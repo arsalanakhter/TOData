@@ -36,11 +36,11 @@ class Solution_Reader:
             'F' + str(self.L) + \
             'Tmax' + str(self.T_max) + \
             'Iter' + str(self.iteration)
-        self.instance_lp_file = os.path.normpath(
-            self.instance_folder_path + self.instance_filename_prefix + '.mps')
+        # self.instance_lp_file = os.path.normpath(
+        #    self.instance_folder_path + self.instance_filename_prefix + '.lp')
         self.instance_sol_file = os.path.normpath(
             self.instance_folder_path + self.instance_filename_prefix + '.sol')
-        self.model = read(self.instance_lp_file)
+        # self.model = read(self.instance_lp_file)
         # It seems gurobi cannot read the sol file in the above model
         # We'll read it manually, in varibale x
         self.x = {}

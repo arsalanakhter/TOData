@@ -178,7 +178,7 @@ class SolverMinMax:
         if not os.path.exists(self.instance_folder_path):
             os.makedirs(self.instance_folder_path)
         # Write both the LP file and the solution file
-        self.model.write(self.file_path+'.mps')
+        self.model.write(self.file_path+'.lp')
         self.model.write(self.file_path+'.sol')
 
 
