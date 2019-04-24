@@ -13,6 +13,7 @@ class InstanceReader:
     def readData(self):
         with open(self.instance_file, 'r') as f:
             self.json_data = json.load(f)
+        self.iteration = self.json_data['iteration']
         self.thisSeed = self.json_data['thisSeed']
         self.noOfTasks = self.json_data['noOfTasks']
         self.noOfDepots = self.json_data['noOfDepots']

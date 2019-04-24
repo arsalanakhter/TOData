@@ -32,7 +32,8 @@ class Instance_Generator:
                                         'F' + str(self.L) + \
                                         'Tmax' + str(self.T_max)
 
-    def create_instance(self):
+    def create_instance(self, iteration):
+        self.iteration = iteration
         self.thisSeed = rnd.randrange(sys.maxsize)
         rnd.seed(self.thisSeed)
         self.K = ["K" + str(i) for i in range(self.noOfRobots)]
@@ -69,6 +70,7 @@ class Instance_Generator:
 
     def create_json_data(self):
         self.json_data = {
+            'iteration': self.iteration,
             'thisSeed': self.thisSeed,
             'noOfTasks': self.noOfTasks,
             'noOfDepots': self.noOfDepots,
@@ -100,9 +102,9 @@ class Instance_Generator:
             'arc_ub': dict((':'.join(k), v) for k, v in self.arc_ub.items())
         }
 
-    def write_instance_to_json(self, iteration_number):
+    def write_instance_to_json(self):
         curr_instance_filename = self.instance_filename_prefix + \
-            'Iter' + str(iteration_number) + '.json'
+            'Iter' + str(self.iteration) + '.json'
         file_path = os.path.normpath(
             self.instance_folder_path+curr_instance_filename)
 
@@ -114,9 +116,9 @@ class Instance_Generator:
 
     def generate_data(self):
         for iteration in range(self.no_of_instances):
-            self.create_instance()
+            self.create_instance(iteration)
             self.create_json_data()
-            self.write_instance_to_json(iteration)
+            self.write_instance_to_json()
 
 
 def main():
@@ -127,16 +129,16 @@ def main():
     max_depots = 1
 
     min_tasks = 1
-    max_tasks = 3
+    max_tasks = 1
 
     fuel_range_start = 50
     # fuel_range_end = int(math.ceil(2*100*math.sqrt(2)/5)*5)
-    fuel_range_end = 60
+    fuel_range_end = 55
     fuel_range_step = 5
 
     Tmax_range_start = 50
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2)/10)*10)
-    Tmax_range_end = 70
+    Tmax_range_end = 60
     Tmax_range_step = 10
 
     robots_range = list(range(min_robots, max_robots+1))
