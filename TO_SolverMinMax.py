@@ -178,7 +178,7 @@ class SolverMinMax:
         if not os.path.exists(self.instance_folder_path):
             os.makedirs(self.instance_folder_path)
         # Write both the LP file and the solution file
-        self.model.write(self.file_path+'.lp')
+        self.model.write(self.file_path+'.mps')
         self.model.write(self.file_path+'.sol')
 
 
@@ -212,7 +212,7 @@ def main():
 
     no_of_instances = 3
     path_to_data_folder = os.getcwd()
-    instance_dictionary = {}
+    # instance_dictionary = {}
 
     for r in robots_range:
         for d in depots_range:
@@ -239,10 +239,8 @@ def main():
                             file_path = os.path.normpath(
                                 instance_folder_path+curr_instance_filename)
                             instance = InstanceReader(file_path)
-                            instance_dictionary[curr_instance_filename[1:-5]
-                                                ] = instance.readData()
-                            solver = SolverMinMax(instance_dictionary[
-                                curr_instance_filename[1:-5]])
+                            instance_data = instance.readData()
+                            solver = SolverMinMax(instance_data)
                             solver.solve()
                             solver.write_lp_and_sol_to_disk()
 
