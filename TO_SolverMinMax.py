@@ -3,8 +3,6 @@ import random as rnd
 import math
 import numpy as np
 import os
-import sys
-import pickle
 from TO_InstanceReader import InstanceReader
 
 
@@ -43,12 +41,33 @@ class SolverMinMax:
         self.arcs = instance.arcs
         self.arc_ub = instance.arc_ub
         self.k_y = instance.k_y
+        # Generate names for model/solution_file
+        self.path_to_sol_folder = os.getcwd()
+        self.instance_folder_path_suffix = \
+            '/sol' + \
+            '/R' + str(self.noOfRobots) + \
+            '/D' + str(self.noOfDepots) + \
+            '/T' + str(self.noOfTasks) + \
+            '/F' + str(self.L) + \
+            '/Tmax' + str(self.T_max)
+        self.instance_folder_path = os.path.normpath(
+            self.path_to_sol_folder + self.instance_folder_path_suffix)
+        self.instance_filename_prefix = '\\R' + str(self.noOfRobots) + \
+            'D' + str(self.noOfDepots) + \
+            'T' + str(self.noOfTasks) + \
+            'F' + str(self.L) + \
+            'Tmax' + str(self.T_max)
+        self.curr_instance_filename = self.instance_filename_prefix + \
+            'Iter' + str(self.iteration)
+        self.file_path = os.path.normpath(
+            self.instance_folder_path + self.curr_instance_filename)
+
         # Initialize the model
         self.init_model()
 
     def init_model(self):
         # Initialize the model
-        self.model = Model('TOMinMax')
+        self.model = Model('TOMinMax-'+self.curr_instance_filename[1:])
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb=0, ub=self.arc_ub,
                                name="x", vtype=GRB.INTEGER)
@@ -155,31 +174,12 @@ class SolverMinMax:
         # self.model.params.TimeLimit = 30
         self.model.optimize()
 
-    def pickle_solution_to_disk(self):
-        path_to_sol_folder = os.getcwd()
-        instance_folder_path_suffix = \
-            '/sol' + \
-            '/R' + str(self.noOfRobots) + \
-            '/D' + str(self.noOfDepots) + \
-            '/T' + str(self.noOfTasks) + \
-            '/F' + str(self.L) + \
-            '/Tmax' + str(self.T_max)
-        instance_folder_path = os.path.normpath(
-            path_to_sol_folder + instance_folder_path_suffix)
-        instance_filename_prefix = '\\R' + str(self.noOfRobots) + \
-            'D' + str(self.noOfDepots) + \
-            'T' + str(self.noOfTasks) + \
-            'F' + str(self.L) + \
-            'Tmax' + str(self.T_max)
-        curr_instance_filename = instance_filename_prefix + \
-            'Iter' + str(self.iteration) + '.mps'
-        file_path = os.path.normpath(
-            instance_folder_path+curr_instance_filename)
-
-        if not os.path.exists(instance_folder_path):
-            os.makedirs(instance_folder_path)
-
-        self.model.write(file_path)
+    def write_lp_and_sol_to_disk(self):
+        if not os.path.exists(self.instance_folder_path):
+            os.makedirs(self.instance_folder_path)
+        # Write both the LP file and the solution file
+        self.model.write(self.file_path+'.lp')
+        self.model.write(self.file_path+'.sol')
 
 
 def main():
@@ -244,7 +244,7 @@ def main():
                             solver = SolverMinMax(instance_dictionary[
                                 curr_instance_filename[1:-5]])
                             solver.solve()
-                            solver.pickle_solution_to_disk()
+                            solver.write_lp_and_sol_to_disk()
 
 
 if __name__ == "__main__":
