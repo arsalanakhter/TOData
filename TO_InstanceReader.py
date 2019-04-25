@@ -3,15 +3,47 @@ import math
 import os
 import sys
 import json
+import regex as re
 
 
 class InstanceReader:
 
-    def __init__(self, instance_file):
-        self.instance_file = instance_file
+    def __init__(self, instance_string, path_to_data_folder=os.getcwd()):
+        self.instance_string = instance_string
+        self.path_to_data_folder = path_to_data_folder
+        temp = [int(s) for s in re.findall(
+            '\d+', instance_string)]  # extract numbers
+        self.noOfRobots = temp[0]
+        self.noOfDepots = temp[1]
+        self.noOfTasks = temp[2]
+        self.L = temp[3]
+        self.T_max = temp[4]
+        self.iteration = temp[5]
+        self.compute_data_filepath()
+        self.readData()
+
+    def compute_data_filepath(self):
+        instance_data_folder_path_suffix = \
+            '/data' + \
+            '/R' + str(self.noOfRobots) + \
+            '/D' + str(self.noOfDepots) + \
+            '/T' + str(self.noOfTasks) + \
+            '/F' + str(self.L) + \
+            '/Tmax' + str(self.T_max)
+        instance_data_folder_path = \
+            self.path_to_data_folder + instance_data_folder_path_suffix
+        instance_data_filename_prefix = \
+            '\\R' + str(self.noOfRobots) + \
+            'D' + str(self.noOfDepots) + \
+            'T' + str(self.noOfTasks) + \
+            'F' + str(self.L) + \
+            'Tmax' + str(self.T_max) + \
+            'Iter' + str(self.iteration)
+        self.instance_data_file = os.path.normpath(
+            instance_data_folder_path + instance_data_filename_prefix + '.json')
 
     def readData(self):
-        with open(self.instance_file, 'r') as f:
+        with open(self.instance_data_file, 'r') as f:
             self.json_data = json.load(f)
         self.iteration = self.json_data['iteration']
         self.thisSeed = self.json_data['thisSeed']

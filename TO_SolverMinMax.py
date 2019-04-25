@@ -162,10 +162,14 @@ class SolverMinMax:
 
         c15 = self.model.addConstrs(
             (0 <= r[i] <= self.L for i in self.T), name="c15")
-        c16 = self.model.addConstrs((
+        c16 = self.model.addConstrs(
+            (self.f[i, j]*x[i, j, k] <= 
+            self.L for i in self.D for j in self.D+self.S+self.E for k in self.K if i != j), name="c16")
+
+        c17 = self.model.addConstrs((
             quicksum(self.c[i, j]*x[i, j, k]*1 /
                      self.vel for i in self.N for j in self.N if i != j) <= self.T_max
-            for k in self.K), name="c16")
+            for k in self.K), name="c17")
 
     def solve(self):
         self.model.params.Heuristics = 0.0  # %age of time use a heuristic solution
@@ -183,23 +187,23 @@ class SolverMinMax:
 
 
 def main():
-    min_robots = 2
-    max_robots = 2
+    min_robots = 3
+    max_robots = 3
 
-    min_depots = 1
-    max_depots = 1
+    min_depots = 2
+    max_depots = 2
 
-    min_tasks = 1
-    max_tasks = 1
+    min_tasks = 7
+    max_tasks = 7
 
-    fuel_range_start = 50
+    fuel_range_start = 125
     # fuel_range_end = int(math.ceil(2*100*math.sqrt(2)/5)*5)
-    fuel_range_end = 55
+    fuel_range_end = 125
     fuel_range_step = 5
 
-    Tmax_range_start = 50
+    Tmax_range_start = 175
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2)/10)*10)
-    Tmax_range_end = 60
+    Tmax_range_end = 175
     Tmax_range_step = 10
 
     robots_range = list(range(min_robots, max_robots+1))
@@ -210,7 +214,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 3
+    no_of_instances = 5
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 
