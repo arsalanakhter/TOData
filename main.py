@@ -2,6 +2,7 @@
 from TO_InstanceReader import InstanceReader
 from TO_SolverMinMax import SolverMinMax
 from TO_SolutionReader import Solution_Reader
+from TO_SolutionInformationExtractor import SolutionInformationExtractor
 import os
 import sys
 import ptvsd
