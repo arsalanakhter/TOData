@@ -67,7 +67,7 @@ class SolverMinMax:
 
     def init_model(self):
         # Initialize the model
-        self.model = Model('TOMinMax-'+self.curr_instance_filename[1:])
+        self.model = Model('TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:'+ str(self.thisSeed))
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb=0, ub=self.arc_ub,
                                name="x", vtype=GRB.INTEGER)
