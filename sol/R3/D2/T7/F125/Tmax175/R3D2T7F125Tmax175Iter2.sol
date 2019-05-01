@@ -1,4 +1,4 @@
-# Solution for model TOMinMax-R3D2T7F125Tmax175Iter2
+# Solution for model TOMinMax-R3D2T7F125Tmax175Iter2-Seed:4259697828970541402
 # Objective value = 2.9915000533480076e+00
 x[T0,T1,K0] 0
 x[T0,T1,K1] 0

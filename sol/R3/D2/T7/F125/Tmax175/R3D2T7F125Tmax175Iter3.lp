@@ -1,4 +1,4 @@
-\ Model TOMinMax-R3D2T7F125Tmax175Iter3
+\ Model TOMinMax-R3D2T7F125Tmax175Iter3-Seed:9129090036194241967
 \ LP format - for model browsing. Use MPS format to capture full model detail.
 Maximize
   y[T0,K0] + y[T0,K1] + y[T0,K2] + y[T1,K0] + y[T1,K1] + y[T1,K2] + y[T2,K0]
