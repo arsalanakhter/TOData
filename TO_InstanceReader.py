@@ -33,7 +33,7 @@ class InstanceReader:
         instance_data_folder_path = \
             self.path_to_data_folder + instance_data_folder_path_suffix
         instance_data_filename_prefix = \
-            '\\R' + str(self.noOfRobots) + \
+            '/R' + str(self.noOfRobots) + \
             'D' + str(self.noOfDepots) + \
             'T' + str(self.noOfTasks) + \
             'F' + str(self.L) + \
