@@ -91,7 +91,7 @@ do
                         # Create Instance name
                         INSTANCE_STRING="R${NO_OF_ROBOTS}D${NO_OF_DEPOTS}T${NO_OF_TASKS}F${FUEL}Tmax${T_MAX}Iter${ITER}"
                         # submit job
-                        sh WIN_single_job.sh ${INSTANCE_STRING}
+                        sh cluster_single_job.sh ${INSTANCE_STRING}
                         # Sleep for 1 sec so that the machine is not overloaded
                         sleep 1
                     done
