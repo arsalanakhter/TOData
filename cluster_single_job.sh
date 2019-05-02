@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-#SBATCH -n 1
-#SBATCH -N 10
+#SBATCH --ntasks=1 --cpus-per-task=20
+#SBATCH -N 1
 #SBATCH -p short
 #SBATCH --mem 32G
 
