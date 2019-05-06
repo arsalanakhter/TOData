@@ -47,13 +47,27 @@ class SolutionInformationExtractor:
                         self.recharge_recharge_count += 1
 
 
+    def distance_travelled_calculator(self):
+        distance_all_robots = []
+        for k in self.instance.K:
+            route = self.sol.nodesInOrder[k]
+            n1 = route[0]
+            distance = 0
+            for n2 in route[1:]:
+                distance += self.instance.c[n1, n2]
+
+            distance_all_robots.append(distance)
+
+        return distance_all_robots
+
+
 '''
     def compute_data_filepath(self):
         instance_data_folder_path_suffix = \
             '/data' + \
             '/R' + str(self.noOfRobots) + \
             '/D' + str(self.noOfDepots) + \
-            '/T' + str(self.noOfTasks) + \
+            '/T' + str(self.noOfTasks) + \  
             '/F' + str(self.L) + \
             '/Tmax' + str(self.T_max)
         instance_data_folder_path = \
@@ -91,16 +105,30 @@ class SolutionInformationExtractor:
 
 
 def main():
-    instance_prefix = 'R3D2T7F125Tmax175Iter'
-    for i in range(5):
+    # instance_prefix = 'R3D2T3F150Tmax600Iter'
+    instance_prefix = 'R3D3T7F150Tmax600Iter'
+    no_of_instances = 5
+    for i in range(no_of_instances):
         instance_name = instance_prefix + str(i)
         instance = InstanceReader(instance_name)
         sol = Solution_Reader(instance_name)
-        pprint(sol.nodesInOrder)
+        # pprint(sol.nodesInOrder)
         sol_info = SolutionInformationExtractor(instance, sol)
         sol_info.recharge_recharge_task_frequency()
-        print(sol_info.recharge_recharge_count)
-        print(sol_info.recharge_task_count)
+        # print(sol_info.recharge_recharge_count)
+        # print(sol_info.recharge_task_count)
+        # curr_instance_filename = instance_prefix + 'Iter' + str(i) + '.json'
+        # file_path = os.path.normpath(instance_folder_path + curr_instance_filename)
+
+        distance_travelled = sol_info.distance_travelled_calculator()
+
+        with open('data.csv', 'a') as csvFile:
+            writer = csv.writer(csvFile)
+            row = [instance_name, sol_info.recharge_task_count, sol_info.recharge_recharge_count]
+            for x in distance_travelled:
+                row.append(x)
+            writer.writerow(row)
+        csvFile.close()
 
 
 if __name__ == "__main__":

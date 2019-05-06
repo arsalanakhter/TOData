@@ -1,6 +1,7 @@
 # from TO_InstanceGenerator import Instance_Generator
 from TO_InstanceReader import InstanceReader
 from TO_SolverMinMax import SolverMinMax
+from TO_Solver import Solver
 from TO_SolutionReader import Solution_Reader
 from TO_SolutionInformationExtractor import SolutionInformationExtractor
 import os
@@ -13,7 +14,8 @@ class Job:
         instance = InstanceReader(instance_string)
         instance_data = instance.readData()
         # Now solve the instance, and write the solution to disk
-        solver = SolverMinMax(instance_data)
+        # solver = SolverMinMax(instance_data)
+        solver = Solver(instance_data)
         solver.solve()
         solver.write_lp_and_sol_to_disk()
 
