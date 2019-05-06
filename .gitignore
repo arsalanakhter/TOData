@@ -2,3 +2,4 @@ __pycache__/
 data/
 sol/
 .vscode/
+*.log
