@@ -67,7 +67,8 @@ class Solver:
 
     def init_model(self):
         # Initialize the model
-        self.model = Model('TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:'+ str(self.thisSeed))
+        self.model = Model(
+            'TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb=0, ub=self.arc_ub,
                                name="x", vtype=GRB.INTEGER)
@@ -79,7 +80,8 @@ class Solver:
         # Objective function
         gamma = 0.0001
         objExpr1 = quicksum(y[i, k] for i in self.T for k in self.K)
-        objExpr2 = quicksum(gamma * self.c[i, j] * x[i, j, k] for k in self.K for i in self.N for j in self.N if i != j)
+        objExpr2 = quicksum(gamma * self.c[i, j] * x[i, j, k]
+                            for k in self.K for i in self.N for j in self.N if i != j)
         objFun = objExpr1 - objExpr2
         self.model.setObjective(objFun, GRB.MAXIMIZE)
 
@@ -159,7 +161,7 @@ class Solver:
             (0 <= r[i] <= self.L for i in self.T), name="c15")
         c16 = self.model.addConstrs(
             (self.f[i, j]*x[i, j, k] <=
-            self.L for i in self.D for j in self.D+self.S+self.E for k in self.K if i != j), name="c16")
+             self.L for i in self.D for j in self.D+self.S+self.E for k in self.K if i != j), name="c16")
 
         c17 = self.model.addConstrs((
             quicksum(self.c[i, j]*x[i, j, k]*1 /
@@ -239,7 +241,7 @@ def main():
                                 instance_folder_path+curr_instance_filename)
                             instance = InstanceReader(file_path)
                             instance_data = instance.readData()
-                            solver = SolverMinMax(instance_data)
+                            solver = Solver(instance_data)
                             solver.solve()
                             solver.write_lp_and_sol_to_disk()
 
