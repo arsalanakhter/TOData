@@ -122,7 +122,7 @@ def main():
 
         distance_travelled = sol_info.distance_travelled_calculator()
 
-        with open('data.csv', 'a') as csvFile:
+        with open('analysis/data.csv', 'a') as csvFile:
             writer = csv.writer(csvFile)
             row = [instance_name, sol_info.recharge_task_count, sol_info.recharge_recharge_count]
             for x in distance_travelled:
