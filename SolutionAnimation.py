@@ -5,8 +5,9 @@ import plotly.graph_objs as go
 import os
 from TO_InstanceReader import InstanceReader
 from TO_SolutionReader import Solution_Reader
-from InstancePlotter import taskNodesTrace, startNodesTrace
-from SolutionPlotter import edgeTrace
+from InstancePlotter import Instance_Plotter
+from SolutionPlotter import SolutionPlotter
+
 
 class SolutionAnimation:
 
@@ -14,15 +15,17 @@ class SolutionAnimation:
         self.instance_string = instance_string
         self.instance = InstanceReader(instance_string)
         self.sol = Solution_Reader(instance_string)
+        self.instance_plotter_obj = Instance_Plotter(instance_string)
+        self.solution_plotter_obj = SolutionPlotter(instance_string)
 
     def drawArena(self, modelName='', remainingFuel=0):
-        task_trace = taskNodesTrace(remainingFuel)
-        start_trace = startNodesTrace(self.instance.D_loc)
+        task_trace = self.instance_plotter_obj.taskNodesTrace(remainingFuel)
+        start_trace = self.instance_plotter_obj.startNodesTrace(self.instance.D_loc)
         # end_trace = endNodesTrace(E_loc)
         data = [task_trace, start_trace]
 
         for k in self.sol.arcsInOrder:
-            edge_trace, node_info_trace = edgeTrace(self.instance.D_loc, self.sol.arcsInOrder[k])
+            edge_trace, node_info_trace = self.solution_plotter_obj.edgeTrace(self.instance.D_loc, self.sol.arcsInOrder[k])
             edge_trace.name = str(k)
             data.append(edge_trace)
             data.append(node_info_trace)
@@ -59,7 +62,7 @@ class SolutionAnimation:
 
 
 def main():
-    instance_prefix = 'R3D3T7F150Tmax600Iter'
+    instance_prefix = 'R3D3T7F150Tmax600Iter0'
 
     video = SolutionAnimation(instance_prefix)
     video.play_and_save()
