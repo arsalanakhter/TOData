@@ -18,21 +18,32 @@ class SolutionAnimation:
         self.instance_plotter_obj = Instance_Plotter(instance_string)
         self.solution_plotter_obj = SolutionPlotter(instance_string)
 
+    def make_frame(self, node):
+        # for k in self.instance.K:
+        #     for node in self.sol.nodesInOrder[k]:
+        x, y = self.instance.T_loc.get(node)
+
+        return x
+
     def drawArena(self, modelName='', remainingFuel=0):
         task_trace = self.instance_plotter_obj.taskNodesTrace(remainingFuel)
         start_trace = self.instance_plotter_obj.startNodesTrace(self.instance.D_loc)
         # end_trace = endNodesTrace(E_loc)
         data = [task_trace, start_trace]
 
+        edge_trace = {k:[] for k in self.instance.K}
+        node_info_trace = {k:[] for k in self.instance.K}
         for k in self.sol.arcsInOrder:
-            edge_trace, node_info_trace = self.solution_plotter_obj.edgeTrace(self.instance.D_loc, self.sol.arcsInOrder[k])
-            edge_trace.name = str(k)
-            data.append(edge_trace)
-            data.append(node_info_trace)
+            edge_trace[k], node_info_trace[k] = self.solution_plotter_obj.edgeTrace(self.instance.D_loc,
+                                                                              self.sol.arcsInOrder[k])
+            edge_trace[k].name = str(k)
+            data.append(edge_trace[k])
+            data.append(node_info_trace[k])
 
         layout = go.Layout(
             title='{}: {} robot(s), {} task(s), {} depot(s). f={:.1f}, Tmax={}'
-                .format(modelName, len(self.instance.K), len(self.instance.T), len(self.instance.D), self.instance.L, self.instance.T_max, ),
+                .format(modelName, len(self.instance.K), len(self.instance.T), len(self.instance.D), self.instance.L,
+                        self.instance.T_max, ),
             hovermode='closest',
             xaxis=dict(
                 title='X-Coord',
@@ -46,19 +57,48 @@ class SolutionAnimation:
                 # ticklen= 5,
                 # gridwidth= 2,
             ),
-            showlegend=True
-
+            showlegend=True,
+            updatemenus=[{'type': 'buttons',
+                          'buttons': [{'label': 'Play',
+                                       'method': 'animate',
+                                       'args': [None]}]}]
         )
-        fig = go.Figure(data=data, layout=layout)
-        return fig
 
+        xx = [50, 60, 70, 80]
+        yy = [50, 60, 70, 80]
+        # for node in self.sol.nodesInOrder['K0']
+
+        frames = [dict(data=[start_trace, task_trace,
+                             dict(text='Animate',
+                                  x=[xx[c]],
+                                  y=[yy[c]],
+                                  mode='markers+text',
+                                  textposition='top center',
+                                  name='Animated<br>',
+                                  marker=dict(size=10,
+                                              color='yellow'
+                                              )
+                                  )
+                             ]
+                       ) for c in range(4)
+                  ]
+
+        for f in frames:
+            # for k in self.instance.K:
+            f['data'].append(edge_trace['K0'])
+            f['data'].append(node_info_trace['K0'])
+            f['data'].append(edge_trace['K1'])
+            f['data'].append(node_info_trace['K1'])
+            # f['data'].append(edge_trace['K2'])
+            # f['data'].append(node_info_trace['K2'])
+
+        fig = go.Figure(data=data, layout=layout, frames=frames)
+        return fig
 
     def play_and_save(self):
         # plotly animation
         fig = self.drawArena(self.instance_string)
         py.plot(fig)
-
-
 
 
 def main():
@@ -68,8 +108,5 @@ def main():
     video.play_and_save()
 
 
-
 if __name__ == "__main__":
     main()
-
-
