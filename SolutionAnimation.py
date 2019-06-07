@@ -18,12 +18,6 @@ class SolutionAnimation:
         self.instance_plotter_obj = Instance_Plotter(instance_string)
         self.solution_plotter_obj = SolutionPlotter(instance_string)
 
-    def make_frame(self, node):
-        # for k in self.instance.K:
-        #     for node in self.sol.nodesInOrder[k]:
-        x, y = self.instance.T_loc.get(node)
-
-        return x
 
     def drawArena(self, modelName='', remainingFuel=0):
         task_trace = self.instance_plotter_obj.taskNodesTrace(remainingFuel)
@@ -64,23 +58,36 @@ class SolutionAnimation:
                                        'args': [None]}]}]
         )
 
-        xx = [50, 60, 70, 80]
-        yy = [50, 60, 70, 80]
-        # for node in self.sol.nodesInOrder['K0']
+        max_frames = max([len(self.sol.nodesInOrder[k]) for k in self.instance.K])
+        xx = {'F'+str(c): [] for c in range(max_frames)}
+        yy = {'F'+str(c): [] for c in range(max_frames)}
+        for c in range(max_frames):
+            x = []
+            y = []
+            for k in self.instance.K:
 
+                if(c < len(self.sol.nodesInOrder[k])):
+                    tempx, tempy = self.instance.N_loc.get(self.sol.nodesInOrder[k][c])
+                    xx['F' + str(c)].append(tempx)
+                    yy['F' + str(c)].append(tempy)
+                else:
+                    xx['F' + str(c)].append(self.instance.N_loc.get(self.sol.nodesInOrder[k][-1]))
+                    yy['F' + str(c)].append(self.instance.N_loc.get(self.sol.nodesInOrder[k][-1]))
+
+        print(xx)
         frames = [dict(data=[start_trace, task_trace,
-                             dict(text='Animate',
-                                  x=[xx[c]],
-                                  y=[yy[c]],
+                             dict(text='R',
+                                  x=xx['F'+str(c)],
+                                  y=yy['F'+str(c)],
                                   mode='markers+text',
                                   textposition='top center',
-                                  name='Animated<br>',
+                                  name='Robots<br>',
                                   marker=dict(size=10,
-                                              color='yellow'
+                                              color='black'
                                               )
                                   )
                              ]
-                       ) for c in range(4)
+                       ) for c in range(max_frames)
                   ]
 
         for f in frames:
