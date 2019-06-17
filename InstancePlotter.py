@@ -25,7 +25,7 @@ class Instance_Plotter(InstanceReader):
             name='<br>Task Locations<br>',
             marker=dict(
                 size=6,
-                color='blue',
+                color='green',
                 line=dict(
                     # color='rgba(217, 217, 217, 0.14)',
                     width=0.5
@@ -58,7 +58,7 @@ class Instance_Plotter(InstanceReader):
             name='Refueling Locations<br>',
             marker=dict(
                 size=12,
-                color='green',
+                color='blue',
                 line=dict(
                     # color='rgba(217, 217, 217, 0.14)',
                     width=0.5
@@ -112,12 +112,15 @@ class Instance_Plotter(InstanceReader):
 
 def main():
     # instance_prefix = 'R3D2T3F150Tmax600Iter'
-    instance_prefix = 'R3D3T7F50Tmax600Iter'
-    no_of_instances = 1
-    for i in range(no_of_instances):
-        instance_name = instance_prefix + str(i)
-        plot = Instance_Plotter(instance_name)
-        plot.create_plot_and_show()
+    instance_prefix = 'R3D3T7F150Tmax600Iter4'
+    # no_of_instances = 1
+    # for i in range(no_of_instances):
+    #     instance_name = instance_prefix + str(i)
+    #     plot = Instance_Plotter(instance_name)
+    #     plot.create_plot_and_show()
+
+    plot = Instance_Plotter(instance_prefix)
+    plot.create_plot_and_show()
 
 
 if __name__ == "__main__":
