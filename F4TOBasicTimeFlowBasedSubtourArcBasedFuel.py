@@ -6,11 +6,11 @@ import os
 from TO_InstanceReader import InstanceReader
 
 
-class F1Solver:
+class F4Solver:
 
     def __init__(self, instance):
         '''
-        param instance: A single instance that can be solved by the MinMax Solver
+        param instance: A single instance that can be solved by the Basic Solver
         '''
         self.iteration = instance.iteration
         self.noOfRobots = instance.noOfRobots
@@ -68,7 +68,7 @@ class F1Solver:
     def init_model(self):
         # Initialize the model
         self.model = Model(
-            'TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
+            'F4TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb = 0, ub = self.arc_ub, name="x", vtype=GRB.INTEGER)
         y = self.model.addVars(self.T, name="y", vtype=GRB.BINARY)
@@ -197,7 +197,7 @@ def main():
                                 instance_folder_path+curr_instance_filename)
                             instance = InstanceReader(file_path)
                             instance_data = instance.readData()
-                            solver = F1Solver(instance_data)
+                            solver = F4Solver(instance_data)
                             solver.solve()
                             solver.write_lp_and_sol_to_disk()
 

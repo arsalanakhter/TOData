@@ -6,11 +6,11 @@ import os
 from TO_InstanceReader import InstanceReader
 
 
-class F3Solver:
+class F5Solver:
 
     def __init__(self, instance):
         '''
-        param instance: A single instance that can be solved by the Basic Solver
+        param instance: A single instance that can be solved by the MinMax Solver
         '''
         self.iteration = instance.iteration
         self.noOfRobots = instance.noOfRobots
@@ -40,7 +40,7 @@ class F3Solver:
         self.f = instance.f
         self.arcs = instance.arcs
         self.arc_ub = instance.arc_ub
-        self.k_y = instance.k_y # not used remove TODO
+        self.k_y = instance.k_y 
         # Generate names for model/solution_file
         self.path_to_sol_folder = os.getcwd()
         self.instance_folder_path_suffix = \
@@ -68,24 +68,26 @@ class F3Solver:
     def init_model(self):
         # Initialize the model
         self.model = Model(
-            'F3TOBasic-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
+            'F5TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb = 0, ub = self.arc_ub, name="x", vtype=GRB.INTEGER)
-        y = self.model.addVars(self.T, name="y", vtype=GRB.BINARY)
+        y = self.model.addVars(self.k_y, name="y", vtype=GRB.BINARY)
         r = self.model.addVars(self.N, lb=0, ub=self.L, vtype=GRB.CONTINUOUS, name="r")
-        q = self.model.addVars(self.arcs, vtype=GRB.CONTINUOUS, name="q")
-
+        g = self.model.addVars(self.arcs, name="g", vtype=GRB.INTEGER)
+        z = self.model.addVar(name="z", vtype=GRB.CONTINUOUS)
+        
         # Objective function
-        gamma = 0.0001
-        objExpr1 = quicksum(y[i] for i in self.T)
-        objExpr2 = quicksum(gamma * self.c[i, j] * x[i, j, k]
-                            for k in self.K for i in self.N for j in self.N if i != j)
+        gamma = 1e-4
+        objExpr1 = quicksum(y[i,k] for i in self.T for k in self.K)
+        objExpr2 = gamma*z
         objFun = objExpr1 - objExpr2
         self.model.setObjective(objFun, GRB.MAXIMIZE)
 
         # Constraints
         # For detail on what the constraints signify please see the
         # corresponding section in the report
+        c1 = self.model.addConstrs(((quicksum(self.c[i,j]*x[i,j,k] for i in self.N for j in self.N if i!=j)) <= z for k in self.K ), name="c1")
+
         c2_1 = self.model.addConstr((quicksum(x[s,j,k] for j in self.N for k in self.K for s in self.S if j not in self.S) == self.noOfRobots), name="c2_1")
         c2_2 = self.model.addConstr((quicksum(x[i,e,k] for i in self.N for k in self.K for e in self.E if i!=e) == self.noOfRobots), name="c2_2")
         
@@ -96,31 +98,32 @@ class F3Solver:
 
         c5_1 = self.model.addConstrs(((quicksum(x[i,h,k] for i in self.N if i!=h and i not in self.E)) == (quicksum(x[h,j,k] for j in self.N if j!=h and j not in self.S)) 
                                             for h in self.N for k in self.K if h not in self.S and h not in self.E), name="c5_1")
-        c5_2 = self.model.addConstrs(((quicksum(x[i,h,k] for k in self.K for i in self.N if i!=h)) == y[h] for h in self.T), name="c5_2")
-        c5_3 = self.model.addConstrs(((quicksum(x[h,j,k] for k in self.K for j in self.N if j!=h)) == y[h] for h in self.T), name="c5_3")
-        c5_4 = self.model.addConstrs((y[i] <= 1 for i in self.T), name="c5_4")
+        c5_2 = self.model.addConstrs(((quicksum(x[i,h,k] for k in self.K for i in self.N if i!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_2")
+        c5_3 = self.model.addConstrs(((quicksum(x[h,j,k] for k in self.K for j in self.N if j!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_3")
+        c5_4 = self.model.addConstrs((quicksum(y[i,k] for k in self.K) <= 1 for i in self.T), name="c5_4")
 
         c6 = self.model.addConstrs((quicksum(self.c[i,j]*x[i,j,k]*1/self.vel for i in self.N for j in self.N if i!=j) <= self.T_max 
                                                         for k in self.K), name="c6")
         
-        # Time based flow constraints
-        c7 = self.model.addConstrs((quicksum(q[i,j,k] for k in self.K for j in self.N if i!=j and j not in self.S) - 
-                         quicksum(q[j,i,k] for k in self.K for j in self.N if i!=j and j not in self.E) == 
-                                quicksum(self.c[i,j]*x[i,j,k] for k in self.K for j in self.N if i!=j) 
-                                                            for i in self.N if i not in self.E), name='c7' )
-        c8 = self.model.addConstrs((0 <= q[i,j,k] <= self.T_max*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8' )
-        c9 = self.model.addConstrs((q[s,i,k] == self.f[s,i]*x[s,i,k] for i in self.T+self.D+self.E for s in self.S for k in self.K), name='c9')
+        # Task based flow constraints
+        c7 = self.model.addConstrs(((quicksum((g[s,i,k] - g[i,s,k]) for i in self.N for s in self.S if i not in self.S)) == 
+                        (quicksum(x[i,j,k] for i in self.T for j in self.N if i!=j)) for k in self.K), name="c7")
+        c8 = self.model.addConstrs(((quicksum((g[j,i,k] - g[i,j,k]) for j in self.N if i!=j)) == 
+                        (quicksum(x[i,j,k] for j in self.N if i!=j )) for i in self.T for k in self.K), name="c8")
+        c9 = self.model.addConstrs(((quicksum((g[j,i,k] - g[i,j,k]) for j in self.N if j!=i)) 
+                                                    == 0 for i in self.D for k in self.K), name="c9")
+        c10 = self.model.addConstrs(( 0 <= g[i,j,k] <= self.noOfTasks*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j), name="c10")
 
         
         # Node based fuel constraints
         M = 1e6
-        c10 = self.model.addConstrs((r[j] - r[i] + self.f[i,j] <= M*(1-x[i,j,k]) for i in self.T for j in self.T for k in self.K if i!=j), name="c10")
-        c11 = self.model.addConstrs((r[j] - r[i] + self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.T for j in self.T for k in self.K if i!=j), name="c11")
-        c12 = self.model.addConstrs((r[j] - self.L + self.f[i,j] <= M*(1-x[i,j,k]) for i in self.D+self.S for j in self.T+self.D+self.E for k in self.K if i!=j), name="c12")
-        c13 = self.model.addConstrs((r[j] - self.L + self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.D+self.S for j in self.T+self.D+self.E for k in self.K if i!=j), name="c13")
-        c14 = self.model.addConstrs((r[i] - self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.S+self.T for j in self.D+self.E for k in self.K ), name="c14")
-        c15 = self.model.addConstrs((0 <= r[i] <= self.L for i in self.T+self.E), name="c15")
-        c16 = self.model.addConstrs((self.f[i,j]*x[i,j,k] <= self.L for i in self.S+self.D for j in self.D for k in self.K if i!=j), name="c16")
+        c11 = self.model.addConstrs((r[j] - r[i] + self.f[i,j] <= M*(1-x[i,j,k]) for i in self.T for j in self.T for k in self.K if i!=j), name="c11")
+        c12 = self.model.addConstrs((r[j] - r[i] + self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.T for j in self.T for k in self.K if i!=j), name="c12")
+        c13 = self.model.addConstrs((r[j] - self.L + self.f[i,j] <= M*(1-x[i,j,k]) for i in self.D+self.S for j in self.T+self.D+self.E for k in self.K if i!=j), name="c13")
+        c14 = self.model.addConstrs((r[j] - self.L + self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.D+self.S for j in self.T+self.D+self.E for k in self.K if i!=j), name="c14")
+        c15 = self.model.addConstrs((r[i] - self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.S+self.T for j in self.D+self.E for k in self.K ), name="c15")
+        c16 = self.model.addConstrs((0 <= r[i] <= self.L for i in self.T+self.E), name="c16")
+        c17 = self.model.addConstrs((self.f[i,j]*x[i,j,k] <= self.L for i in self.S+self.D for j in self.D for k in self.K if i!=j), name="c17")
 
 
     def solve(self):
@@ -198,7 +201,7 @@ def main():
                                 instance_folder_path+curr_instance_filename)
                             instance = InstanceReader(file_path)
                             instance_data = instance.readData()
-                            solver = F3Solver(instance_data)
+                            solver = F5Solver(instance_data)
                             solver.solve()
                             solver.write_lp_and_sol_to_disk()
 

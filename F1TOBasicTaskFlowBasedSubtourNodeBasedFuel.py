@@ -10,7 +10,7 @@ class F1Solver:
 
     def __init__(self, instance):
         '''
-        param instance: A single instance that can be solved by the MinMax Solver
+        param instance: A single instance that can be solved by the Basic Solver
         '''
         self.iteration = instance.iteration
         self.noOfRobots = instance.noOfRobots
@@ -68,12 +68,12 @@ class F1Solver:
     def init_model(self):
         # Initialize the model
         self.model = Model(
-            'TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
+            'F1TOBasic-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb = 0, ub = self.arc_ub, name="x", vtype=GRB.INTEGER)
         y = self.model.addVars(self.T, name="y", vtype=GRB.BINARY)
         r = self.model.addVars(self.N, lb=0, ub=self.L, vtype=GRB.CONTINUOUS, name="r")
-        g = self.model.addVars(self.arcs, name="p", vtype=GRB.INTEGER)
+        g = self.model.addVars(self.arcs, name="g", vtype=GRB.INTEGER)
 
         # Objective function
         gamma = 0.0001
@@ -130,6 +130,9 @@ class F1Solver:
         # model.params.MIPGapAbs = 0.0005
         # self.model.params.TimeLimit = 30
         self.model.optimize()
+        print(self.model.Runtime)
+        print("***************************************************************************")
+        
 
     def write_lp_and_sol_to_disk(self):
         if not os.path.exists(self.instance_folder_path):
