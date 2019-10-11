@@ -68,7 +68,7 @@ class F2Solver:
     def init_model(self):
         # Initialize the model
         self.model = Model(
-            'F2TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
+            'F2TOBasic-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb = 0, ub = self.arc_ub, name="x", vtype=GRB.INTEGER)
         y = self.model.addVars(self.T, name="y", vtype=GRB.BINARY)
