@@ -34,3 +34,7 @@ $ git pull origin master
 ```
 $ git branch -D issue#1
 ```
+8. To remove the remote tracking of this branch from your own computer
+```
+$ git remote prune origin
+```
