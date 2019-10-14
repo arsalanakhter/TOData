@@ -12,7 +12,11 @@ $ git pull origin master
 ```
 $ git checkout -b issue#1
 ```
-3. Work, commit, and push to origin
+3. Work, commit. 
+
+  - In the commit message, use the keywords `fixes #1` or `resolves #1`. This helps with automatically closing the issue that we worked on.
+
+  - Once done, push to github.
 ```
 $ git push origin issue#1
 ```
