@@ -122,10 +122,10 @@ class Instance_Generator:
 
 
 def main():
-    min_robots = 3
+    min_robots = 2
     max_robots = 3
 
-    min_depots = 3
+    min_depots = 2
     max_depots = 3
 
     min_tasks = 7
@@ -145,13 +145,16 @@ def main():
 
     robots_range = list(range(min_robots, max_robots+1))
     depots_range = list(range(min_depots, max_depots+1))
-    tasks_range = list(range(min_tasks, max_tasks+1))
-    fuel_range = list(range(fuel_range_start, fuel_range_end +
-                            fuel_range_step, fuel_range_step))
-    Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
-                            Tmax_range_step, Tmax_range_step,))
+    #tasks_range = list(range(min_tasks, max_tasks+1))
+    tasks_range = [5,10]
+    #fuel_range = list(range(fuel_range_start, fuel_range_end +
+    #                        fuel_range_step, fuel_range_step))
+    fuel_range = [50,75,150]
+    #Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
+    #                        Tmax_range_step, Tmax_range_step,))
+    Tmax_range = [150,300,600]
 
-    no_of_instances = 5
+    no_of_instances = 10
 
     for r in robots_range:
         for d in depots_range:

@@ -99,20 +99,20 @@ def main():
     min_robots = 2
     max_robots = 2
 
-    min_depots = 1
-    max_depots = 1
+    min_depots = 2
+    max_depots = 2
 
-    min_tasks = 1
-    max_tasks = 3
+    min_tasks = 5
+    max_tasks = 5
 
     fuel_range_start = 50
     # fuel_range_end = int(math.ceil(2*100*math.sqrt(2)/5)*5)
-    fuel_range_end = 60
+    fuel_range_end = 50
     fuel_range_step = 5
 
-    Tmax_range_start = 50
+    Tmax_range_start = 150
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2)/10)*10)
-    Tmax_range_end = 70
+    Tmax_range_end = 150
     Tmax_range_step = 10
 
     robots_range = list(range(min_robots, max_robots+1))
@@ -123,7 +123,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 3
+    no_of_instances = 1
     path_to_data_folder = os.getcwd()
     instance_dictionary = {}
 

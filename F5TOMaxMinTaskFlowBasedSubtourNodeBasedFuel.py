@@ -136,9 +136,15 @@ class F5Solver:
     def write_lp_and_sol_to_disk(self):
         if not os.path.exists(self.instance_folder_path):
             os.makedirs(self.instance_folder_path)
+        # Save runtime, because after writing the lp file, 
+        # runtime is lost. No idea why
+        run_time = self. model.Runtime
         # Write both the LP file and the solution file
         self.model.write(self.file_path+'.lp')
         self.model.write(self.file_path+'.sol')
+        # Add runtime in the sol file as well.
+        with open(self.file_path+'.sol', "a") as myfile:
+            myfile.write('runtime:{0:.2f}'.format(run_time))
 
 
 def main():
@@ -199,7 +205,7 @@ def main():
                                 'Iter' + str(it) + '.json'
                             file_path = os.path.normpath(
                                 instance_folder_path+curr_instance_filename)
-                            instance = InstanceReader(file_path)
+                            instance = InstanceReader(curr_instance_filename)
                             instance_data = instance.readData()
                             solver = F5Solver(instance_data)
                             solver.solve()
