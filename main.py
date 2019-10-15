@@ -47,10 +47,10 @@ class Job:
 
 def main():
     # Attach a debugger from here (vscode) for a call from bash
-    print("Waiting for debugger attach")
-    ptvsd.enable_attach(address=('localhost', 5678), redirect_output=True)
-    ptvsd.wait_for_attach()
-    breakpoint()
+    # print("Waiting for debugger attach")
+    # ptvsd.enable_attach(address=('localhost', 5678), redirect_output=True)
+    # ptvsd.wait_for_attach()
+    # breakpoint()
     # Get the string name from sys.argv[1]
     instance_string = sys.argv[1]
     solver_string = sys.argv[2]
