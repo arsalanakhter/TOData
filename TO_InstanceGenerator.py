@@ -156,7 +156,7 @@ def main():
     robots_range = list(range(min_robots, max_robots+1))
     depots_range = list(range(min_depots, max_depots+1))
     #tasks_range = list(range(min_tasks, max_tasks+1))
-    tasks_range = [5, 10]
+    tasks_range = [5,10]
     #fuel_range = list(range(fuel_range_start, fuel_range_end +
     #                        fuel_range_step, fuel_range_step))
     fuel_range = [50,75,150]
@@ -165,8 +165,6 @@ def main():
     Tmax_range = [150,300,600]
 
     no_of_instances = 10
-    # Create a list of seeds
-    list_of_seeds = [rnd.randrange(sys.maxsize) for i in range(no_of_instances)]
 
     for r in robots_range:
         for d in depots_range:

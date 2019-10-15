@@ -68,7 +68,7 @@ class Solver:
     def init_model(self):
         # Initialize the model
         self.model = Model(
-            'TOMinMax-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
+            'TOBasic-'+self.curr_instance_filename[1:]+'-Seed:' + str(self.thisSeed))
         # Decision variables and their bounds
         x = self.model.addVars(self.arcs, lb=0, ub=self.arc_ub,
                                name="x", vtype=GRB.INTEGER)
@@ -178,29 +178,35 @@ class Solver:
     def write_lp_and_sol_to_disk(self):
         if not os.path.exists(self.instance_folder_path):
             os.makedirs(self.instance_folder_path)
+        # Save runtime, because after writing the lp file, 
+        # runtime is lost. No idea why
+        run_time = self. model.Runtime
         # Write both the LP file and the solution file
         self.model.write(self.file_path+'.lp')
         self.model.write(self.file_path+'.sol')
+        # Add runtime in the sol file as well.
+        with open(self.file_path+'.sol', "a") as myfile:
+            myfile.write('runtime:{0:.2f}'.format(run_time))
 
 
 def main():
     min_robots = 3
     max_robots = 3
 
-    min_depots = 2
-    max_depots = 2
+    min_depots = 3
+    max_depots = 3
 
-    min_tasks = 7
-    max_tasks = 7
+    min_tasks = 10
+    max_tasks = 10
 
-    fuel_range_start = 125
+    fuel_range_start = 50
     # fuel_range_end = int(math.ceil(2*100*math.sqrt(2)/5)*5)
-    fuel_range_end = 125
+    fuel_range_end = 50
     fuel_range_step = 5
 
-    Tmax_range_start = 175
+    Tmax_range_start = 150
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2)/10)*10)
-    Tmax_range_end = 175
+    Tmax_range_end = 150
     Tmax_range_step = 10
 
     robots_range = list(range(min_robots, max_robots+1))
@@ -211,7 +217,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 5
+    no_of_instances = 10
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 
@@ -239,7 +245,7 @@ def main():
                                 'Iter' + str(it) + '.json'
                             file_path = os.path.normpath(
                                 instance_folder_path+curr_instance_filename)
-                            instance = InstanceReader(file_path)
+                            instance = InstanceReader(curr_instance_filename)
                             instance_data = instance.readData()
                             solver = Solver(instance_data)
                             solver.solve()
