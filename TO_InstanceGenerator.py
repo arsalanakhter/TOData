@@ -9,7 +9,8 @@ import json
 class Instance_Generator:
 
     def __init__(self, no_of_robots, no_of_depots, no_of_tasks, fuel, Tmax,
-                 no_of_instances=1, path_to_data_folder=os.getcwd()):
+                 no_of_instances=1, seed_list=[rnd.randrange(sys.maxsize)],
+                 path_to_data_folder=os.getcwd()):
         self.noOfRobots = no_of_robots
         self.noOfTasks = no_of_tasks
         self.noOfDepots = no_of_depots
@@ -17,6 +18,15 @@ class Instance_Generator:
         self.T_max = Tmax
         self.vel = 1
         self.no_of_instances = no_of_instances
+        if len(seed_list) == no_of_instances:
+            self.seed_list = seed_list
+        elif len(seed_list) == 1:
+        # Handling the case if only no_of_instances are provided
+            self.seed_list = []
+            for i in range(self.no_of_instances):
+                self.seed_list.append(rnd.randrange(sys.maxsize))
+        else:
+            raise Exception('Number of instances not equal to number of seeds.')
         self.instance_folder_path_suffix = \
             '/data' + \
             '/R' + str(self.noOfRobots) + \
@@ -32,9 +42,9 @@ class Instance_Generator:
                                         'F' + str(self.L) + \
                                         'Tmax' + str(self.T_max)
 
-    def create_instance(self, iteration):
+    def create_instance(self, iteration, seed):
         self.iteration = iteration
-        self.thisSeed = rnd.randrange(sys.maxsize)
+        self.thisSeed = seed
         rnd.seed(self.thisSeed)
         self.K = ["K" + str(i) for i in range(self.noOfRobots)]
         self.T = ["T" + str(i) for i in range(self.noOfTasks)]
@@ -115,8 +125,8 @@ class Instance_Generator:
             json.dump(self.json_data, fp, sort_keys=True, indent=4)
 
     def generate_data(self):
-        for iteration in range(self.no_of_instances):
-            self.create_instance(iteration)
+        for iteration, seed in zip(range(self.no_of_instances), self.seed_list):
+            self.create_instance(iteration, seed)
             self.create_json_data()
             self.write_instance_to_json()
 
@@ -128,8 +138,8 @@ def main():
     min_depots = 2
     max_depots = 3
 
-    min_tasks = 7
-    max_tasks = 7
+    min_tasks = 5
+    max_tasks = 10
 
     fuel_range_start = 150
     fuel_range_step = 100
@@ -162,7 +172,7 @@ def main():
                 for f in fuel_range:
                     for tmax in Tmax_range:
                         instance = Instance_Generator(
-                            r, d, t, f, tmax, no_of_instances)
+                            r, d, t, f, tmax, no_of_instances, list_of_seeds)
                         instance.generate_data()
 
 
