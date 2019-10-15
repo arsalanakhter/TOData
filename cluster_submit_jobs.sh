@@ -80,7 +80,7 @@ for NO_OF_ROBOTS in 5
 do
     for NO_OF_DEPOTS in 5
     do
-        for NO_OF_TASKS in 15
+        for NO_OF_TASKS in 5, 10
         do 
             for FUEL in 150
             do
@@ -91,7 +91,7 @@ do
                         # Create Instance name
                         INSTANCE_STRING="R${NO_OF_ROBOTS}D${NO_OF_DEPOTS}T${NO_OF_TASKS}F${FUEL}Tmax${T_MAX}Iter${ITER}"
                         # submit job
-                        sbatch cluster_single_job.sh ${INSTANCE_STRING}
+                        sbatch -J ${INSTANCE_STRING} cluster_single_job.sh ${INSTANCE_STRING}
                         # Sleep for 1 sec so that the machine is not overloaded
                         sleep 1
                     done
