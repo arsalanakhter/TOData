@@ -81,9 +81,10 @@ SOLDIR=$MYDIR/sol
 #cp $MYDIR/C-mdvrp/* $WORKDIR/C-mdvrp/  # comment this if running random input
 #for i in {1..10}
 #do
-INSTANCE_STRING=$1 
+INSTANCE_STRING=$1
+SOLVER_TYPE=$2 
 echo $INSTANCE_STRING
-python $MYDIR/main.py ${INSTANCE_STRING}
+python $MYDIR/main.py ${INSTANCE_STRING} ${SOLVER_TYPE}
 #done
 #rm -rf $DATADIR
 #mkdir $DATADIR

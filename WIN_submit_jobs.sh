@@ -86,20 +86,23 @@ for NO_OF_ROBOTS in 3
 do
     for NO_OF_DEPOTS in 2
     do
-        for NO_OF_TASKS in 7
+        for NO_OF_TASKS in 5
         do 
-            for FUEL in 125
+            for FUEL in 50
             do
-                for T_MAX in 175
+                for T_MAX in 300
                 do
                     for ITER in {0..4}
                     do
-                        # Create Instance name
-                        INSTANCE_STRING="R${NO_OF_ROBOTS}D${NO_OF_DEPOTS}T${NO_OF_TASKS}F${FUEL}Tmax${T_MAX}Iter${ITER}"
-                        # submit job
-                        sh WIN_single_job.sh ${INSTANCE_STRING}
-                        # Sleep for 1 sec so that the machine is not overloaded
-                        sleep 1
+                        for SOLVER_TYPE in F1 F2
+                        do
+                            # Create Instance name
+                            INSTANCE_STRING="R${NO_OF_ROBOTS}D${NO_OF_DEPOTS}T${NO_OF_TASKS}F${FUEL}Tmax${T_MAX}Iter${ITER}"
+                            # submit job
+                            sh WIN_single_job.sh ${INSTANCE_STRING} ${SOLVER_TYPE}
+                            # Sleep for 1 sec so that the machine is not overloaded
+                            sleep 1
+                        done
                     done
                 done
             done

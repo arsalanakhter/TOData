@@ -52,7 +52,7 @@ class F2Solver:
             '/Tmax' + str(self.T_max)
         self.instance_folder_path = os.path.normpath(
             self.path_to_sol_folder + self.instance_folder_path_suffix)
-        self.instance_filename_prefix = '\\R' + str(self.noOfRobots) + \
+        self.instance_filename_prefix = '\\F2R' + str(self.noOfRobots) + \
             'D' + str(self.noOfDepots) + \
             'T' + str(self.noOfTasks) + \
             'F' + str(self.L) + \
@@ -135,7 +135,7 @@ class F2Solver:
             os.makedirs(self.instance_folder_path)
         # Save runtime, because after writing the lp file, 
         # runtime is lost. No idea why
-        run_time = self. model.Runtime
+        run_time = self.model.Runtime
         # Write both the LP file and the solution file
         self.model.write(self.file_path+'.lp')
         self.model.write(self.file_path+'.sol')

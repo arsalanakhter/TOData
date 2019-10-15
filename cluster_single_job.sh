@@ -3,6 +3,7 @@
 #SBATCH -N 1
 #SBATCH -p short
 #SBATCH --mem 32G
+#SBATCH -C E5-2695
 
 # Stop execution after any error
 set -e
@@ -82,8 +83,7 @@ trap cleanup EXIT SIGINT SIGTERM
 #do
 INSTANCE_STRING=$1 
 echo $INSTANCE_STRING
-#SBATCH --job-name=${INSTANCE_STRING}
-python $MYDIR/main.py ${INSTANCE_STRING}
+python3 $MYDIR/main.py ${INSTANCE_STRING}
 #done
 #rm -rf $DATADIR
 #mkdir $DATADIR
