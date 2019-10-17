@@ -79,13 +79,16 @@ trap cleanup EXIT SIGINT SIGTERM
 #python3 -m pip install plotly --user
 #mkdir C-mdvrp # comment this if running random input
 #cp $MYDIR/C-mdvrp/* $WORKDIR/C-mdvrp/  # comment this if running random input
-#for i in {1..10}
-#do
-INSTANCE_STRING=$1
-SOLVER_TYPE=$2 
-echo $INSTANCE_STRING
-python $MYDIR/main.py ${INSTANCE_STRING} ${SOLVER_TYPE}
-#done
+for ITER in {0..9}
+do
+    for SOLVER_TYPE in F1 F2 F3 F4
+    do
+        INSTANCE_STRING=$1
+        ITERATION_STRING="${INSTANCE_STRING}Iter${ITER}"
+        echo $ITERATION_STRING $SOLVER_TYPE
+        python $MYDIR/main.py ${ITERATION_STRING} ${SOLVER_TYPE}
+    done
+done
 #rm -rf $DATADIR
 #mkdir $DATADIR
 #mkdir $DATADIR/csv && mkdir $DATADIR/img
