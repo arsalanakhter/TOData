@@ -82,6 +82,7 @@ trap cleanup EXIT SIGINT SIGTERM
 for ITER in {0..9}
 do
     for SOLVER_TYPE in F1 F2 F3 F4
+    do
         INSTANCE_STRING=$1
         ITERATION_STRING="${INSTANCE_STRING}Iter${ITER}"
         echo $ITERATION_STRING $SOLVER_TYPE

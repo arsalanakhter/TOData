@@ -81,11 +81,13 @@ SOLDIR=$MYDIR/sol
 #cp $MYDIR/C-mdvrp/* $WORKDIR/C-mdvrp/  # comment this if running random input
 for ITER in {0..9}
 do
-    INSTANCE_STRING=$1
-    SOLVER_TYPE=$2 
-    ITERATION_STRING="${INSTANCE_STRING}Iter${ITER}"
-    echo $ITERATION_STRING $SOLVER_TYPE
-    python $MYDIR/main.py ${ITERATION_STRING} ${SOLVER_TYPE}
+    for SOLVER_TYPE in F1 F2 F3 F4
+    do
+        INSTANCE_STRING=$1
+        ITERATION_STRING="${INSTANCE_STRING}Iter${ITER}"
+        echo $ITERATION_STRING $SOLVER_TYPE
+        python $MYDIR/main.py ${ITERATION_STRING} ${SOLVER_TYPE}
+    done
 done
 #rm -rf $DATADIR
 #mkdir $DATADIR
