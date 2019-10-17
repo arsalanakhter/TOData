@@ -141,7 +141,7 @@ def main():
                             '/Tmax' + str(tmax)
                         instance_folder_path = os.path.normpath(
                             path_to_data_folder + instance_folder_path_suffix)
-                        instance_filename_prefix = '\\R' + str(r) + \
+                        instance_filename_prefix = '/R' + str(r) + \
                             'D' + str(d) + \
                             'T' + str(t) + \
                             'F' + str(f) + \

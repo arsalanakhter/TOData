@@ -52,7 +52,7 @@ class F5Solver:
             '/Tmax' + str(self.T_max)
         self.instance_folder_path = os.path.normpath(
             self.path_to_sol_folder + self.instance_folder_path_suffix)
-        self.instance_filename_prefix = '\\F5R' + str(self.noOfRobots) + \
+        self.instance_filename_prefix = '/F5R' + str(self.noOfRobots) + \
             'D' + str(self.noOfDepots) + \
             'T' + str(self.noOfTasks) + \
             'F' + str(self.L) + \
@@ -195,7 +195,7 @@ def main():
                             '/Tmax' + str(tmax)
                         instance_folder_path = os.path.normpath(
                             path_to_data_folder + instance_folder_path_suffix)
-                        instance_filename_prefix = '\\R' + str(r) + \
+                        instance_filename_prefix = '/R' + str(r) + \
                             'D' + str(d) + \
                             'T' + str(t) + \
                             'F' + str(f) + \
