@@ -4,6 +4,7 @@ import numpy as np
 import os
 import sys
 import json
+from TO_SysPathGenerator import SysPathGenerator
 
 
 class Instance_Generator:
@@ -29,20 +30,10 @@ class Instance_Generator:
                 self.seed_list.append(rnd.randrange(sys.maxsize))
         else:
             raise Exception('Number of instances not equal to number of seeds.')
-        self.instance_folder_path_suffix = \
-            '/data' + \
-            '/R' + str(self.noOfRobots) + \
-            '/D' + str(self.noOfDepots) + \
-            '/T' + str(self.noOfTasks) + \
-            '/F' + str(self.L) + \
-            '/Tmax' + str(self.T_max)
-        self.instance_folder_path = os.path.normpath(
-            path_to_data_folder + self.instance_folder_path_suffix)
-        self.instance_filename_prefix = '/R' + str(self.noOfRobots) + \
-                                        'D' + str(self.noOfDepots) + \
-                                        'T' + str(self.noOfTasks) + \
-                                        'F' + str(self.L) + \
-                                        'Tmax' + str(self.T_max)
+        self.filePaths = SysPathGenerator(self.noOfRobots, self.noOfDepots, self.noOfTasks, 
+                                            self.delta, self.T_max)
+        self.instance_folder_path = self.filePaths.instance_data_folder_path
+        self.instance_filename_prefix = self.filePaths.instance_data_filename_prefix
 
     # Function for generating a random location in a circle
     def random_xy_loc_in_circle(self):
@@ -121,6 +112,7 @@ class Instance_Generator:
             'noOfTasks': self.noOfTasks,
             'noOfDepots': self.noOfDepots,
             'noOfRobots': self.noOfRobots,
+            'arenaRadius': self.arenaRadius,
             'K': self.K,
             'T': self.T,
             'D': self.D,
@@ -129,6 +121,7 @@ class Instance_Generator:
             'N': self.N,
 
             'L': self.L,
+            'delta': self.delta,
             'vel': self.vel,
             'T_max': self.T_max,
             # 'R': self.R,
@@ -201,6 +194,7 @@ def main():
     Tmax_range = [150,300,600]
 
     no_of_instances = 10
+    seed_list = [rnd.randrange(sys.maxsize) for i in range(no_of_instances)]
 
     for r in robots_range:
         for d in depots_range:
@@ -208,7 +202,7 @@ def main():
                 for f in delta_range:
                     for tmax in Tmax_range:
                         instance = Instance_Generator(
-                            r, d, t, f, tmax, no_of_instances)
+                            r, d, t, f, tmax, no_of_instances, seed_list)
                         instance.generate_data()
 
 

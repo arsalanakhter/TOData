@@ -4,7 +4,7 @@ import os
 import sys
 import json
 import regex as re
-
+from TO_SysPathGenerator import SysPathGenerator
 
 class InstanceReader:
 
@@ -16,31 +16,17 @@ class InstanceReader:
         self.noOfRobots = temp[0]
         self.noOfDepots = temp[1]
         self.noOfTasks = temp[2]
-        self.L = temp[3]
+        self.delta = temp[3]
         self.T_max = temp[4]
         self.iteration = temp[5]
         self.compute_data_filepath()
         self.readData()
 
     def compute_data_filepath(self):
-        instance_data_folder_path_suffix = \
-            '/data' + \
-            '/R' + str(self.noOfRobots) + \
-            '/D' + str(self.noOfDepots) + \
-            '/T' + str(self.noOfTasks) + \
-            '/F' + str(self.L) + \
-            '/Tmax' + str(self.T_max)
-        instance_data_folder_path = \
-            self.path_to_data_folder + instance_data_folder_path_suffix
-        instance_data_filename_prefix = \
-            '/R' + str(self.noOfRobots) + \
-            'D' + str(self.noOfDepots) + \
-            'T' + str(self.noOfTasks) + \
-            'F' + str(self.L) + \
-            'Tmax' + str(self.T_max) + \
-            'Iter' + str(self.iteration)
-        self.instance_data_file = os.path.normpath(
-            instance_data_folder_path + instance_data_filename_prefix + '.json')
+        self.filePaths = SysPathGenerator(self.noOfRobots, self.noOfDepots, self.noOfTasks, 
+                                            self.delta, self.T_max)
+        self.instance_data_file = os.path.normpath(self.filePaths.instance_data_folder_path + \
+                self.filePaths.instance_data_filename_prefix + 'Iter' + str(self.iteration)+ '.json')
 
     def readData(self):
         with open(self.instance_data_file, 'r') as f:
@@ -50,6 +36,7 @@ class InstanceReader:
         self.noOfTasks = self.json_data['noOfTasks']
         self.noOfDepots = self.json_data['noOfDepots']
         self.noOfRobots = self.json_data['noOfRobots']
+        self.arenaRadius = self.json_data['arenaRadius']
         self.K = self.json_data['K']
         self.T = self.json_data['T']
         self.D = self.json_data['D']
@@ -58,6 +45,7 @@ class InstanceReader:
         self.N = self.json_data['N']
 
         self.L = self.json_data['L']
+        self.delta = self.json_data['delta']
         self.vel = self.json_data['vel']
         self.T_max = self.json_data['T_max']
         #R = json_data['R']

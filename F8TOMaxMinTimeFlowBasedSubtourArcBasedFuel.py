@@ -4,6 +4,7 @@ import math
 import numpy as np
 import os
 from TO_InstanceReader import InstanceReader
+from TO_SysPathGenerator import SysPathGenerator
 
 
 class F8Solver:
@@ -17,6 +18,7 @@ class F8Solver:
         self.noOfTasks = instance.noOfTasks
         self.noOfDepots = instance.noOfDepots
         self.L = instance.L
+        self.delta = instance.delta
         self.T_max = instance.T_max
         self.vel = instance.vel
         self.thisSeed = instance.thisSeed
@@ -42,21 +44,11 @@ class F8Solver:
         self.arc_ub = instance.arc_ub
         self.k_y = instance.k_y 
         # Generate names for model/solution_file
-        self.path_to_sol_folder = os.getcwd()
-        self.instance_folder_path_suffix = \
-            '/sol' + \
-            '/R' + str(self.noOfRobots) + \
-            '/D' + str(self.noOfDepots) + \
-            '/T' + str(self.noOfTasks) + \
-            '/F' + str(self.L) + \
-            '/Tmax' + str(self.T_max)
-        self.instance_folder_path = os.path.normpath(
-            self.path_to_sol_folder + self.instance_folder_path_suffix)
-        self.instance_filename_prefix = '/F8R' + str(self.noOfRobots) + \
-            'D' + str(self.noOfDepots) + \
-            'T' + str(self.noOfTasks) + \
-            'F' + str(self.L) + \
-            'Tmax' + str(self.T_max)
+        self.filePaths = SysPathGenerator(self.noOfRobots, self.noOfDepots, self.noOfTasks, 
+                                            self.delta, self.T_max)
+        self.instance_folder_path = self.filePaths.instance_sol_folder_path
+        self.instance_filename_prefix = '/F8' + self.filePaths.instance_sol_filename_prefix
+
         self.curr_instance_filename = self.instance_filename_prefix + \
             'Iter' + str(self.iteration)
         self.file_path = os.path.normpath(
@@ -149,17 +141,17 @@ def main():
     min_robots = 2
     max_robots = 2
 
-    min_depots = 1
-    max_depots = 1
+    min_depots = 2
+    max_depots = 2
 
-    min_tasks = 3
-    max_tasks = 3
+    min_tasks = 5
+    max_tasks = 5
 
-    fuel_range_start = 150
-    fuel_range_step = 100
-    # fuel_range_end = int(math.ceil(2*100*math.sqrt(2) /
-    #                               fuel_range_step)*fuel_range_step)  # ~282
-    fuel_range_end = 150
+    delta_range_start = 150
+    delta_range_step = 100
+    # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
+    #                               delta_range_step)*delta_range_step)  # ~282
+    delta_range_end = 150
 
     Tmax_range_start = 600
     Tmax_range_step = 100
@@ -170,8 +162,8 @@ def main():
     robots_range = list(range(min_robots, max_robots+1))
     depots_range = list(range(min_depots, max_depots+1))
     tasks_range = list(range(min_tasks, max_tasks+1))
-    fuel_range = list(range(fuel_range_start, fuel_range_end +
-                            fuel_range_step, fuel_range_step))
+    delta_range = list(range(delta_range_start, delta_range_end +
+                            delta_range_step, delta_range_step))
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
@@ -182,22 +174,12 @@ def main():
     for r in robots_range:
         for d in depots_range:
             for t in tasks_range:
-                for f in fuel_range:
+                for f in delta_range:
                     for tmax in Tmax_range:
-                        instance_folder_path_suffix = \
-                            '/data' + \
-                            '/R' + str(r) + \
-                            '/D' + str(d) + \
-                            '/T' + str(t) + \
-                            '/F' + str(f) + \
-                            '/Tmax' + str(tmax)
-                        instance_folder_path = os.path.normpath(
-                            path_to_data_folder + instance_folder_path_suffix)
-                        instance_filename_prefix = '/R' + str(r) + \
-                            'D' + str(d) + \
-                            'T' + str(t) + \
-                            'F' + str(f) + \
-                            'Tmax' + str(tmax)
+                        filePaths = SysPathGenerator(r, d, t, f, tmax)
+                        instance_folder_path = filePaths.instance_data_folder_path
+                        instance_filename_prefix = filePaths.instance_data_filename_prefix
+
                         for it in range(no_of_instances):
                             curr_instance_filename = instance_filename_prefix + \
                                 'Iter' + str(it) + '.json'
