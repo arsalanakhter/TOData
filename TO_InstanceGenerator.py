@@ -8,15 +8,17 @@ import json
 
 class Instance_Generator:
 
-    def __init__(self, no_of_robots, no_of_depots, no_of_tasks, fuel, Tmax,
+    def __init__(self, no_of_robots, no_of_depots, no_of_tasks, delta, Tmax,
                  no_of_instances=1, seed_list=[rnd.randrange(sys.maxsize)],
                  path_to_data_folder=os.getcwd()):
         self.noOfRobots = no_of_robots
         self.noOfTasks = no_of_tasks
         self.noOfDepots = no_of_depots
-        self.L = fuel
+        self.L = 1
         self.T_max = Tmax
         self.vel = 1
+        self.arenaRadius = 100
+        self.delta = delta
         self.no_of_instances = no_of_instances
         if len(seed_list) == no_of_instances:
             self.seed_list = seed_list
@@ -42,6 +44,14 @@ class Instance_Generator:
                                         'F' + str(self.L) + \
                                         'Tmax' + str(self.T_max)
 
+    # Function for generating a random location in a circle
+    def random_xy_loc_in_circle(self):
+        r=self.arenaRadius*rnd.random()
+        theta = 2*math.pi*rnd.random()
+        x=r*np.cos(theta)
+        y=r*np.sin(theta)
+        return x,y
+
     def create_instance(self, iteration, seed):
         self.iteration = iteration
         self.thisSeed = seed
@@ -55,10 +65,33 @@ class Instance_Generator:
 
         # R = {task: 1 for task in T}
 
-        self.T_loc = {task: (100*rnd.random(), 100*rnd.random())
-                      for task in self.T}
-        self.D_loc = {loc: (100*rnd.random(), 100*rnd.random())
-                      for loc in self.D}
+        self.T_loc = {task: (self.random_xy_loc_in_circle()) for task in self.T}
+        
+        # Set Depot locations based on number of robots.
+        # If |D| = 1 : Place it at the center
+        # If |D| = 2 : Place them at locations (0, R/2) and (0, -R/2)
+        # If |D| = 3 : Place them at locations (0, sqrt(3)*delta/8), 
+        #          : (-delta/4, -sqrt(3)*delta/8), (delta/4, -sqrt(3)*delta/8)
+        # If |D| = 4 : Place them at locations (delta/4, delta/4)
+        #          : (delta/4, -delta/4), (-delta/4, delta/4)
+        #          : (-delta/4, -delta/4)
+
+        if self.noOfDepots == 1:
+            self.D_loc = {loc: (0,0) for loc in self.D}
+        elif self.noOfDepots == 2:
+            self.D_loc = {self.D[0]: (0, self.arenaRadius/2), 
+                          self.D[1]: (0, -self.arenaRadius/2)}
+        elif self.noOfDepots == 3:
+            self.D_loc = {self.D[0]: (0, math.sqrt(3)*self.delta/8), 
+                          self.D[1]: (-self.delta/4, -math.sqrt(3)*-self.delta/8),
+                          self.D[2]: (-self.delta/4, -math.sqrt(3)*-self.delta/8)}
+        elif self.noOfDepots == 4:
+            self.D_loc = {self.D[0]: (-self.delta/4, self.delta/4), 
+                          self.D[1]: (-self.delta/4, self.delta/4),
+                          self.D[2]: (self.delta/4, -self.delta/4),
+                          self.D[3]: (-self.delta/4, -self.delta/4)}
+
+        
         self.S_loc = {loc: self.D_loc['D0'] for loc in self.S}
         self.E_loc = {loc: self.D_loc['D0'] for loc in self.E}
         self.N_loc = {**self.T_loc, **self.D_loc, **self.S_loc, **self.E_loc}
@@ -67,7 +100,10 @@ class Instance_Generator:
         self.c = {t: np.linalg.norm(
             np.array(self.N_loc.get(t[0]))-np.array(self.N_loc.get(t[1])))
             for t in iter(self.edges)}
-        self.f = self.c  # Just for consistency with the paper
+        self.f = {t: (1/self.delta)*np.linalg.norm(
+            np.array(self.N_loc.get(t[0]))-np.array(self.N_loc.get(t[1]))) 
+            for t in iter(self.edges)}
+
 
         self.arcs = [(i, j, k)
                      for i in self.N for j in self.N for k in self.K if i != j]
@@ -141,11 +177,11 @@ def main():
     min_tasks = 5
     max_tasks = 10
 
-    fuel_range_start = 150
-    fuel_range_step = 100
-    # fuel_range_end = int(math.ceil(2*100*math.sqrt(2) /
-    #                               fuel_range_step)*fuel_range_step)  # ~282
-    fuel_range_end = 150
+    delta_range_start = 150
+    delta_range_step = 100
+    # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
+    #                               delta_range_step)*delta_range_step)  # ~282
+    delta_range_end = 150
 
     Tmax_range_start = 600
     Tmax_range_step = 100
@@ -157,9 +193,9 @@ def main():
     depots_range = list(range(min_depots, max_depots+1))
     #tasks_range = list(range(min_tasks, max_tasks+1))
     tasks_range = [5,10]
-    #fuel_range = list(range(fuel_range_start, fuel_range_end +
-    #                        fuel_range_step, fuel_range_step))
-    fuel_range = [50,75,150]
+    #delta_range = list(range(delta_range_start, delta_range_end +
+    #                        delta_range_step, delta_range_step))
+    delta_range = [50,75,150]
     #Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
     #                        Tmax_range_step, Tmax_range_step,))
     Tmax_range = [150,300,600]
@@ -169,10 +205,10 @@ def main():
     for r in robots_range:
         for d in depots_range:
             for t in tasks_range:
-                for f in fuel_range:
+                for f in delta_range:
                     for tmax in Tmax_range:
                         instance = Instance_Generator(
-                            r, d, t, f, tmax, no_of_instances, list_of_seeds)
+                            r, d, t, f, tmax, no_of_instances)
                         instance.generate_data()
 
 
