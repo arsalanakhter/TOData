@@ -4,19 +4,17 @@ import regex as re
 import os
 
 
-class PathGenerator:
+class SysPathGenerator:
 
-    def __init__(self, instance_string, path_to_working_dir=os.getcwd()):
-        self.instance_string = instance_string
+    def __init__(self, noOfRobots, noOfDepots, noOfTasks, delta, Tmax, path_to_working_dir=os.getcwd()):
         self.path_to_working_dir = path_to_working_dir
-        temp = [int(s) for s in re.findall(
-            '\d+', instance_string)]  # extract numbers
-        self.noOfRobots = temp[0]
-        self.noOfDepots = temp[1]
-        self.noOfTasks = temp[2]
-        self.L = temp[3]
-        self.T_max = temp[4]
-        self.iteration = temp[5]
+        #temp = [int(s) for s in re.findall(
+        #    '\d+', instance_string)]  # extract numbers
+        self.noOfRobots = noOfRobots
+        self.noOfDepots = noOfDepots
+        self.noOfTasks = noOfTasks
+        self.delta = delta
+        self.T_max = Tmax
         self.compute_data_filepath()
         self.compute_sol_filepath()
 
@@ -26,20 +24,19 @@ class PathGenerator:
             '/R' + str(self.noOfRobots) + \
             '/D' + str(self.noOfDepots) + \
             '/T' + str(self.noOfTasks) + \
-            '/F' + str(self.L) + \
+            '/Delta' + str(self.delta) + \
             '/Tmax' + str(self.T_max)
         self.instance_data_folder_path = \
             os.path.normpath(self.path_to_working_dir +
                              instance_data_folder_path_suffix)
-        instance_data_filename_prefix = \
-            '\\R' + str(self.noOfRobots) + \
+        self.instance_data_filename_prefix = \
+            '/R' + str(self.noOfRobots) + \
             'D' + str(self.noOfDepots) + \
             'T' + str(self.noOfTasks) + \
-            'F' + str(self.L) + \
-            'Tmax' + str(self.T_max) + \
-            'Iter' + str(self.iteration)
+            'Delta' + str(self.delta) + \
+            'Tmax' + str(self.T_max)
         self.instance_data_file = os.path.normpath(
-            self.instance_data_folder_path + instance_data_filename_prefix + '.json')
+            self.instance_data_folder_path + self.instance_data_filename_prefix)
 
     def compute_sol_filepath(self):
         instance_sol_folder_path_suffix = \
@@ -47,16 +44,15 @@ class PathGenerator:
             '/R' + str(self.noOfRobots) + \
             '/D' + str(self.noOfDepots) + \
             '/T' + str(self.noOfTasks) + \
-            '/F' + str(self.L) + \
+            '/Delta' + str(self.delta) + \
             '/Tmax' + str(self.T_max)
         self.instance_sol_folder_path = os.path.normpath(
             self.path_to_working_dir + instance_sol_folder_path_suffix)
-        instance_sol_filename_prefix = \
-            '\\R' + str(self.noOfRobots) + \
+        self.instance_sol_filename_prefix = \
+            'R' + str(self.noOfRobots) + \
             'D' + str(self.noOfDepots) + \
             'T' + str(self.noOfTasks) + \
-            'F' + str(self.L) + \
-            'Tmax' + str(self.T_max) + \
-            'Iter' + str(self.iteration)
+            'Delta' + str(self.delta) + \
+            'Tmax' + str(self.T_max)
         self.instance_sol_file = os.path.normpath(
-            self.instance_sol_folder_path + instance_sol_filename_prefix + '.sol')
+            self.instance_sol_folder_path + self.instance_sol_filename_prefix)

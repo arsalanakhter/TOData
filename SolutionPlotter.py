@@ -14,9 +14,9 @@ class SolutionPlotter:
 
     def __init__(self, instance_string, path_to_data_folder=os.getcwd()):
         self.instance_string = instance_string
-        self.instance = InstanceReader(instance_string)
+        self.instance = InstanceReader(instance_string[2:])
         self.sol = Solution_Reader(instance_string)
-        self.instance_plotter_obj = Instance_Plotter(instance_string)
+        self.instance_plotter_obj = Instance_Plotter(instance_string[2:])
 
     def edgeTrace(self, S_loc, arcsInOrder):
         colors = ['rgb(31, 119, 180)', 'rgb(255, 127, 14)',
@@ -115,7 +115,7 @@ class SolutionPlotter:
 
 
 def main():
-    instance_prefix = 'R3D2T3F150Tmax600Iter'
+    instance_prefix = 'F1R2D2T5Delta150Tmax600Iter'
     no_of_instances = 1
     for i in range(no_of_instances):
         instance_name = instance_prefix + str(i)
