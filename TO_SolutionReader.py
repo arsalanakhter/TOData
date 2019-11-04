@@ -7,6 +7,7 @@ import os
 import regex as re
 import csv
 import networkx as nx
+from TO_SysPathGenerator import SysPathGenerator
 
 
 class Solution_Reader:
@@ -18,7 +19,7 @@ class Solution_Reader:
         self.noOfRobots = temp[1]
         self.noOfDepots = temp[2]
         self.noOfTasks = temp[3]
-        self.L = temp[4]
+        self.delta = temp[4]
         self.T_max = temp[5]
         # It should ideally be read from file, but lets just go ahead for now
         self.K = ["K" + str(i) for i in range(self.noOfRobots)]
@@ -30,27 +31,16 @@ class Solution_Reader:
         # ------------------------------------------------------------------
         self.iteration = temp[6]
         self.vel = 1
-        self.instance_folder_path_suffix = \
-            '/sol' + \
-            '/R' + str(self.noOfRobots) + \
-            '/D' + str(self.noOfDepots) + \
-            '/T' + str(self.noOfTasks) + \
-            '/F' + str(self.L) + \
-            '/Tmax' + str(self.T_max)
-        self.instance_folder_path = \
-            path_to_data_folder + self.instance_folder_path_suffix
-        self.instance_filename_prefix = \
-            '/F' + str(self.formulationNo) + \
-            'R' + str(self.noOfRobots) + \
-            'D' + str(self.noOfDepots) + \
-            'T' + str(self.noOfTasks) + \
-            'F' + str(self.L) + \
-            'Tmax' + str(self.T_max) + \
-            'Iter' + str(self.iteration)
+        self.filePaths = SysPathGenerator(self.noOfRobots, self.noOfDepots, self.noOfTasks, 
+                                            self.delta, self.T_max)
+        self.instance_folder_path = self.filePaths.instance_sol_folder_path
+        self.instance_filename_prefix = self.filePaths.instance_sol_filename_prefix
+
         # self.instance_lp_file = os.path.normpath(
         #    self.instance_folder_path + self.instance_filename_prefix + '.lp')
         self.instance_sol_file = os.path.normpath(
-            self.instance_folder_path + self.instance_filename_prefix + '.sol')
+            self.instance_folder_path + '/F' + str(self.formulationNo) + \
+            self.instance_filename_prefix + 'Iter' + str(self.iteration) + '.sol')
         # self.model = read(self.instance_lp_file)
         # It seems gurobi cannot read the sol file in the above model
         # We'll read it manually, in varibale sol
@@ -67,8 +57,9 @@ class Solution_Reader:
                     self.sol[var] = float(value)
                 else:
                     _, self.runtime = line[0].split(':')
+        self.compute_arcs_in_order()
 
-    def copmute_arcs_in_order(self):
+    def compute_arcs_in_order(self):
         self.finalArcs = {k: [] for k in self.K}
         self.remainingFuel = {t: 0 for t in self.T}
         for i in self.sol:

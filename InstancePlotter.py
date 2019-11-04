@@ -25,7 +25,7 @@ class Instance_Plotter(InstanceReader):
             name='<br>Task Locations<br>',
             marker=dict(
                 size=6,
-                color='green',
+                color='blue',
                 line=dict(
                     # color='rgba(217, 217, 217, 0.14)',
                     width=0.5
@@ -58,7 +58,7 @@ class Instance_Plotter(InstanceReader):
             name='Refueling Locations<br>',
             marker=dict(
                 size=12,
-                color='blue',
+                color='green',
                 line=dict(
                     # color='rgba(217, 217, 217, 0.14)',
                     width=0.5
