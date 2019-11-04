@@ -87,19 +87,22 @@ class SolutionPlotter:
             data.append(node_info_trace)
 
         layout = go.Layout(
-            title='{}: {} robot(s), {} task(s), {} depot(s). f={:.1f}, Tmax={}'
+            title='{}: {} robot(s), {} task(s), {} depot(s). f={:.1f}, Tmax={} <br> {}'
             .format(modelName, len(self.instance.K), len(self.instance.T), len(self.instance.D), self.instance.L,
-                    self.instance.T_max,),
+                    self.instance.T_max,self.sol.nodesInOrder),
             hovermode='closest',
             xaxis=dict(
                 title='X-Coord',
-                range=[0, 100]
+                range=[-100, 100]
                 # ticklen= 5,
                 # zeroline= False,
                 # gridwidth= 2,
             ),
             yaxis=dict(
-                title='Y-Coord'
+                title='Y-Coord',
+                range = [-100, 100],
+                scaleanchor="x", 
+                scaleratio=1
                 # ticklen= 5,
                 # gridwidth= 2,
             ),
@@ -111,6 +114,18 @@ class SolutionPlotter:
 
     def create_plot_and_show(self):
         fig = self.drawArena(self.instance_string)
+        # Add unfilled circle to show the Arena
+        fig.update_layout(shapes=[go.layout.Shape(
+                    type="circle",
+                    xref="x",
+                    yref="y",
+                    x0=100,
+                    y0=100,
+                    x1=-100,
+                    y1=-100,
+                    line_color="Black",
+                    line_width=1
+                )])
         py.plot(fig)
 
 

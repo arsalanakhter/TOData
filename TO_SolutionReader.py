@@ -58,6 +58,7 @@ class Solution_Reader:
                 else:
                     _, self.runtime = line[0].split(':')
         self.compute_arcs_in_order()
+        self.convert_to_nodes_in_order()
 
     def compute_arcs_in_order(self):
         self.finalArcs = {k: [] for k in self.K}
