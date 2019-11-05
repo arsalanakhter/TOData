@@ -17,6 +17,7 @@ class SolutionPlotter:
         self.instance = InstanceReader(instance_string[2:])
         self.sol = Solution_Reader(instance_string)
         self.instance_plotter_obj = Instance_Plotter(instance_string[2:])
+        self.compute_path_lengths()
 
     def edgeTrace(self, S_loc, arcsInOrder):
         colors = ['rgb(31, 119, 180)', 'rgb(255, 127, 14)',
@@ -90,7 +91,7 @@ class SolutionPlotter:
             title='{}: {} robot(s), {} task(s), {} depot(s), delta={}, Tmax={}<br>{}<br>Seed: {}<br>'
             .format(modelName, len(self.instance.K), len(self.instance.T), len(self.instance.D), self.instance.delta,
                     self.instance.T_max, 
-                    "<br>".join("{}:{}".format(k, v) for k, v in self.sol.arcsInOrder.items()), 
+                    "<br>".join("{}:{} ({:.2f})".format(k, v, self.path_length[k]) for k, v in self.sol.arcsInOrder.items()), 
                     self.instance.thisSeed),
             hovermode='closest',
             xaxis=dict(
@@ -130,6 +131,13 @@ class SolutionPlotter:
                     line_width=1
                 )])
         py.plot(fig)
+    
+    def compute_path_lengths(self):
+        self.path_length={k:0 for k in self.instance.K}
+        for k in self.instance.K:
+            for arc in self.sol.arcsInOrder[k]:
+                self.path_length[k]+=self.instance.c[arc]
+
 
 
 def main():
