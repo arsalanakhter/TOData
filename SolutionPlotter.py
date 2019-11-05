@@ -88,11 +88,11 @@ class SolutionPlotter:
             data.append(node_info_trace)
 
         layout = go.Layout(
-            title='{}: {} robot(s), {} task(s), {} depot(s), delta={}, Tmax={}<br>{}<br>Seed: {}<br>'
+            title='{}: {} robot(s), {} task(s), {} depot(s), delta={}, Tmax={}<br>{}<br>Seed: {}<br>Total Length: {:.2f}'
             .format(modelName, len(self.instance.K), len(self.instance.T), len(self.instance.D), self.instance.delta,
                     self.instance.T_max, 
                     "<br>".join("{}:{} ({:.2f})".format(k, v, self.path_length[k]) for k, v in self.sol.arcsInOrder.items()), 
-                    self.instance.thisSeed),
+                    self.instance.thisSeed, self.total_length),
             hovermode='closest',
             xaxis=dict(
                 title='X-Coord',
@@ -109,7 +109,7 @@ class SolutionPlotter:
                 # ticklen= 5,
                 # gridwidth= 2,
             ),
-            margin=dict(t=200),
+            margin=dict(t=250),
             showlegend=True
 
         )
@@ -133,10 +133,12 @@ class SolutionPlotter:
         py.plot(fig)
     
     def compute_path_lengths(self):
-        self.path_length={k:0 for k in self.instance.K}
+        self.path_length = {k:0 for k in self.instance.K}
+        self.total_length = 0
         for k in self.instance.K:
             for arc in self.sol.arcsInOrder[k]:
                 self.path_length[k]+=self.instance.c[arc]
+            self.total_length+=self.path_length[k]
 
 
 
