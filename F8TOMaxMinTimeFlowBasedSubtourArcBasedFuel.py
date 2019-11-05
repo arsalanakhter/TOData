@@ -98,10 +98,10 @@ class F8Solver:
                                                         for k in self.K), name="c6")
         
         # Time based flow constraints
-        c7 = self.model.addConstrs((quicksum(q[i,j,k] for k in self.K for j in self.N if i!=j and j not in self.S) - 
-                         quicksum(q[j,i,k] for k in self.K for j in self.N if i!=j and j not in self.E) == 
-                                quicksum(self.c[i,j]*x[i,j,k] for k in self.K for j in self.N if i!=j) 
-                                                            for i in self.N if i not in self.E), name='c7' )
+        c7 = self.model.addConstrs((quicksum(q[i,j,k] for j in self.N if i!=j and j not in self.S) - 
+                         quicksum(q[j,i,k] for j in self.N if i!=j and j not in self.E) == 
+                                quicksum(self.c[i,j]*x[i,j,k]  for j in self.N if i!=j) 
+                                            for k in self.K for i in self.N if i not in self.E), name='c7' )
         c8 = self.model.addConstrs((0 <= q[i,j,k] <= self.T_max*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8' )
         c9 = self.model.addConstrs((q[s,i,k] == self.f[s,i]*x[s,i,k] for i in self.T+self.D+self.E for s in self.S for k in self.K), name='c9')
 
