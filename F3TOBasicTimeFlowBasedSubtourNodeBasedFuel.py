@@ -96,10 +96,10 @@ class F3Solver:
                                                         for k in self.K), name="c6")
         
         # Time based flow constraints
-        c7 = self.model.addConstrs((quicksum(q[i,j,k] for k in self.K for j in self.N if i!=j and j not in self.S) - 
-                         quicksum(q[j,i,k] for k in self.K for j in self.N if i!=j and j not in self.E) == 
-                                quicksum(self.c[i,j]*x[i,j,k] for k in self.K for j in self.N if i!=j) 
-                                                            for i in self.N if i not in self.E), name='c7' )
+        c7 = self.model.addConstrs((quicksum(q[i,j,k] for j in self.N if i!=j and j not in self.S) - 
+                         quicksum(q[j,i,k] for j in self.N if i!=j and j not in self.E) == 
+                                quicksum(self.c[i,j]*x[i,j,k] for j in self.N if i!=j) 
+                                            for k in self.K for i in self.N if i not in self.E), name='c7' )
         c8 = self.model.addConstrs((0 <= q[i,j,k] <= self.T_max*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8' )
         c9 = self.model.addConstrs((q[s,i,k] == self.f[s,i]*x[s,i,k] for i in self.T+self.D+self.E for s in self.S for k in self.K), name='c9')
 
@@ -137,11 +137,11 @@ class F3Solver:
 
 
 def main():
-    min_robots = 2
-    max_robots = 2
+    min_robots = 3
+    max_robots = 3
 
-    min_depots = 2
-    max_depots = 2
+    min_depots = 3
+    max_depots = 3
 
     min_tasks = 5
     max_tasks = 5
@@ -166,7 +166,8 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 5
+    no_of_instances = 1
+    iter_no_list = [2]
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 
@@ -179,7 +180,7 @@ def main():
                         instance_folder_path = filePaths.instance_data_folder_path
                         instance_filename_prefix = filePaths.instance_data_filename_prefix
 
-                        for it in range(no_of_instances):
+                        for it in iter_no_list:
                             curr_instance_filename = instance_filename_prefix + \
                                 'Iter' + str(it) + '.json'
                             file_path = os.path.normpath(

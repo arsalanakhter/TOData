@@ -141,11 +141,11 @@ class F1Solver:
 
 
 def main():
-    min_robots = 2
-    max_robots = 2
+    min_robots = 3
+    max_robots = 3
 
-    min_depots = 2
-    max_depots = 2
+    min_depots = 3
+    max_depots = 3
 
     min_tasks = 5
     max_tasks = 5
@@ -170,7 +170,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 5
+    no_of_instances = 6
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 
