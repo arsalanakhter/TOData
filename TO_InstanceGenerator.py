@@ -74,10 +74,10 @@ class Instance_Generator:
                           self.D[1]: (0, -self.arenaRadius/2)}
         elif self.noOfDepots == 3:
             self.D_loc = {self.D[0]: (0, math.sqrt(3)*self.delta/8), 
-                          self.D[1]: (-self.delta/4, -math.sqrt(3)*-self.delta/8),
-                          self.D[2]: (-self.delta/4, -math.sqrt(3)*-self.delta/8)}
+                          self.D[1]: (-self.delta/4, -math.sqrt(3)*self.delta/8),
+                          self.D[2]: (self.delta/4, -math.sqrt(3)*self.delta/8)}
         elif self.noOfDepots == 4:
-            self.D_loc = {self.D[0]: (-self.delta/4, self.delta/4), 
+            self.D_loc = {self.D[0]: (self.delta/4, self.delta/4), 
                           self.D[1]: (-self.delta/4, self.delta/4),
                           self.D[2]: (self.delta/4, -self.delta/4),
                           self.D[3]: (-self.delta/4, -self.delta/4)}
