@@ -141,9 +141,10 @@ class SolutionPlotter:
 
 
 def main():
-    instance_prefix = 'F1R3D2T5Delta150Tmax600Iter'
+    instance_prefix = 'F3R3D3T5Delta150Tmax600Iter'
     no_of_instances = 1
-    for i in range(no_of_instances):
+    iter_no_list = [2]
+    for i in iter_no_list:
         instance_name = instance_prefix + str(i)
         plot = SolutionPlotter(instance_name)
         plot.create_plot_and_show()
