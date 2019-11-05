@@ -87,9 +87,11 @@ class SolutionPlotter:
             data.append(node_info_trace)
 
         layout = go.Layout(
-            title='{}: {} robot(s), {} task(s), {} depot(s). f={:.1f}, Tmax={} <br> {}'
-            .format(modelName, len(self.instance.K), len(self.instance.T), len(self.instance.D), self.instance.L,
-                    self.instance.T_max,self.sol.nodesInOrder),
+            title='{}: {} robot(s), {} task(s), {} depot(s), delta={}, Tmax={}<br>{}<br>Seed: {}<br>'
+            .format(modelName, len(self.instance.K), len(self.instance.T), len(self.instance.D), self.instance.delta,
+                    self.instance.T_max, 
+                    "<br>".join("{}:{}".format(k, v) for k, v in self.sol.arcsInOrder.items()), 
+                    self.instance.thisSeed),
             hovermode='closest',
             xaxis=dict(
                 title='X-Coord',
@@ -106,6 +108,7 @@ class SolutionPlotter:
                 # ticklen= 5,
                 # gridwidth= 2,
             ),
+            margin=dict(t=200),
             showlegend=True
 
         )
@@ -130,7 +133,7 @@ class SolutionPlotter:
 
 
 def main():
-    instance_prefix = 'F1R2D2T5Delta150Tmax600Iter'
+    instance_prefix = 'F1R3D2T5Delta150Tmax600Iter'
     no_of_instances = 1
     for i in range(no_of_instances):
         instance_name = instance_prefix + str(i)
