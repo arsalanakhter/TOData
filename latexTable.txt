@@ -87,4 +87,4 @@
 \\\cmidrule(lr){3-19}\cmidrule(lr){2-19}
                         \bottomrule
                         \end{tabular}
-                    }\caption{Runtime for10random instances - No. of Robots = [2]}\label{tab:AllRuntimesR=10}\end{table*}%%%%%%%%%%%%%%%%%%%%%
+                    }\caption{Runtime for10random instances - No. of Robots = [2]}\label{tab:AllRuntimesR=[2]}\end{table*}%%%%%%%%%%%%%%%%%%%%%

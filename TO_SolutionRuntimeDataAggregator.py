@@ -49,7 +49,7 @@ class SolutionRuntimeDataAggregator:
     def write_to_csv(self):
         self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedData.csv')
         with open(self.resultsFile, 'w+') as results_file:
-            result_writer = csv.writer(results_file, delimiter='&', lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter=',', lineterminator='\n')
             # Write row1
             row1 = [' ',' ',' ']
             row2 = [' ',' ',' ']
@@ -81,7 +81,7 @@ class SolutionRuntimeDataAggregator:
     def write_min_avg_max_to_csv(self):
         self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedDataMinAvgMax.csv')
         with open(self.resultsFile, 'w+') as results_file:
-            result_writer = csv.writer(results_file, delimiter='&',lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter=',',lineterminator='\n')
             # Write row1
             row1 = [' ',' ',' ']
             row2 = [' ',' ',' ']
