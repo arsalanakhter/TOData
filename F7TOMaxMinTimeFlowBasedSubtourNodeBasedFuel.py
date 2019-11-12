@@ -124,6 +124,8 @@ class F7Solver:
         # self.model.params.TimeLimit = 30
         self.model.optimize()
 
+        return self.model 
+
     def write_lp_and_sol_to_disk(self):
         if not os.path.exists(self.instance_folder_path):
             os.makedirs(self.instance_folder_path)
@@ -139,22 +141,22 @@ class F7Solver:
 
 
 def main():
-    min_robots = 2
-    max_robots = 2
+    min_robots = 5
+    max_robots = 5
 
-    min_depots = 2
-    max_depots = 2
+    min_depots = 3
+    max_depots = 3
 
-    min_tasks = 5
-    max_tasks = 5
+    min_tasks = 8
+    max_tasks = 8
 
-    delta_range_start = 150
+    delta_range_start = 50
     delta_range_step = 100
     # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               delta_range_step)*delta_range_step)  # ~282
     delta_range_end = 150
 
-    Tmax_range_start = 600
+    Tmax_range_start = 150
     Tmax_range_step = 100
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               Tmax_range_step)*Tmax_range_step)  # ~282
@@ -189,7 +191,7 @@ def main():
                             instance = InstanceReader(curr_instance_filename)
                             instance_data = instance.readData()
                             solver = F7Solver(instance_data)
-                            solver.solve()
+                            model = solver.solve()
                             solver.write_lp_and_sol_to_disk()
 
 if __name__ == "__main__":
