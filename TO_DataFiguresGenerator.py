@@ -2,6 +2,7 @@ import pandas as pd
 import plotly.offline as py
 import plotly.graph_objects as go
 import plotly.io as pio
+import os
 
 
 class DataFiguresGenerator:
@@ -44,53 +45,76 @@ class DataFiguresGenerator:
         F1Tmax150 = self.F1_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F1.3'][3:6].tolist()
         F1Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
+        F1Tmax150.showlegend = False
         fig.add_trace(F1Tmax150)
 
         F2Tmax150 = self.F2_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F2.3'][3:6].tolist()
         F2Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
+        F2Tmax150.showlegend = False
         fig.add_trace(F2Tmax150)
 
         F3Tmax150 = self.F3_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F3.3'][3:6].tolist()
         F3Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
+        F3Tmax150.showlegend = False
         fig.add_trace(F3Tmax150)
 
         F4Tmax150 = self.F4_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F4.3'][3:6].tolist()
         F4Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
+        F4Tmax150.showlegend = False
         fig.add_trace(F4Tmax150)
 
 
         #Tmax 600
         F1Tmax150 = self.F1_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F1.3'][6:9].tolist()
-        F1Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z = zdata)
+        F1Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z =    zdata)
+        F1Tmax150.showlegend = False
         fig.add_trace(F1Tmax150)
 
         F2Tmax150 = self.F2_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F2.3'][6:9].tolist()
         F2Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z = zdata)
+        F2Tmax150.showlegend = False
         fig.add_trace(F2Tmax150)
 
         F3Tmax150 = self.F3_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F3.3'][6:9].tolist()
         F3Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z = zdata)
+        F3Tmax150.showlegend = False
         fig.add_trace(F3Tmax150)
 
         F4Tmax150 = self.F4_trace()
         zdata = df[df[' .2'].str.contains(col_fields[0])]['F4.3'][6:9].tolist()
         F4Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z = zdata)
+        F4Tmax150.showlegend = False
         fig.add_trace(F4Tmax150)
 
         
 
         
         #pio.write_image(fig, 'pic_23.png', width = 1280, height = 1024)
-        py.plot(fig, include_mathjax='cdn')
+        py.plot(fig)
         #fig.write_image("figures/fig1.svg")
 
 
+    def plot_with_jax(self, fig, filename='temp-plot.html'):
+        plot_div = py.plot(fig, output_type = 'div')
+
+        template = """
+        <head>
+        <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_SVG">
+        </script>
+        </head>
+        <body>
+        {plot_div:s}
+        </body>""".format(plot_div = plot_div)
+        with open(filename, 'w') as fp:
+            fp.write(template)
+        os.startfile(filename)
 
 
     def individual_trace(self):
@@ -152,26 +176,26 @@ class DataFiguresGenerator:
     def draw_figure(self):
         data=[]
         layout = go.Layout(
-            title='Average Times',
-            width=800,
-            height=700,
+            title='Average Computation Times. 2 Robots 3 Depots 10 Tasks.',
+            width=1100,
+            height=900,
             autosize=False,
             scene=dict(
-                xaxis_title=r"$\tau$",
-                yaxis_title=r"$T_{max}$",
-                zaxis_title=r"Computation Time",
-                camera=dict(
-                    up=dict(
-                        x=0,
-                        y=0,
-                        z=1
-                    ),
-                    eye=dict(
-                        x=0,
-                        y=1.0707,
-                        z=1,
-                    )
-                ),
+                xaxis_title="𝜏",
+                yaxis_title="T<sub>max</sub>",
+                zaxis_title="Computation Time",
+                #camera=dict(
+                #    up=dict(
+                #        x=0,
+                #        y=0,
+                #        z=1
+                #    ),
+                #    eye=dict(
+                #        x=0,
+                #        y=1.0707,
+                #        z=1,
+                #    )
+                #),
                 aspectratio = dict( x=1, y=1, z=0.7 ),
                 aspectmode = 'manual'
             ),
