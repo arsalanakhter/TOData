@@ -49,7 +49,7 @@ class SolutionRuntimeDataAggregator:
     def write_to_csv(self):
         self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedData.csv')
         with open(self.resultsFile, 'w+') as results_file:
-            result_writer = csv.writer(results_file, delimiter='&', lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter=',', lineterminator='\n')
             # Write row1
             row1 = [' ',' ',' ']
             row2 = [' ',' ',' ']
@@ -81,7 +81,7 @@ class SolutionRuntimeDataAggregator:
     def write_min_avg_max_to_csv(self):
         self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedDataMinAvgMax.csv')
         with open(self.resultsFile, 'w+') as results_file:
-            result_writer = csv.writer(results_file, delimiter='&',lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter=',',lineterminator='\n')
             # Write row1
             row1 = [' ',' ',' ']
             row2 = [' ',' ',' ']
@@ -234,8 +234,8 @@ class SolutionRuntimeDataAggregator:
                         \\end{tabular}
                     }"""
             results_file.write(string)
-            results_file.write('\\caption{Runtime for'+str(len(self.iterations_list))+'random instances - No. of Robots = '+str(self.no_of_robots)+'}')
-            results_file.write('\\label{tab:AllRuntimesR='+str(self.no_of_robots)+'}')
+            results_file.write('\\caption{Runtime for'+str(len(self.iterations_list))+'random instances - No. of Robots = '+str(self.no_of_robots[0])+'}')
+            results_file.write('\\label{tab:AllRuntimesR='+str(self.no_of_robots[0])+'}')
             results_file.write('\\end{table*}')
             results_file.write('%%%%%%%%%%%%%%%%%%%%%')
 
@@ -341,8 +341,8 @@ class SolutionRuntimeDataAggregator:
                         \\end{tabular}
                     }"""
             results_file.write(string)
-            results_file.write('\\caption{Runtime for '+str(len(self.iterations_list))+' random instances - No. of Robots = '+str(self.no_of_robots)+'}')
-            results_file.write('\\label{tab:AllRuntimesR='+str(self.no_of_robots)+'}')
+            results_file.write('\\caption{Runtime for '+str(len(self.iterations_list))+' random instances - No. of Robots = '+str(self.no_of_robots[0])+'}')
+            results_file.write('\\label{tab:AllRuntimesR='+str(self.no_of_robots[0])+'}')
             results_file.write('\\end{table*}')
             results_file.write('%%%%%%%%%%%%%%%%%%%%%')
 
@@ -350,7 +350,7 @@ class SolutionRuntimeDataAggregator:
 
 def main():
     formulations_list = [1,2,3,4]
-    no_of_robots_list = [2]
+    no_of_robots_list = [3]
     no_of_depots_list =[2,3]
     no_of_tasks_list = [5,10]
     delta_param_list = [50, 75, 150]

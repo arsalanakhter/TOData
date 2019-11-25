@@ -143,7 +143,7 @@ class SolutionPlotter:
 
 
 def main():
-    instance_prefix = 'F4R3D3T5Delta150Tmax600Iter'
+    instance_prefix = 'F2R3D3T5Delta150Tmax600Iter'
     no_of_instances = 10
     #iter_no_list = [2]
     iter_no_list = [i for i in range(no_of_instances)]    
