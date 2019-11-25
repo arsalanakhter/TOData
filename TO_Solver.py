@@ -175,6 +175,8 @@ class Solver:
         # self.model.params.TimeLimit = 30
         self.model.optimize()
 
+        return self.model 
+
     def write_lp_and_sol_to_disk(self):
         if not os.path.exists(self.instance_folder_path):
             os.makedirs(self.instance_folder_path)
@@ -190,14 +192,14 @@ class Solver:
 
 
 def main():
-    min_robots = 3
-    max_robots = 3
+    min_robots = 5
+    max_robots = 5
 
     min_depots = 3
     max_depots = 3
 
-    min_tasks = 10
-    max_tasks = 10
+    min_tasks = 8
+    max_tasks = 8
 
     fuel_range_start = 50
     # fuel_range_end = int(math.ceil(2*100*math.sqrt(2)/5)*5)
@@ -248,7 +250,7 @@ def main():
                             instance = InstanceReader(curr_instance_filename)
                             instance_data = instance.readData()
                             solver = Solver(instance_data)
-                            solver.solve()
+                            model = solver.solve()
                             solver.write_lp_and_sol_to_disk()
 
 

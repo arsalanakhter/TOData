@@ -26,7 +26,7 @@ class Job:
         # Now solve the instance, and write the solution to disk
         solver_selected = self.solver_select(solver_string)
         solver = solver_selected(self.instance_data)
-        solver.solve()
+        model = solver.solve()
         solver.write_lp_and_sol_to_disk()
 
     def solver_select(self, solver_string):

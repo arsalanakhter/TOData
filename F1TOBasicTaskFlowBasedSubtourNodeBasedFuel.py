@@ -122,9 +122,8 @@ class F1Solver:
         # model.params.MIPGapAbs = 0.0005
         # self.model.params.TimeLimit = 30
         self.model.optimize()
-        print(self.model.Runtime)
-        print("***************************************************************************")
-        
+
+        return self.model                
 
     def write_lp_and_sol_to_disk(self):
         if not os.path.exists(self.instance_folder_path):
@@ -141,22 +140,22 @@ class F1Solver:
 
 
 def main():
-    min_robots = 3
-    max_robots = 3
+    min_robots = 5
+    max_robots = 5
 
     min_depots = 3
     max_depots = 3
 
-    min_tasks = 5
-    max_tasks = 5
+    min_tasks = 8
+    max_tasks = 8
 
-    delta_range_start = 150
+    delta_range_start = 50
     delta_range_step = 100
     # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               delta_range_step)*delta_range_step)  # ~282
     delta_range_end = 150
 
-    Tmax_range_start = 600
+    Tmax_range_start = 150
     Tmax_range_step = 100
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               Tmax_range_step)*Tmax_range_step)  # ~282
@@ -170,7 +169,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 6
+    no_of_instances = 5
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 
@@ -191,7 +190,7 @@ def main():
                             instance = InstanceReader(curr_instance_filename)
                             instance_data = instance.readData()
                             solver = F1Solver(instance_data)
-                            solver.solve()
+                            model = solver.solve()
                             solver.write_lp_and_sol_to_disk()
 
 

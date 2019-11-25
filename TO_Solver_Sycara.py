@@ -172,6 +172,8 @@ class Solver_Sycara:
         # self.model.params.TimeLimit = 30
         self.model.optimize()
 
+        return self.model 
+
     def write_lp_and_sol_to_disk(self):
         if not os.path.exists(self.instance_folder_path):
             os.makedirs(self.instance_folder_path)
@@ -181,23 +183,23 @@ class Solver_Sycara:
 
 
 def main():
-    min_robots = 3
-    max_robots = 3
+    min_robots = 5
+    max_robots = 5
 
-    min_depots = 2
-    max_depots = 2
+    min_depots = 3
+    max_depots = 3
 
-    min_tasks = 7
-    max_tasks = 7
+    min_tasks = 8
+    max_tasks = 8
 
-    fuel_range_start = 125
+    fuel_range_start = 50
     # fuel_range_end = int(math.ceil(2*100*math.sqrt(2)/5)*5)
-    fuel_range_end = 125
+    fuel_range_end = 50
     fuel_range_step = 5
 
-    Tmax_range_start = 175
+    Tmax_range_start = 150
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2)/10)*10)
-    Tmax_range_end = 175
+    Tmax_range_end = 150
     Tmax_range_step = 10
 
     robots_range = list(range(min_robots, max_robots+1))
@@ -239,7 +241,7 @@ def main():
                             instance = InstanceReader(file_path)
                             instance_data = instance.readData()
                             solver = Solver(instance_data)
-                            solver.solve()
+                            model = solver.solve()
                             solver.write_lp_and_sol_to_disk()
 
 
