@@ -162,7 +162,7 @@ class Instance_Generator:
 
 def main():
     min_robots = 2
-    max_robots = 3
+    max_robots = 4
 
     min_depots = 2
     max_depots = 3
@@ -188,10 +188,10 @@ def main():
     tasks_range = [5,10]
     #delta_range = list(range(delta_range_start, delta_range_end +
     #                        delta_range_step, delta_range_step))
-    delta_range = [50,75,150]
+    delta_range = [50,75,100, 125, 150]
     #Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
     #                        Tmax_range_step, Tmax_range_step,))
-    Tmax_range = [150,300,600]
+    Tmax_range = [50, 75, 150, 300, 450, 600]
 
     no_of_instances = 10
     seed_list = [rnd.randrange(sys.maxsize) for i in range(no_of_instances)]
@@ -204,6 +204,7 @@ def main():
                         instance = Instance_Generator(
                             r, d, t, f, tmax, no_of_instances, seed_list)
                         instance.generate_data()
+                        print('Data generated for: R{}D{}T{}Delta{}Tmax{}'.format(r,d,t,f,tmax))
 
 
 if __name__ == "__main__":
