@@ -40,7 +40,7 @@ class FormulationsSolutionComparator:
         # Compares all the formulations for a single problem
         # and writes the results in a file 
         # The results should show only the problem instances that have
-        # different objective functions and, if so, what are those, and
+        # different objective values and, if so, what are those, and
         # what are the resulting arcs.       
         obj_val_list = []
         for f in self.formulations_list:
