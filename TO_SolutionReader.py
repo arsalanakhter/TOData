@@ -49,7 +49,9 @@ class Solution_Reader:
             reader = csv.reader((line.replace('  ', ' ')
                                  for line in csvfile), delimiter=' ')
             next(reader)  # skip header
-            next(reader)  # skip the best objective value line
+            objective_value_line = next(reader)  # get the best objective value line
+            rr = re.findall("[-+]?[.]?[\d]+(?:,\d\d\d)*[\.]?\d*(?:[eE][-+]?\d+)?", objective_value_line[-1])
+            self.objective_val = float(rr[0])
             for line in reader:
                 if len(line) == 2:
                     var = line[0]
@@ -101,12 +103,13 @@ class Solution_Reader:
 
 
 def main():
-    instance_prefix = 'F1R3D2T5F50Tmax150Iter'
+    instance_prefix = 'F2R3D3T10Delta150Tmax600Iter'
 
     for i in range(5):
         instance = instance_prefix + str(i)
         sol = Solution_Reader(instance)
         print(sol.runtime)
+        print(sol.objective_val)
 
 
 if __name__ == "__main__":
