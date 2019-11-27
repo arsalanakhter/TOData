@@ -46,19 +46,20 @@ class FormulationsSolutionComparator:
         for f in self.formulations_list:
             instance_string = 'F'+str(f)+problem_string
             sol = Solution_Reader(instance_string)
-            obj_val_list.append(sol.objective_val)
-        print('{}: {}'.format(problem_string, obj_val_list[1:]==obj_val_list[:-1]))
-
+            obj_val_list.append(float('%.5f'%(sol.objective_val)))
+        if obj_val_list[1:]!=obj_val_list[:-1]:
+            with open('CheckNeeded.txt', 'a') as the_file:
+                the_file.write('{}: {}\n'.format(problem_string, obj_val_list))
 
 
 
 def main():
     formulations_list = [1,2,3,4]
-    no_of_robots_list = [3]
+    no_of_robots_list = [2,3,4]
     no_of_depots_list =[2,3]
     no_of_tasks_list = [5,10]
-    delta_param_list = [50, 75, 150]
-    Tmax_param_list = [150,300,600]
+    delta_param_list = [100, 125]
+    Tmax_param_list = [50,75,450]
     iterations_list = [i for i in range(10)]
 
     comparator = FormulationsSolutionComparator(
