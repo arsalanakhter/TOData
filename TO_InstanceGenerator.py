@@ -164,8 +164,8 @@ def main():
     min_robots = 2
     max_robots = 4
 
-    min_depots = 2
-    max_depots = 3
+    min_depots = 1
+    max_depots = 1
 
     min_tasks = 5
     max_tasks = 10
@@ -194,7 +194,17 @@ def main():
     Tmax_range = [50, 75, 150, 300, 450, 600]
 
     no_of_instances = 10
-    seed_list = [rnd.randrange(sys.maxsize) for i in range(no_of_instances)]
+    #seed_list = [rnd.randrange(sys.maxsize) for i in range(no_of_instances)]
+    seed_list = [1679156726667891580,
+                1650489432282747979,
+                3433114415903346549,
+                5237005969715870065,
+                3503955511357013226,
+                4756079252721248023,
+                2281456846044426304,
+                3390157364023920803,
+                8762155956704656379,
+                5406991502605904493]
 
     for r in robots_range:
         for d in depots_range:
