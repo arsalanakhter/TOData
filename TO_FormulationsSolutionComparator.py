@@ -1,10 +1,10 @@
 import os
-
+import csv
 from TO_SolutionReader import Solution_Reader
 
 
 class FormulationsSolutionComparator:
-    # A class to comapre the solutions coming from different formulations
+    # A class to compare the solutions coming from different formulations
     # Ideally, all the solutions should be same. If not, at least the 
     # objective function value should be same
     # The class writes a file only containing any differences in the solutions.
@@ -25,7 +25,11 @@ class FormulationsSolutionComparator:
         self.delta_param_list = delta_param_list
         self.Tmax_param_list = Tmax_param_list
         self.iterations_list = iterations_list
-
+        
+        with open('comparison.csv', 'a') as csvFile:
+            writer = csv.writer(csvFile)
+            writer.writerow(["Instance", "F1", "F2", "F3", "F4"])
+        csvFile.close()    
 
         for r in self.no_of_robots_list:
             for d in self.no_of_depots_list:
@@ -43,12 +47,20 @@ class FormulationsSolutionComparator:
         # different objective values and, if so, what are those, and
         # what are the resulting arcs.       
         obj_val_list = []
+        row = [problem_string]
         for f in self.formulations_list:
             instance_string = 'F'+str(f)+problem_string
             sol = Solution_Reader(instance_string)
             obj_val_list.append(sol.objective_val)
-        print('{}: {}'.format(problem_string, obj_val_list[1:]==obj_val_list[:-1]))
-
+            print('{}: {}'.format('F'+str(f)+problem_string, obj_val_list[f-1:]==obj_val_list[:-1]))
+            if obj_val_list[f-1:]==obj_val_list[:-1]:
+                row.append("True")
+            else:
+                row.append(obj_val_list[f-1])
+        with open('comparison.csv', 'a') as csvFile:
+            writer = csv.writer(csvFile)
+            writer.writerow(row)
+        csvFile.close()
 
 
 
