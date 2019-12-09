@@ -3,11 +3,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.offline as py
 
+import csv
 from TO_SolutionReader import Solution_Reader
 
 
 class FormulationsSolutionComparator:
-    # A class to comapre the solutions coming from different formulations
+    # A class to compare the solutions coming from different formulations
     # Ideally, all the solutions should be same. If not, at least the 
     # objective function value should be same
     # The class writes a file only containing any differences in the solutions.
@@ -48,6 +49,7 @@ class FormulationsSolutionComparator:
         # different objective values and, if so, what are those, and
         # what are the resulting arcs.       
         obj_val_list = []
+        row = [problem_string]
         for f in self.formulations_list:
             instance_string = 'F'+str(f)+problem_string
             sol = Solution_Reader(instance_string)
