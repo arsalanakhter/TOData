@@ -90,8 +90,8 @@ class F7Solver:
 
         c5_1 = self.model.addConstrs(((quicksum(x[i,h,k] for i in self.N if i!=h and i not in self.E)) == (quicksum(x[h,j,k] for j in self.N if j!=h and j not in self.S)) 
                                             for h in self.N for k in self.K if h not in self.S and h not in self.E), name="c5_1")
-        c5_2 = self.model.addConstrs(((quicksum(x[i,h,k] for k in self.K for i in self.N if i!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_2")
-        c5_3 = self.model.addConstrs(((quicksum(x[h,j,k] for k in self.K for j in self.N if j!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_3")
+        c5_2 = self.model.addConstrs(((quicksum(x[i,h,k] for i in self.N if i!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_2")
+        c5_3 = self.model.addConstrs(((quicksum(x[h,j,k] for j in self.N if j!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_3")
         c5_4 = self.model.addConstrs((quicksum(y[i,k] for k in self.K) <= 1 for i in self.T), name="c5_4")
 
         c6 = self.model.addConstrs((quicksum(self.c[i,j]*x[i,j,k]*1/self.vel for i in self.N for j in self.N if i!=j) <= self.T_max 
