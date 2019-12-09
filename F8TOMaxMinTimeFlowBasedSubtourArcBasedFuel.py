@@ -89,9 +89,9 @@ class F8Solver:
         c4_2 = self.model.addConstrs(((quicksum(x[e,i,k] for e in self.E for i in self.N if i not in self.E)) == 0 for k in self.K), name="c4_2")
 
         c5_1 = self.model.addConstrs(((quicksum(x[i,h,k] for i in self.N if i!=h and i not in self.E)) == (quicksum(x[h,j,k] for j in self.N if j!=h and j not in self.S)) 
-                                            for h in self.N for k in self.K if h not in self.S and h not in self.E), name="c5_1")
-        c5_2 = self.model.addConstrs(((quicksum(x[i,h,k] for k in self.K for i in self.N if i!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_2")
-        c5_3 = self.model.addConstrs(((quicksum(x[h,j,k] for k in self.K for j in self.N if j!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_3")
+                                            for h in self.N if h not in self.S + self.E for k in self.K), name="c5_1")
+        c5_2 = self.model.addConstrs(((quicksum(x[i,h,k] for i in self.N if i!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_2")
+        c5_3 = self.model.addConstrs(((quicksum(x[h,j,k] for j in self.N if j!=h)) == y[h,k] for h in self.T for k in self.K), name="c5_3")
         c5_4 = self.model.addConstrs((quicksum(y[i,k] for k in self.K) <= 1 for i in self.T), name="c5_4")
 
         c6 = self.model.addConstrs((quicksum(self.c[i,j]*x[i,j,k]*1/self.vel for i in self.N for j in self.N if i!=j) <= self.T_max 
@@ -101,7 +101,7 @@ class F8Solver:
         c7 = self.model.addConstrs((quicksum(q[i,j,k] for j in self.N if i!=j and j not in self.S) - 
                          quicksum(q[j,i,k] for j in self.N if i!=j and j not in self.E) == 
                                 quicksum(self.c[i,j]*x[i,j,k]  for j in self.N if i!=j) 
-                                            for k in self.K for i in self.N if i not in self.E), name='c7' )
+                                            for k in self.K for i in self.T + self.D + self.E), name='c7' )
         c8 = self.model.addConstrs((0 <= q[i,j,k] <= self.T_max*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8' )
         c9 = self.model.addConstrs((q[s,i,k] == self.f[s,i]*x[s,i,k] for i in self.T+self.D+self.E for s in self.S for k in self.K), name='c9')
 
@@ -140,22 +140,22 @@ class F8Solver:
 
 
 def main():
-    min_robots = 5
-    max_robots = 5
+    min_robots = 4
+    max_robots = 4
 
     min_depots = 3
     max_depots = 3
 
-    min_tasks = 8
-    max_tasks = 8
+    min_tasks = 10
+    max_tasks = 10
 
-    delta_range_start = 50
+    delta_range_start = 150
     delta_range_step = 100
     # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               delta_range_step)*delta_range_step)  # ~282
     delta_range_end = 150
 
-    Tmax_range_start = 150
+    Tmax_range_start = 600
     Tmax_range_step = 100
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               Tmax_range_step)*Tmax_range_step)  # ~282
@@ -169,7 +169,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 5
+    no_of_instances = 10
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 
