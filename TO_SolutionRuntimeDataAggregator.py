@@ -47,7 +47,7 @@ class SolutionRuntimeDataAggregator:
 
 
     def write_to_csv(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedData.csv')
+        self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedDataR'+str(self.no_of_robots[0])+'.csv')
         with open(self.resultsFile, 'w+') as results_file:
             result_writer = csv.writer(results_file, delimiter=',', lineterminator='\n')
             # Write row1
@@ -79,24 +79,16 @@ class SolutionRuntimeDataAggregator:
 
 
     def write_min_avg_max_to_csv(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedDataMinAvgMax.csv')
+        self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedDataMinAvgMaxR'+str(self.no_of_robots[0])+'.csv')
         with open(self.resultsFile, 'w+') as results_file:
             result_writer = csv.writer(results_file, delimiter=',',lineterminator='\n')
             # Write row1
             row1 = [' ',' ',' ']
-            row2 = [' ',' ',' ']
-            row3 = [' ',' ',' ']
             for formulation in self.formulations_list:
-                row1 = row1 + ['F'+str(formulation) for i in range (len(self.no_of_depots_list)*len(self.no_of_tasks_list))]
-                # Write row2
                 for d in self.no_of_depots_list:
-                    row2 = row2 + ['D'+str(d) for i in range (len(self.no_of_tasks_list))]
-                    # Write row3
                     for t in self.no_of_tasks_list:
-                        row3 = row3 + ['T'+str(t)]
+                        row1 = row1 + ['F'+str(formulation) + 'D'+str(d) + 'T'+str(t)]
             result_writer.writerow(row1)
-            result_writer.writerow(row2)
-            result_writer.writerow(row3)
 
             for r in self.no_of_robots:
                 for tmax in self.Tmax_param_list:
@@ -135,7 +127,7 @@ class SolutionRuntimeDataAggregator:
 
 
     def write_latex_table(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTable.txt')
+        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTableR'+str(self.no_of_robots[0])+'.txt')
         with open(self.resultsFile, 'w+') as results_file:
             string = """
                         %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -242,7 +234,7 @@ class SolutionRuntimeDataAggregator:
 
 
     def write_latex_table_avg_only(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTableAvgOnly.txt')
+        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTableAvgOnlyR'+str(self.no_of_robots[0])+'.txt')
         with open(self.resultsFile, 'w+') as results_file:
             string = """
                         %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -350,11 +342,11 @@ class SolutionRuntimeDataAggregator:
 
 def main():
     formulations_list = [1,2,3,4]
-    no_of_robots_list = [3]
-    no_of_depots_list =[2,3]
-    no_of_tasks_list = [5,10]
-    delta_param_list = [50, 75, 150]
-    Tmax_param_list = [150,300,600]
+    no_of_robots_list = [2] # We can only put one robot number here.
+    no_of_depots_list =[1, 2, 3]
+    no_of_tasks_list = [5 , 10]
+    delta_param_list = [50, 75, 100, 125, 150]
+    Tmax_param_list = [50, 75, 150, 300, 450, 600]
     iterations_list = [i for i in range(10)]
 
     agg = SolutionRuntimeDataAggregator(
