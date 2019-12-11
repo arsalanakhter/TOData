@@ -25,14 +25,18 @@ class DataFiguresGenerator:
         self.iterations_list = iterations_list
 
 
-    def compute_plots(self):
+    def compute_Tmax_plots(self):
         for d in self.no_of_depots_list:
             for tau in self.delta_param_list:
-                self.compute_single_plot(d, tau)
+                self.compute_single_Tmax_plot(d, tau)
 
+    def compute_tau_plots(self):
+        for d in self.no_of_depots_list:
+            for tmax in self.Tmax_param_list:
+                self.compute_single_tau_plot(d, tmax)
 
-    def compute_single_plot(self, d, tau):
-        r=2 # No of robots
+    def compute_single_Tmax_plot(self, d, tau):
+        r=self.no_of_robots_list[0] # No of robots
         # Pick the data for this plot only
         row_fields = [' ', ' .1', ' .2']
         for f in self.formulations_list:
@@ -97,7 +101,76 @@ class DataFiguresGenerator:
         py.plot(fig, include_mathjax='cdn')
         fig.write_image('figRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
 
-    
+
+    def compute_single_tau_plot(self, d, tmax):
+        r=self.no_of_robots_list[0] # No of robots
+        # Pick the data for this plot only
+        row_fields = [' ', ' .1', ' .2']
+        for f in self.formulations_list:
+            for t in self.no_of_tasks_list:
+                row_fields.append('F'+str(f)+'D'+str(d)+'T'+str(t))
+        col_fields = ['Avg']
+        df = pd.read_csv('aggregatedDataMinAvgMaxR'+str(r)+'.csv', usecols=row_fields, index_col=False)
+        print(df[df[' .2'].str.contains(col_fields[0])])#['F2.3'][0:3].tolist())
+        #print(df[df[' .2'].str.contains(col_fields[0])]['F2.3'][3:6].tolist())
+        #print(df[df[' .2'].str.contains(col_fields[0])]['F2.3'][6:9].tolist())
+        #fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01)
+        fig = self.draw_figure()
+        y_max = 0
+        tasks_reversed = self.no_of_tasks_list[::-1]
+        for t in tasks_reversed: 
+            F1trace = self.F1_trace()
+            ydata = df[df[' .2'].str.contains(col_fields[0])]
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F1D'+str(d)+'T'+str(t)].tolist()
+            ydata_max = max(ydata)
+            if ydata_max > y_max:
+                y_max = ydata_max
+            F1trace.update(x=self.delta_param_list, y=ydata)
+
+            F2trace = self.F2_trace()
+            ydata = df[df[' .2'].str.contains(col_fields[0])]
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F2D'+str(d)+'T'+str(t)].tolist()
+            ydata_max = max(ydata)
+            if ydata_max > y_max:
+                y_max = ydata_max
+            F2trace.update(x=self.delta_param_list, y=ydata)
+
+            F3trace = self.F3_trace()
+            ydata = df[df[' .2'].str.contains(col_fields[0])]
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F3D'+str(d)+'T'+str(t)].tolist()
+            ydata_max = max(ydata)
+            if ydata_max > y_max:
+                y_max = ydata_max
+            F3trace.update(x=self.delta_param_list, y=ydata)
+
+            F4trace = self.F4_trace()
+            ydata = df[df[' .2'].str.contains(col_fields[0])]
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F4D'+str(d)+'T'+str(t)].tolist()
+            ydata_max = max(ydata)
+            if ydata_max > y_max:
+                y_max = ydata_max
+            F4trace.update(x=self.delta_param_list, y=ydata)
+
+
+            if t==10:
+                F1trace.update(yaxis='y2', legendgroup='group2', showlegend=False)
+                F2trace.update(yaxis='y2', legendgroup='group2', showlegend=False)
+                F3trace.update(yaxis='y2', legendgroup='group2', showlegend=False)
+                F4trace.update(yaxis='y2', legendgroup='group2', showlegend=False)
+            fig.add_trace(F1trace)
+            fig.add_trace(F2trace)
+            fig.add_trace(F3trace)
+            fig.add_trace(F4trace)
+            fig.update_layout(title='R={}; D={}; T<sub>max</sub>={}'.format(r,d,tmax))
+            fig.update_layout(xaxis=dict(tickvals=self.delta_param_list, title="𝜏"))
+            #fig['layout']['yaxis'].update(range=[0, y_max])
+            #fig['layout']['yaxis2'].update(range=[0, y_max])
+
+
+        py.plot(fig, include_mathjax='cdn')
+        fig.write_image('figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+
+
     def individual_trace(self):
         # Basic trace to be used to create other traces/lines
         trace = go.Scatter(
@@ -202,7 +275,7 @@ class DataFiguresGenerator:
 
 def main():
     formulations_list = [1,2,3,4]
-    no_of_robots_list = [2] # We can only put one robot number here.
+    no_of_robots_list = [4] # We can only put one robot number here.
     no_of_depots_list =[1, 2, 3]
     no_of_tasks_list = [5 , 10]
     delta_param_list = [50, 75, 100, 125, 150]
@@ -218,7 +291,7 @@ def main():
                         Tmax_param_list,
                         iterations_list)
 
-    fig_generator.compute_plots()
+    fig_generator.compute_tau_plots()
 
 if __name__ == "__main__":
     main()
