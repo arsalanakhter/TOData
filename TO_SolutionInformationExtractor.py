@@ -106,29 +106,36 @@ class SolutionInformationExtractor:
 
 def main():
     # instance_prefix = 'R3D2T3F150Tmax600Iter'
-    instance_prefix = 'R3D3T7F150Tmax600Iter'
-    no_of_instances = 5
-    for i in range(no_of_instances):
-        instance_name = instance_prefix + str(i)
-        instance = InstanceReader(instance_name)
-        sol = Solution_Reader(instance_name)
-        # pprint(sol.nodesInOrder)
-        sol_info = SolutionInformationExtractor(instance, sol)
-        sol_info.recharge_recharge_task_frequency()
-        # print(sol_info.recharge_recharge_count)
-        # print(sol_info.recharge_task_count)
-        # curr_instance_filename = instance_prefix + 'Iter' + str(i) + '.json'
-        # file_path = os.path.normpath(instance_folder_path + curr_instance_filename)
+    # instance_prefix = 'R2D2T5Delta50Tmax600Iter'
+    no_of_instances = 10
+    for r in [2,3,4]:
+        for d in [2,3]:
+            for t in [5,10]:
+                for delta in [50,75,150]:
+                    for tmax in [150,300,600]:
+                        instance_prefix = 'R'+str(r)+'D'+str(d)+'T'+str(t)+'Delta'+str(delta)+'Tmax'+str(tmax)+'Iter'
+                        for i in range(no_of_instances):
+                            instance_name = instance_prefix + str(i)
+                            instance = InstanceReader(instance_name)
+                            sol = Solution_Reader('F1'+instance_name)
+                            # pprint(sol.nodesInOrder)
+                            sol_info = SolutionInformationExtractor(instance, sol)
+                            sol_info.recharge_recharge_task_frequency()
+                            # print(sol_info.recharge_recharge_count)
+                            # print(sol_info.recharge_task_count)
+                            # curr_instance_filename = instance_prefix + 'Iter' + str(i) + '.json'
+                            # file_path = os.path.normpath(instance_folder_path + curr_instance_filename)
 
-        distance_travelled = sol_info.distance_travelled_calculator()
+                            distance_travelled = sol_info.distance_travelled_calculator()
 
-        with open('analysis/data.csv', 'a') as csvFile:
-            writer = csv.writer(csvFile)
-            row = [instance_name, sol_info.recharge_task_count, sol_info.recharge_recharge_count]
-            for x in distance_travelled:
-                row.append(x)
-            writer.writerow(row)
-        csvFile.close()
+                            with open('analysis/distance_and_recharge_data.csv', 'a', newline='') as csvFile:
+                                writer = csv.writer(csvFile)
+                                row = ['F1'+instance_name, sol_info.recharge_task_count, sol_info.recharge_recharge_count]
+                                for x in distance_travelled:
+                                    row.append(x)
+                                writer.writerow(row)
+    
+    csvFile.close()
 
 
 if __name__ == "__main__":
