@@ -44,17 +44,14 @@ class DataFiguresGenerator:
                 row_fields.append('F'+str(f)+'D'+str(d)+'T'+str(t))
         col_fields = ['Avg']
         df = pd.read_csv('aggregatedDataMinAvgMaxR'+str(r)+'.csv', usecols=row_fields, index_col=False)
-        print(df[df[' .2'].str.contains(col_fields[0])])#['F2.3'][0:3].tolist())
-        #print(df[df[' .2'].str.contains(col_fields[0])]['F2.3'][3:6].tolist())
-        #print(df[df[' .2'].str.contains(col_fields[0])]['F2.3'][6:9].tolist())
-        #fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01)
+        print(df[df[' .2'].str.contains(col_fields[0])])
         fig = self.draw_figure()
         y_max = 0
         tasks_reversed = self.no_of_tasks_list[::-1]
         for t in tasks_reversed: 
             F1trace = self.F1_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F1D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F'+str(self.formulations_list[0])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -62,7 +59,7 @@ class DataFiguresGenerator:
 
             F2trace = self.F2_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F2D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F'+str(self.formulations_list[1])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -70,7 +67,7 @@ class DataFiguresGenerator:
 
             F3trace = self.F3_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F3D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F'+str(self.formulations_list[2])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -78,7 +75,7 @@ class DataFiguresGenerator:
 
             F4trace = self.F4_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F4D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' .1'].isin(['\\tau'+str(tau)])]['F'+str(self.formulations_list[3])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -99,7 +96,7 @@ class DataFiguresGenerator:
 
 
         py.plot(fig, include_mathjax='cdn')
-        fig.write_image('figRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
+        fig.write_image('TOMinMaxfigRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
 
 
     def compute_single_tau_plot(self, d, tmax):
@@ -111,17 +108,14 @@ class DataFiguresGenerator:
                 row_fields.append('F'+str(f)+'D'+str(d)+'T'+str(t))
         col_fields = ['Avg']
         df = pd.read_csv('aggregatedDataMinAvgMaxR'+str(r)+'.csv', usecols=row_fields, index_col=False)
-        print(df[df[' .2'].str.contains(col_fields[0])])#['F2.3'][0:3].tolist())
-        #print(df[df[' .2'].str.contains(col_fields[0])]['F2.3'][3:6].tolist())
-        #print(df[df[' .2'].str.contains(col_fields[0])]['F2.3'][6:9].tolist())
-        #fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.01)
+        print(df[df[' .2'].str.contains(col_fields[0])])
         fig = self.draw_figure()
         y_max = 0
         tasks_reversed = self.no_of_tasks_list[::-1]
         for t in tasks_reversed: 
             F1trace = self.F1_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F1D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F'+str(self.formulations_list[0])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -129,7 +123,7 @@ class DataFiguresGenerator:
 
             F2trace = self.F2_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F2D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F'+str(self.formulations_list[1])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -137,7 +131,7 @@ class DataFiguresGenerator:
 
             F3trace = self.F3_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F3D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F'+str(self.formulations_list[2])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -145,7 +139,7 @@ class DataFiguresGenerator:
 
             F4trace = self.F4_trace()
             ydata = df[df[' .2'].str.contains(col_fields[0])]
-            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F4D'+str(d)+'T'+str(t)].tolist()
+            ydata = ydata[ydata[' '].isin(['Tmax'+str(tmax)])]['F'+str(self.formulations_list[3])+'D'+str(d)+'T'+str(t)].tolist()
             ydata_max = max(ydata)
             if ydata_max > y_max:
                 y_max = ydata_max
@@ -168,7 +162,8 @@ class DataFiguresGenerator:
 
 
         py.plot(fig, include_mathjax='cdn')
-        fig.write_image('figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+        #fig.write_image('figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+        fig.write_image('TOMinMaxfigRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
 
 
     def individual_trace(self):
@@ -200,28 +195,28 @@ class DataFiguresGenerator:
 
     def F1_trace(self):
         new_trace = self.individual_trace()
-        new_trace.name = '𝓕1'
+        new_trace.name = '𝓕'+str(self.formulations_list[0])
         new_trace.marker.color = 'red'
         new_trace.line.color = 'darkred'
         return new_trace
 
     def F2_trace(self):
         new_trace = self.individual_trace()
-        new_trace.name = '𝓕2'
+        new_trace.name = '𝓕'+str(self.formulations_list[1])
         new_trace.marker.color = 'blue'
         new_trace.line.color = 'darkblue'
         return new_trace
 
     def F3_trace(self):
         new_trace = self.individual_trace()
-        new_trace.name = '𝓕3'
+        new_trace.name = '𝓕'+str(self.formulations_list[2])
         new_trace.marker.color = 'green'
         new_trace.line.color = 'darkgreen'
         return new_trace
 
     def F4_trace(self):
         new_trace = self.individual_trace()
-        new_trace.name = '𝓕4'
+        new_trace.name = '𝓕'+str(self.formulations_list[3])
         new_trace.marker.color = 'violet'
         new_trace.line.color = 'darkviolet'
         return new_trace
@@ -274,8 +269,8 @@ class DataFiguresGenerator:
 
 
 def main():
-    formulations_list = [1,2,3,4]
-    no_of_robots_list = [4] # We can only put one robot number here.
+    formulations_list = [5,6,7,8]
+    no_of_robots_list = [2] # We can only put one robot number here.
     no_of_depots_list =[1, 2, 3]
     no_of_tasks_list = [5 , 10]
     delta_param_list = [50, 75, 100, 125, 150]
@@ -291,87 +286,8 @@ def main():
                         Tmax_param_list,
                         iterations_list)
 
-    fig_generator.compute_tau_plots()
+    #fig_generator.compute_tau_plots()
+    fig_generator.compute_Tmax_plots()
 
 if __name__ == "__main__":
     main()
-    
-'''
-        #Tmax 300
-        F1Tmax150 = self.F1_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F1.3'][3:6].tolist()
-        F1Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
-        F1Tmax150.showlegend = False
-        fig.add_trace(F1Tmax150)
-
-        F2Tmax150 = self.F2_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F2.3'][3:6].tolist()
-        F2Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
-        F2Tmax150.showlegend = False
-        fig.add_trace(F2Tmax150)
-
-        F3Tmax150 = self.F3_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F3.3'][3:6].tolist()
-        F3Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
-        F3Tmax150.showlegend = False
-        fig.add_trace(F3Tmax150)
-
-        F4Tmax150 = self.F4_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F4.3'][3:6].tolist()
-        F4Tmax150.update(x=[50, 75, 150], y=[300, 300, 300], z = zdata)
-        F4Tmax150.showlegend = False
-        fig.add_trace(F4Tmax150)
-
-
-        #Tmax 600
-        F1Tmax150 = self.F1_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F1.3'][6:9].tolist()
-        F1Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z =    zdata)
-        F1Tmax150.showlegend = False
-        fig.add_trace(F1Tmax150)
-
-        F2Tmax150 = self.F2_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F2.3'][6:9].tolist()
-        F2Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z = zdata)
-        F2Tmax150.showlegend = False
-        fig.add_trace(F2Tmax150)
-
-        F3Tmax150 = self.F3_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F3.3'][6:9].tolist()
-        F3Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z = zdata)
-        F3Tmax150.showlegend = False
-        fig.add_trace(F3Tmax150)
-
-        F4Tmax150 = self.F4_trace()
-        zdata = df[df[' .2'].str.contains(col_fields[0])]['F4.3'][6:9].tolist()
-        F4Tmax150.update(x=[50, 75, 150], y=[600, 600, 600], z = zdata)
-        F4Tmax150.showlegend = False
-        fig.add_trace(F4Tmax150)
-
-        
-
-        
-        #pio.write_image(fig, 'pic_23.png', width = 1280, height = 1024)
-        py.plot(fig)
-        #fig.write_image("figures/fig1.svg")
-
-
-    def plot_with_jax(self, fig, filename='temp-plot.html'):
-        plot_div = py.plot(fig, output_type = 'div')
-
-        template = """
-        <head>
-        <script type="text/javascript" async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_SVG">
-        </script>
-        </head>
-        <body>
-        {plot_div:s}
-        </body>""".format(plot_div = plot_div)
-        with open(filename, 'w') as fp:
-            fp.write(template)
-        os.startfile(filename)
-
-    '''
-
-

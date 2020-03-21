@@ -31,7 +31,9 @@ class FormulationsSolutionComparator:
         self.iterations_list = iterations_list
 
     def compare_all_problems(self):
+        os.remove('CheckNeeded.csv')
         with open('CheckNeeded.csv', 'a') as the_file:
+            #the_file.write('instance,F1,F2,F3,F4\n')
             the_file.write('instance,F5,F6,F7,F8\n')
         for r in self.no_of_robots_list:
             for d in self.no_of_depots_list:
@@ -67,14 +69,22 @@ class FormulationsSolutionComparator:
         # 4. Increasing delta
         # 5. Increasing Tmax
         df_with_instances = pd.read_csv('CheckNeeded.csv', index_col=False)
+        #df = df_with_instances[['F1','F2','F3','F4']]
         df = df_with_instances[['F5','F6','F7','F8']]
         print(df)
         df_min_vals = df.min(axis=1)
+        #df_min_F1 = (df_min_vals == df.F1).astype(int)
+        #df_min_F2 = (df_min_vals == df.F2).astype(int)
+        #df_min_F3 = (df_min_vals == df.F3).astype(int)
+        #df_min_F4 = (df_min_vals == df.F4).astype(int)
+
         df_min_F5 = (df_min_vals == df.F5).astype(int)
         df_min_F6 = (df_min_vals == df.F6).astype(int)
         df_min_F7 = (df_min_vals == df.F7).astype(int)
         df_min_F8 = (df_min_vals == df.F8).astype(int)
+        #df_all_mins = pd.concat([df_with_instances.instance, df_min_F1, df_min_F2, df_min_F3, df_min_F4], axis=1)
         df_all_mins = pd.concat([df_with_instances.instance, df_min_F5, df_min_F6, df_min_F7, df_min_F8], axis=1)
+        #df_all_mins.columns = ['instance','F1','F2','F3','F4']
         df_all_mins.columns = ['instance','F5','F6','F7','F8']
 
         # Now, compute how many times each formulation worked best for R
@@ -120,10 +130,11 @@ class FormulationsSolutionComparator:
         count = 5
         for data_obj in data_to_be_plotted:
             fig = go.Figure(data=[
-                go.Bar(name=k, x=[r'$\mathcal{F}1$', r'$\mathcal{F}2$', r'$\mathcal{F}3$', r'$\mathcal{F}4$'], y=v)
+                #go.Bar(name=k, x=[r'$\mathcal{F}1$', r'$\mathcal{F}2$', r'$\mathcal{F}3$', r'$\mathcal{F}4$'], y=v)
+                go.Bar(name=k, x=[r'$\mathcal{F}5$', r'$\mathcal{F}6$', r'$\mathcal{F}7$', r'$\mathcal{F}8$'], y=v)
                 for k,v in data_obj.items()]
                 )
-            fig.update_layout(xaxis_title="Formulations", yaxis_title="Number of instances with best objective value")
+            fig.update_layout(font=dict(size=24),xaxis_title="Formulations", yaxis_title="Number of instances with best objective value")
             fig.update_yaxes(range=[0, 100])
             py.plot(fig, include_mathjax='cdn')
             fig.write_image('fig'+str(count)+'.pdf')
@@ -133,10 +144,11 @@ class FormulationsSolutionComparator:
 
 
 def main():
+    #formulations_list = [1,2,3,4]
     formulations_list = [5,6,7,8]
     no_of_robots_list = [2,3,4]
     no_of_depots_list =[1,2,3]
-    no_of_tasks_list = [5,10]
+    no_of_tasks_list = [5, 10]
     delta_param_list = [50, 75, 100, 125, 150]
     Tmax_param_list = [50,75,150,300,450,600]
     iterations_list = [i for i in range(10)]
