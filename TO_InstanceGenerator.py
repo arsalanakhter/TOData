@@ -165,7 +165,7 @@ def main():
     max_robots = 4
 
     min_depots = 1
-    max_depots = 1
+    max_depots = 3
 
     min_tasks = 5
     max_tasks = 10
@@ -188,7 +188,7 @@ def main():
     tasks_range = [5,10]
     #delta_range = list(range(delta_range_start, delta_range_end +
     #                        delta_range_step, delta_range_step))
-    delta_range = [50,75,100, 125, 150]
+    delta_range = [300, 600]
     #Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
     #                        Tmax_range_step, Tmax_range_step,))
     Tmax_range = [50, 75, 150, 300, 450, 600]
