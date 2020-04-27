@@ -90,13 +90,14 @@ class DataFiguresGenerator:
             fig.add_trace(F2trace)
             fig.add_trace(F3trace)
             fig.add_trace(F4trace)
-            fig.update_layout(title='R={}; D={}; 𝜏={}'.format(r,d,tau))
+            #fig.update_layout(title='R={}; D={}; 𝜏={}'.format(r,d,tau))
             #fig['layout']['yaxis'].update(range=[0, y_max])
             #fig['layout']['yaxis2'].update(range=[0, y_max])
 
 
         py.plot(fig, include_mathjax='cdn')
-        fig.write_image('TOMinMaxfigRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
+        fig.write_image('figRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
+        #fig.write_image('TOMinMaxfigRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
 
 
     def compute_single_tau_plot(self, d, tmax):
@@ -155,15 +156,15 @@ class DataFiguresGenerator:
             fig.add_trace(F2trace)
             fig.add_trace(F3trace)
             fig.add_trace(F4trace)
-            fig.update_layout(title='R={}; D={}; T<sub>max</sub>={}'.format(r,d,tmax))
-            fig.update_layout(xaxis=dict(tickvals=self.delta_param_list, title="𝜏"))
+            #fig.update_layout(title='R={}; D={}; 𝓣<sub>max</sub>={}'.format(r,d,tmax))
+            fig.update_layout(xaxis=dict(tickvals=self.delta_param_list, title="𝜏 (sec)"))
             #fig['layout']['yaxis'].update(range=[0, y_max])
             #fig['layout']['yaxis2'].update(range=[0, y_max])
 
 
         py.plot(fig, include_mathjax='cdn')
-        #fig.write_image('figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
-        fig.write_image('TOMinMaxfigRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+        fig.write_image('figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+        #fig.write_image('TOMinMaxfigRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
 
 
     def individual_trace(self):
@@ -228,13 +229,13 @@ class DataFiguresGenerator:
             #height=900,
             #autosize=False,
             title='',
-            xaxis=dict(tickvals=self.Tmax_param_list, title="T<sub>max</sub>"),
-            yaxis=dict(domain=[0,0.5]),
-            yaxis2=dict(domain=[0.51,1], title='Computation Time'),
+            xaxis=dict(tickvals=self.Tmax_param_list, title="𝓣<sub>max</sub> (sec)"),
+            yaxis=dict(domain=[0,0.45], range=[-2,3], type="log"),
+            yaxis2=dict(domain=[0.55,1], range=[-2,3], type="log"),
             font=dict(size=24),
-            scene=dict(
-                xaxis_title="T<sub>max</sub>",
-                yaxis_title="Computation Time",
+            #scene=dict(
+            #    xaxis_title="𝓣<sub>max</sub>",
+            #    yaxis_title="Computation Time",
                 #camera=dict(
                 #    up=dict(
                 #        x=0,
@@ -247,32 +248,45 @@ class DataFiguresGenerator:
                 #        z=1,
                 #    )
                 #),
-            ),
-            showlegend=True
+            #),
+            showlegend=True,
         )
         fig = go.Figure(data=data, layout=layout)
-        '''fig.update_layout(
+        fig.update_layout(
             annotations=[
                 go.layout.Annotation(
-                    x=0,
-                    y=0.5,
-                    xanchor= 'center',
-                    yanchor='middle',
-                    showarrow=False,
-                    text="Computation time",
-                    xref="paper",
-                    yref="paper"
-                )])''';
+                    {
+                        'showarrow': False,
+                        'text': 'Computation Time (sec)',
+                        'x': 0,
+                        'xshift': -72,
+                        'xanchor': 'center',
+                        'xref': 'paper',
+                        'y': 0.5,
+                        'yanchor': 'middle',
+                        'yref': 'paper',
+                        'yshift': 0.0,
+                        'textangle': -90,
+                    
+                        "font": dict(
+                            # family="Courier New, monospace",
+                            size=24,
+                            # color="#ffffff"
+                            ),
+                    }
+                )
+            ]
+        )
         return fig
 
 
 
 
 def main():
-    formulations_list = [5,6,7,8]
+    formulations_list = [1,2,3,4]
     no_of_robots_list = [2] # We can only put one robot number here.
-    no_of_depots_list =[1, 2, 3]
-    no_of_tasks_list = [5 , 10]
+    no_of_depots_list =[1,2,3]
+    no_of_tasks_list = [5, 10]
     delta_param_list = [50, 75, 100, 125, 150]
     Tmax_param_list = [50, 75, 150, 300, 450, 600]
     iterations_list = [i for i in range(10)]
@@ -286,8 +300,8 @@ def main():
                         Tmax_param_list,
                         iterations_list)
 
-    #fig_generator.compute_tau_plots()
-    fig_generator.compute_Tmax_plots()
+    fig_generator.compute_tau_plots()
+    #fig_generator.compute_Tmax_plots()
 
 if __name__ == "__main__":
     main()

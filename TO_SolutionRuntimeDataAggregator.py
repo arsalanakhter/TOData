@@ -341,8 +341,8 @@ class SolutionRuntimeDataAggregator:
 
 
 def main():
-    formulations_list = [5,6,7,8]
-    no_of_robots_list = [4] # We can only put one robot number here.
+    formulations_list = [1,2,3,4]
+    no_of_robots_list = [2] # We can only put one robot number here.
     no_of_depots_list =[1, 2, 3]
     no_of_tasks_list = [5 , 10]
     delta_param_list = [50, 75, 100, 125, 150]
