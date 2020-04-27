@@ -79,7 +79,7 @@ trap cleanup EXIT SIGINT SIGTERM
 #python3 -m pip install plotly --user
 #mkdir C-mdvrp # comment this if running random input
 #cp $MYDIR/C-mdvrp/* $WORKDIR/C-mdvrp/  # comment this if running random input
-for FUEL in 200 300 400
+for FUEL in 50 75 100 125 150
 do
     for T_MAX in 50 75 150 300 450 600
     do
