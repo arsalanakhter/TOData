@@ -78,7 +78,7 @@ mkdir -p $DATADIR
 mkdir -p $SOLDIR
 for NO_OF_ROBOTS in 2 3 4
 do
-    for NO_OF_DEPOTS in 2 3
+    for NO_OF_DEPOTS in 1 2 3
     do
         for NO_OF_TASKS in 5 10
         do 
