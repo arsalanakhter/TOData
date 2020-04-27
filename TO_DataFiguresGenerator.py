@@ -96,8 +96,8 @@ class DataFiguresGenerator:
 
 
         py.plot(fig, include_mathjax='cdn')
-        fig.write_image('figRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
-        #fig.write_image('TOMinMaxfigRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
+        fig.write_image('figs/figRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
+        #fig.write_image('figs/TOMinMaxfigRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
 
 
     def compute_single_tau_plot(self, d, tmax):
@@ -163,8 +163,8 @@ class DataFiguresGenerator:
 
 
         py.plot(fig, include_mathjax='cdn')
-        fig.write_image('figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
-        #fig.write_image('TOMinMaxfigRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+        fig.write_image('figs/figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+        #fig.write_image('figs/TOMinMaxfigRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
 
 
     def individual_trace(self):
