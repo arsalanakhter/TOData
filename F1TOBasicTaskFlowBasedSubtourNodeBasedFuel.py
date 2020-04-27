@@ -78,8 +78,8 @@ class F1Solver:
         # Constraints
         # For detail on what the constraints signify please see the
         # corresponding section in the report
-        c2_1 = self.model.addConstr((quicksum(x[s,j,k] for j in self.N for k in self.K for s in self.S if j not in self.S) == self.noOfRobots), name="c2_1")
-        c2_2 = self.model.addConstr((quicksum(x[i,e,k] for i in self.N for k in self.K for e in self.E if i!=e) == self.noOfRobots), name="c2_2")
+        #c2_1 = self.model.addConstr((quicksum(x[s,j,k] for j in self.N for k in self.K for s in self.S if j not in self.S) == self.noOfRobots), name="c2_1")
+        #c2_2 = self.model.addConstr((quicksum(x[i,e,k] for i in self.N for k in self.K for e in self.E if i!=e) == self.noOfRobots), name="c2_2")
         
         c3_1 = self.model.addConstrs(((quicksum(x[s,j,k] for s in self.S for j in self.N if j not in self.S)) == 1 for k in self.K), name="c3_1")
         c4_1 = self.model.addConstrs(((quicksum(x[j,s,k] for s in self.S for j in self.N if j not in self.S)) == 0 for k in self.K), name="c3_2")
@@ -102,7 +102,9 @@ class F1Solver:
                         (quicksum(x[i,j,k] for j in self.N if i!=j )) for i in self.T for k in self.K), name="c8")
         c9 = self.model.addConstrs(((quicksum((g[j,i,k] - g[i,j,k]) for j in self.N if j!=i)) 
                                                     == 0 for i in self.D for k in self.K), name="c9")
-        c10 = self.model.addConstrs(( 0 <= g[i,j,k] <= self.noOfTasks*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j), name="c10")
+        #c10 = self.model.addConstrs(( 0 <= g[i,j,k] <= self.noOfTasks*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j), name="c10")
+        c10_1 = self.model.addConstrs(( 0 <= g[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j), name="c10_1")
+        c10_2 = self.model.addConstrs(( g[i,j,k] <= self.noOfTasks*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j), name="c10_2")        
 
         
         # Node based fuel constraints
@@ -112,17 +114,19 @@ class F1Solver:
         c13 = self.model.addConstrs((r[j] - self.L + self.f[i,j] <= M*(1-x[i,j,k]) for i in self.D+self.S for j in self.T+self.D+self.E for k in self.K if i!=j), name="c13")
         c14 = self.model.addConstrs((r[j] - self.L + self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.D+self.S for j in self.T+self.D+self.E for k in self.K if i!=j), name="c14")
         c15 = self.model.addConstrs((r[i] - self.f[i,j] >= -M*(1-x[i,j,k]) for i in self.S+self.T for j in self.D+self.E for k in self.K ), name="c15")
-        c16 = self.model.addConstrs((0 <= r[i] <= self.L for i in self.T+self.E), name="c16")
+        #c16 = self.model.addConstrs((0 <= r[i] <= self.L for i in self.T+self.E), name="c16")
+        c16_1 = self.model.addConstrs((0 <= r[i] for i in self.T+self.E), name="c16_1")
+        c16_2 = self.model.addConstrs((r[i] <= self.L for i in self.T+self.E), name="c16_2")
         c17 = self.model.addConstrs((self.f[i,j]*x[i,j,k] <= self.L for i in self.S+self.D for j in self.D for k in self.K if i!=j), name="c17")
 
 
     def solve(self):
-        self.model.params.Heuristics = 0.0  # %age of time use a heuristic solution
-        self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
-        # model.params.MIPGapAbs = 0.0005
+        #self.model.params.Heuristics = 0.0  # %age of time use a heuristic solution
+        #self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
+        #self.model.params.MIPGapAbs = 0.0
         # self.model.params.TimeLimit = 30
         self.model.optimize()
-
+        print("MIP Gap: " + str(self.model.getAttr(GRB.Attr.MIPGap)))
         return self.model                
 
     def write_lp_and_sol_to_disk(self):
@@ -140,22 +144,22 @@ class F1Solver:
 
 
 def main():
-    min_robots = 5
-    max_robots = 5
+    min_robots = 2
+    max_robots = 2
 
-    min_depots = 3
-    max_depots = 3
+    min_depots = 1
+    max_depots = 1
 
-    min_tasks = 8
-    max_tasks = 8
+    min_tasks = 10
+    max_tasks = 10
 
-    delta_range_start = 50
+    delta_range_start = 300
     delta_range_step = 100
     # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               delta_range_step)*delta_range_step)  # ~282
-    delta_range_end = 150
+    delta_range_end = 300
 
-    Tmax_range_start = 150
+    Tmax_range_start = 600
     Tmax_range_step = 100
     # Tmax_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               Tmax_range_step)*Tmax_range_step)  # ~282
@@ -169,7 +173,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 5
+    no_of_instances = 1
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 

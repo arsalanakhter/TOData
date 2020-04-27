@@ -80,8 +80,8 @@ class F8Solver:
         # corresponding section in the report
         c1 = self.model.addConstrs(((quicksum(self.c[i,j]*x[i,j,k] for i in self.N for j in self.N if i!=j)) <= z for k in self.K ), name="c1")
 
-        c2_1 = self.model.addConstr((quicksum(x[s,j,k] for j in self.N for k in self.K for s in self.S if j not in self.S) == self.noOfRobots), name="c2_1")
-        c2_2 = self.model.addConstr((quicksum(x[i,e,k] for i in self.N for k in self.K for e in self.E if i!=e) == self.noOfRobots), name="c2_2")
+        #c2_1 = self.model.addConstr((quicksum(x[s,j,k] for j in self.N for k in self.K for s in self.S if j not in self.S) == self.noOfRobots), name="c2_1")
+        #c2_2 = self.model.addConstr((quicksum(x[i,e,k] for i in self.N for k in self.K for e in self.E if i!=e) == self.noOfRobots), name="c2_2")
         
         c3_1 = self.model.addConstrs(((quicksum(x[s,j,k] for s in self.S for j in self.N if j not in self.S)) == 1 for k in self.K), name="c3_1")
         c4_1 = self.model.addConstrs(((quicksum(x[j,s,k] for s in self.S for j in self.N if j not in self.S)) == 0 for k in self.K), name="c3_2")
@@ -102,7 +102,9 @@ class F8Solver:
                          quicksum(q[j,i,k] for j in self.N if i!=j and j not in self.E) == 
                                 quicksum(self.c[i,j]*x[i,j,k]  for j in self.N if i!=j) 
                                             for k in self.K for i in self.T + self.D + self.E), name='c7' )
-        c8 = self.model.addConstrs((0 <= q[i,j,k] <= self.T_max*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8' )
+        #c8 = self.model.addConstrs((0 <= q[i,j,k] <= self.T_max*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8' )
+        c8_1 = self.model.addConstrs((0 <= q[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8_1' )
+        c8_2 = self.model.addConstrs((q[i,j,k] <= self.T_max*x[i,j,k] for i in self.N for j in self.N for k in self.K if i!=j and i not in self.E and j not in self.S), name='c8_2' )
         c9 = self.model.addConstrs((q[s,i,k] == self.f[s,i]*x[s,i,k] for i in self.T+self.D+self.E for s in self.S for k in self.K), name='c9')
 
         
@@ -112,13 +114,15 @@ class F8Solver:
                                quicksum(self.f[t,i]*x[t,i,k] for k in self.K for i in self.N if t!=i)
                                                                for t in self.T), name='c10')
         c11 = self.model.addConstrs((p[b,i,k] == self.f[b,i]*x[b,i,k] for b in self.S+self.D for i in self.N for k in self.K if i!=b), name='c11')
-        c12 = self.model.addConstrs((0 <= p[i,j,k] <= self.L * x[i,j,k] for i in self.N for j in self.N for k in self.K if i != j), name='c12')
+        #c12 = self.model.addConstrs((0 <= p[i,j,k] <= self.L * x[i,j,k] for i in self.N for j in self.N for k in self.K if i != j), name='c12')
+        c12_1 = self.model.addConstrs((0 <= p[i,j,k] for i in self.N for j in self.N for k in self.K if i != j), name='c12_1')        
+        c12_2 = self.model.addConstrs((p[i,j,k] <= self.L * x[i,j,k] for i in self.N for j in self.N for k in self.K if i != j), name='c12_2')
 
 
 
     def solve(self):
-        self.model.params.Heuristics = 0.0  # %age of time use a heuristic solution
-        self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
+        #self.model.params.Heuristics = 0.0  # %age of time use a heuristic solution
+        #self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
         # model.params.MIPGapAbs = 0.0005
         # self.model.params.TimeLimit = 30
         self.model.optimize()
@@ -140,20 +144,20 @@ class F8Solver:
 
 
 def main():
-    min_robots = 4
-    max_robots = 4
+    min_robots = 2
+    max_robots = 2
 
-    min_depots = 3
-    max_depots = 3
+    min_depots = 1
+    max_depots = 1
 
     min_tasks = 10
     max_tasks = 10
 
-    delta_range_start = 150
+    delta_range_start = 300
     delta_range_step = 100
     # delta_range_end = int(math.ceil(2*100*math.sqrt(2) /
     #                               delta_range_step)*delta_range_step)  # ~282
-    delta_range_end = 150
+    delta_range_end = 300
 
     Tmax_range_start = 600
     Tmax_range_step = 100
@@ -169,7 +173,7 @@ def main():
     Tmax_range = list(range(Tmax_range_start, Tmax_range_end +
                             Tmax_range_step, Tmax_range_step,))
 
-    no_of_instances = 10
+    no_of_instances = 1
     path_to_data_folder = os.getcwd()
     # instance_dictionary = {}
 

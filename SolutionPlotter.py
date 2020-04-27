@@ -143,11 +143,11 @@ class SolutionPlotter:
 
 
 def main():
-    instance_prefix = 'R2D1T10Delta150Tmax50Iter7'
+    instance_prefix = 'R2D1T10Delta300Tmax600Iter0'
     #no_of_instances = 10
     #iter_no_list = [2]
     #iter_no_list = [i for i in range(no_of_instances)]
-    list_of_formulations = [1,2,3,4]    
+    list_of_formulations = [1,2,3,4,5,6,7,8]    
     for i in list_of_formulations:
         instance_name = 'F'+str(i)+instance_prefix
         plot = SolutionPlotter(instance_name)
