@@ -125,6 +125,7 @@ class F1Solver:
         #self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
         #self.model.params.MIPGapAbs = 0.0
         # self.model.params.TimeLimit = 30
+        self.model.Params.MIPGap = 0.0
         self.model.optimize()
         print("MIP Gap: " + str(self.model.getAttr(GRB.Attr.MIPGap)))
         return self.model                
