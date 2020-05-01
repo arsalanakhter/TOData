@@ -125,7 +125,7 @@ class F7Solver:
         #self.model.params.Heuristics = 0.0  # %age of time use a heuristic solution
         #self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
         # model.params.MIPGapAbs = 0.0005
-        self.model.Params.MIPGap = 0.0
+        self.model.Params.MIPGap = 1e-3
         # self.model.params.TimeLimit = 30
         self.model.optimize()
 
