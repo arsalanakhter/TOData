@@ -1,6 +1,7 @@
 __pycache__/
 data/
 sol/
+sol2/
 slurm/
 .vscode/
 *.log
