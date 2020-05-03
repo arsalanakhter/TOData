@@ -138,7 +138,7 @@ class F4Solver:
         self.model.write(self.file_path+'.sol')
         # Add runtime in the sol file as well.
         with open(self.file_path+'.sol', "a") as myfile:
-            myfile.write('runtime:{0:.2f}'.format(run_time))
+            myfile.write('runtime:{}'.format(run_time))
 
 
 def main():
