@@ -229,7 +229,7 @@ class DataFiguresGenerator:
             #height=900,
             #autosize=False,
             title='',
-            xaxis=dict(tickvals=self.Tmax_param_list, title="𝓣<sub>max</sub> (sec)"),
+            xaxis=dict(tickvals=self.Tmax_param_list, title=),
             yaxis=dict(domain=[0,0.45], range=[-2,3], type="log"),
             yaxis2=dict(domain=[0.55,1], range=[-2,3], type="log"),
             font=dict(size=24),
