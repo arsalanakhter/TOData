@@ -15,7 +15,7 @@ class Instance_Generator:
         self.noOfRobots = no_of_robots
         self.noOfTasks = no_of_tasks
         self.noOfDepots = no_of_depots
-        self.L = 1
+        self.L = delta
         self.T_max = Tmax
         self.vel = 1
         self.arenaRadius = 100
