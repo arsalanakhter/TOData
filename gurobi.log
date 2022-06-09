@@ -8657,3 +8657,25 @@ Solution count 0
 
 Solve interrupted
 Best objective -, best bound 9.990032784990e+00, gap -
+
+Gurobi 9.5.1 (linux64, gurobi_cl) logging started Thu Jun  9 10:12:55 2022
+
+Set parameter LogFile to value "gurobi.log"
+Restricted license - for non-production use only - expires 2023-10-25
+
+Gurobi 9.5.1 (linux64, gurobi_cl) logging started Thu Jun  9 10:18:21 2022
+
+Set parameter LogFile to value "gurobi.log"
+Restricted license - for non-production use only - expires 2023-10-25
+
+Gurobi 9.5.1 (linux64, gurobi_cl) logging started Thu Jun  9 10:18:42 2022
+
+Set parameter LogFile to value "gurobi.log"
+Restricted license - for non-production use only - expires 2023-10-25
+
+Gurobi 9.5.1 (linux64, gurobi_cl) logging started Thu Jun  9 10:21:37 2022
+
+Set parameter Username
+Set parameter LogFile to value "gurobi.log"
+Academic license - for non-commercial use only - expires 2023-06-04
+Using license file /home/nest/gurobi.lic

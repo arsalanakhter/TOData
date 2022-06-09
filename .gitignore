@@ -3,6 +3,6 @@ data/
 sol/
 sol2/
 slurm/
-.vscode/
 *.log
 *.html
+*.tar
