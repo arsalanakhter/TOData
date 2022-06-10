@@ -9,9 +9,9 @@
 set -e
 
 # Cleanup function to be executed upon exit, for any reason
-function cleanup() {
-    rm -rf $WORKDIR
-}
+# function cleanup() {
+#     rm -rf $WORKDIR
+# }
 
 
 
@@ -30,7 +30,7 @@ MYUSER=$(whoami)
 # (Don't change this)
 #LOCALDIR=/local
 # To be changed as per experiment (my cluster environment)
-MYDIR='/home/aakhter/work/TOData'
+MYDIR='/home/nest/Documents/Github/TOData'
 
 # Folder where you want your data to be stored (my cluster environment)
 DATADIR=$MYDIR/data
@@ -63,7 +63,7 @@ WORKDIR=$LOCALDIR/$MYUSER/$THISJOB
 
 # Make sure you cleanup upon exit
 # (Don't change this)
-trap cleanup EXIT SIGINT SIGTERM
+# trap cleanup EXIT SIGINT SIGTERM
 
 
 
@@ -79,13 +79,13 @@ trap cleanup EXIT SIGINT SIGTERM
 #python3 -m pip install plotly --user
 #mkdir C-mdvrp # comment this if running random input
 #cp $MYDIR/C-mdvrp/* $WORKDIR/C-mdvrp/  # comment this if running random input
-for FUEL in 50 75 100 125 150
+for FUEL in 150
 do
-    for T_MAX in 50 75 150 300 450 600
+    for T_MAX in 300
     do
-        for ITER in {0..9}
+        for ITER in 0
         do
-            for SOLVER_TYPE in F1 F2 F3 F4 F5 F6 F7 F8
+            for SOLVER_TYPE in F6
             do
                 INSTANCE_STRING=$1
                 ITERATION_STRING="${INSTANCE_STRING}F${FUEL}Tmax${T_MAX}Iter${ITER}"

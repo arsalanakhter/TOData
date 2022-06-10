@@ -16,7 +16,7 @@ from TO_SolutionReader import Solution_Reader
 from TO_SolutionInformationExtractor import SolutionInformationExtractor
 import os
 import sys
-import ptvsd
+# import ptvsd
 
 
 class Job:

@@ -24,7 +24,7 @@ MYUSER=$(whoami)
 # (Don't change this)
 #LOCALDIR=/local
 # To be changed as per experiment (my cluster environment)
-MYDIR='/home/aakhter/work/TOData'
+MYDIR='/home/nest/Documents/Github/TOData'
 
 # Folder where you want your data to be stored (my cluster environment)
 DATADIR=$MYDIR/data
@@ -76,16 +76,16 @@ trap cleanup EXIT SIGINT SIGTERM
 # Make DIRS for data and sol
 mkdir -p $DATADIR
 mkdir -p $SOLDIR
-for NO_OF_ROBOTS in 2 3 4
+for NO_OF_ROBOTS in 4
 do
-    for NO_OF_DEPOTS in 1 2 3
+    for NO_OF_DEPOTS in 3
     do
-        for NO_OF_TASKS in 5 10
+        for NO_OF_TASKS in 10
         do 
                     # Create Instance name
                     INSTANCE_STRING="R${NO_OF_ROBOTS}D${NO_OF_DEPOTS}T${NO_OF_TASKS}"
                     # submit job
-                    sbatch -J ${INSTANCE_STRING} cluster_single_job.sh ${INSTANCE_STRING}
+                    sh ubuntu_single_job.sh ${INSTANCE_STRING}
                     # Sleep for 1 sec so that the machine is not overloaded
                     sleep 1
         done
