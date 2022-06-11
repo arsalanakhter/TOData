@@ -80,7 +80,7 @@ for NO_OF_ROBOTS in 4
 do
     for NO_OF_DEPOTS in 3
     do
-        for NO_OF_TASKS in 10
+        for NO_OF_TASKS in 25
         do 
                     # Create Instance name
                     INSTANCE_STRING="R${NO_OF_ROBOTS}D${NO_OF_DEPOTS}T${NO_OF_TASKS}"

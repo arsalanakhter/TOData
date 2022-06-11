@@ -125,7 +125,7 @@ class F8Solver:
         #self.model.params.Cuts = 0  # Do not use cuts, except lazy constraints
         # model.params.MIPGapAbs = 0.0005
         # self.model.params.TimeLimit = 30
-        self.model.Params.MIPGap = 1e-8
+        self.model.Params.MIPGap = 1e-4
         self.model.optimize()
 
         return self.model 

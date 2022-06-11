@@ -185,7 +185,7 @@ def main():
     robots_range = list(range(min_robots, max_robots+1))
     depots_range = list(range(min_depots, max_depots+1))
     #tasks_range = list(range(min_tasks, max_tasks+1))
-    tasks_range = [5,10]
+    tasks_range = [25]
     #delta_range = list(range(delta_range_start, delta_range_end +
     #                        delta_range_step, delta_range_step))
     delta_range = [50, 75, 100, 125, 150]
