@@ -1,7 +1,9 @@
 __pycache__/
 data/
+data2
 sol/
 sol2/
+sol3/
 slurm/
 *.log
 *.html

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.offline as py
-
+import plotly.io as pio
 import csv
 from TO_SolutionReader import Solution_Reader
 
@@ -33,8 +33,8 @@ class FormulationsRuntimeComparator:
     def compare_all_problems(self):
         os.remove('Runtimes.csv')
         with open('Runtimes.csv', 'a') as the_file:
-            #the_file.write('instance,F1,F2,F3,F4\n')
-            the_file.write('instance,F5,F6,F7,F8\n')
+            the_file.write('instance,F1,F2,F3,F4\n')
+            # the_file.write('instance,F5,F6,F7,F8\n')
         for r in self.no_of_robots_list:
             for d in self.no_of_depots_list:
                 for t in self.no_of_tasks_list:
@@ -68,23 +68,23 @@ class FormulationsRuntimeComparator:
         # 4. Increasing delta
         # 5. Increasing Tmax
         df_with_instances = pd.read_csv('Runtimes.csv', index_col=False)
-        #df = df_with_instances[['F1','F2','F3','F4']]
-        df = df_with_instances[['F5','F6','F7','F8']]
+        df = df_with_instances[['F1','F2','F3','F4']]
+        # df = df_with_instances[['F5','F6','F7','F8']]
         print(df)
         df_min_vals = df.min(axis=1)
-        #df_min_F1 = (df_min_vals == df.F1).astype(int)
-        #df_min_F2 = (df_min_vals == df.F2).astype(int)
-        #df_min_F3 = (df_min_vals == df.F3).astype(int)
-        #df_min_F4 = (df_min_vals == df.F4).astype(int)
+        df_min_F1 = (df_min_vals == df.F1).astype(int)
+        df_min_F2 = (df_min_vals == df.F2).astype(int)
+        df_min_F3 = (df_min_vals == df.F3).astype(int)
+        df_min_F4 = (df_min_vals == df.F4).astype(int)
 
-        df_min_F5 = (df_min_vals == df.F5).astype(int)
-        df_min_F6 = (df_min_vals == df.F6).astype(int)
-        df_min_F7 = (df_min_vals == df.F7).astype(int)
-        df_min_F8 = (df_min_vals == df.F8).astype(int)
-        #df_all_mins = pd.concat([df_with_instances.instance, df_min_F1, df_min_F2, df_min_F3, df_min_F4], axis=1)
-        df_all_mins = pd.concat([df_with_instances.instance, df_min_F5, df_min_F6, df_min_F7, df_min_F8], axis=1)
-        #df_all_mins.columns = ['instance','F1','F2','F3','F4']
-        df_all_mins.columns = ['instance','F5','F6','F7','F8']
+        # df_min_F5 = (df_min_vals == df.F5).astype(int)
+        # df_min_F6 = (df_min_vals == df.F6).astype(int)
+        # df_min_F7 = (df_min_vals == df.F7).astype(int)
+        # df_min_F8 = (df_min_vals == df.F8).astype(int)
+        df_all_mins = pd.concat([df_with_instances.instance, df_min_F1, df_min_F2, df_min_F3, df_min_F4], axis=1)
+        # df_all_mins = pd.concat([df_with_instances.instance, df_min_F5, df_min_F6, df_min_F7, df_min_F8], axis=1)
+        df_all_mins.columns = ['instance','F1','F2','F3','F4']
+        # df_all_mins.columns = ['instance','F5','F6','F7','F8']
 
         # Create a dictionary to hold min times
         self.min_times = {}
@@ -162,13 +162,13 @@ class FormulationsRuntimeComparator:
     def plot_best_formulation_stats(self):
         data_to_be_plotted = [self.R_formulations_data, self.D_formulations_data, self.T_formulations_data,
                                 self.Delta_formulations_data, self.Tmax_formulations_data]
-        #count = 0
-        count = 5
+        count = 0
+        # count = 5
         for data_obj in data_to_be_plotted:
             fig = go.Figure(data=[
                 go.Bar(name=k, 
-                        #x=[r'$\mathcal{F}1$', r'$\mathcal{F}2$', r'$\mathcal{F}3$', r'$\mathcal{F}4$'],
-                        x=[r'$\mathcal{F}5$', r'$\mathcal{F}6$', r'$\mathcal{F}7$', r'$\mathcal{F}8$'],
+                        x=[r'$\mathcal{F}1$', r'$\mathcal{F}2$', r'$\mathcal{F}3$', r'$\mathcal{F}4$'],
+                        # x=[r'$\mathcal{F}5$', r'$\mathcal{F}6$', r'$\mathcal{F}7$', r'$\mathcal{F}8$'],
                         y=v
                         #textfont=dict(size=20),
                         #text=self.min_times[k],
@@ -179,16 +179,17 @@ class FormulationsRuntimeComparator:
                 for k,v in data_obj.items()]
                 )
             fig.update_layout(font=dict(size=18),xaxis_title="Formulations", yaxis_title="Number of instances with best runtime")
-            fig.update_yaxes(range=[0, 1600])
+            fig.update_yaxes(range=[0, 800])
             py.plot(fig, include_mathjax='cdn')
-            fig.write_image('figs/fig'+str(count)+'.pdf')
-            count+=1
+            fig = pio.full_figure_for_development(fig, warn=False)
+            pio.write_image(fig, 'figs/fig'+str(count)+'.pdf', format='pdf')
+            count += 1
 
 
 
 def main():
-    #formulations_list = [1,2,3,4]
-    formulations_list = [5,6,7,8]
+    formulations_list = [1,2,3,4]
+    # formulations_list = [5,6,7,8]
     no_of_robots_list = [2,3,4]
     no_of_depots_list =[1,2,3]
     no_of_tasks_list = [5, 10]
