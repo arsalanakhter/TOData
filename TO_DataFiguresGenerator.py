@@ -230,8 +230,8 @@ class DataFiguresGenerator:
             #autosize=False,
             title='',
             xaxis=dict(tickvals=self.Tmax_param_list, title="𝓣<sub>max</sub>"),
-            yaxis=dict(domain=[0,0.45], range=[-2,3], type="log"),
-            yaxis2=dict(domain=[0.55,1], range=[-2,3], type="log"),
+            yaxis=dict(domain=[0,0.45], range=[-2,2.1], type="log"),
+            yaxis2=dict(domain=[0.55,1], range=[-2,2.1], type="log"),
             font=dict(size=24),
             #scene=dict(
             #    xaxis_title="𝓣<sub>max</sub>",
@@ -284,7 +284,7 @@ class DataFiguresGenerator:
 
 def main():
     formulations_list = [1,2,3,4]
-    no_of_robots_list = [4] # We can only put one robot number here.
+    no_of_robots_list = [3] # We can only put one robot number here.
     no_of_depots_list =[1,2,3]
     no_of_tasks_list = [5, 10]
     delta_param_list = [50, 75, 100, 125, 150]
@@ -300,8 +300,8 @@ def main():
                         Tmax_param_list,
                         iterations_list)
 
-    fig_generator.compute_tau_plots()
-    # fig_generator.compute_Tmax_plots()
+    # fig_generator.compute_tau_plots()
+    fig_generator.compute_Tmax_plots()
 
 if __name__ == "__main__":
     main()
