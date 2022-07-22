@@ -229,7 +229,7 @@ class DataFiguresGenerator:
             #height=900,
             #autosize=False,
             title='',
-            xaxis=dict(tickvals=self.Tmax_param_list, title=),
+            xaxis=dict(tickvals=self.Tmax_param_list, title="𝓣<sub>max</sub>"),
             yaxis=dict(domain=[0,0.45], range=[-2,3], type="log"),
             yaxis2=dict(domain=[0.55,1], range=[-2,3], type="log"),
             font=dict(size=24),
@@ -301,7 +301,7 @@ def main():
                         iterations_list)
 
     fig_generator.compute_tau_plots()
-    fig_generator.compute_Tmax_plots()
+    # fig_generator.compute_Tmax_plots()
 
 if __name__ == "__main__":
     main()

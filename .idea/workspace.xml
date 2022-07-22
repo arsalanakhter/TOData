@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3bf65ea-73cb-4dad-af2b-12919e1970b3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Runtimes.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Runtimes.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TO_FormulationsRuntimeComparator.py" beforeDir="false" afterPath="$PROJECT_DIR$/TO_FormulationsRuntimeComparator.py" afterDir="false" />
+    <list default="true" id="e3bf65ea-73cb-4dad-af2b-12919e1970b3" name="Changes" comment="Runtime graphs updated">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TO_DataFiguresGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/TO_DataFiguresGenerator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TO_SolutionRuntimeDataAggregator.py" beforeDir="false" afterPath="$PROJECT_DIR$/TO_SolutionRuntimeDataAggregator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregatedDataMinAvgMaxR2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/aggregatedDataMinAvgMaxR2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregatedDataMinAvgMaxR3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/aggregatedDataMinAvgMaxR3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregatedDataMinAvgMaxR4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/aggregatedDataMinAvgMaxR4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregatedDataR2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/aggregatedDataR2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregatedDataR3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/aggregatedDataR3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aggregatedDataR4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/aggregatedDataR4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latexTableAvgOnlyR2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/latexTableAvgOnlyR2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latexTableAvgOnlyR3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/latexTableAvgOnlyR3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latexTableAvgOnlyR4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/latexTableAvgOnlyR4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latexTableR2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/latexTableR2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latexTableR3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/latexTableR3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/latexTableR4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/latexTableR4.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,12 +34,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Python.TO_DataFiguresGenerator">
+    <configuration name="TO_DataFiguresGenerator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TOData" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TO_DataFiguresGenerator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="TO_FormulationsRuntimeComparator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TOData" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -49,8 +82,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="TO_SolutionRuntimeDataAggregator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TOData" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TO_SolutionRuntimeDataAggregator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.TO_DataFiguresGenerator" />
+        <item itemvalue="Python.TO_SolutionRuntimeDataAggregator" />
         <item itemvalue="Python.TO_FormulationsRuntimeComparator" />
       </list>
     </recent_temporary>
@@ -64,17 +120,29 @@
       <option name="presentableId" value="Default" />
       <updated>1648762476099</updated>
     </task>
+    <task id="LOCAL-00001" summary="Runtime graphs updated">
+      <created>1658325613166</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1658325613166</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TO_FormulationsRuntimeComparator.py</url>
-          <line>155</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Runtime graphs updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Runtime graphs updated" />
   </component>
 </project>
