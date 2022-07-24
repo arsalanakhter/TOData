@@ -1,57 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3bf65ea-73cb-4dad-af2b-12919e1970b3" name="Changes" comment="Tmax and tau graphs updated for Formulations 1,2,3,4">
+    <list default="true" id="e3bf65ea-73cb-4dad-af2b-12919e1970b3" name="Changes" comment="Figures scales changed to 100 max instead of 1000 max">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CheckNeeded.csv" beforeDir="false" afterPath="$PROJECT_DIR$/CheckNeeded.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TO_DataFiguresGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/TO_DataFiguresGenerator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TO_FormulationsRuntimeComparator.py" beforeDir="false" afterPath="$PROJECT_DIR$/TO_FormulationsRuntimeComparator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TO_SolutionRuntimeDataAggregator.py" beforeDir="false" afterPath="$PROJECT_DIR$/TO_SolutionRuntimeDataAggregator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/fig0.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/fig0.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/fig1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/fig1.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/fig2.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/fig2.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/fig3.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/fig3.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/fig4.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/fig4.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D1tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D2tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR2D3tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D1tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D2tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR3D3tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D1tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax450.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax50.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax600.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax600.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D2tmax75.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tau100.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tau100.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tau125.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tau125.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tau150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tau150.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tau50.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tau50.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tau75.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tau75.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tmax150.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tmax150.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tmax300.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tmax300.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/figs/figRuntimeR4D3tmax450.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/figs/figRuntimeR4D3tmax450.pdf" afterDir="false" />
@@ -80,7 +133,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.TO_DataFiguresGenerator">
+  <component name="RunManager" selected="Python.TO_SolutionRuntimeDataAggregator">
     <configuration name="TO_DataFiguresGenerator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TOData" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -123,6 +176,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="TO_FormulationsSolutionComparator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TOData" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TO_FormulationsSolutionComparator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="TO_SolutionRuntimeDataAggregator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TOData" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,9 +220,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.TO_DataFiguresGenerator" />
         <item itemvalue="Python.TO_SolutionRuntimeDataAggregator" />
+        <item itemvalue="Python.TO_FormulationsSolutionComparator" />
         <item itemvalue="Python.TO_FormulationsRuntimeComparator" />
+        <item itemvalue="Python.TO_DataFiguresGenerator" />
       </list>
     </recent_temporary>
   </component>
@@ -175,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658494992070</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Figures scales changed to 100 max instead of 1000 max">
+      <created>1658495980809</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1658495980809</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +274,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Runtime graphs updated" />
     <MESSAGE value="Tmax and tau graphs updated for Formulations 1,2,3,4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tmax and tau graphs updated for Formulations 1,2,3,4" />
+    <MESSAGE value="Figures scales changed to 100 max instead of 1000 max" />
+    <option name="LAST_COMMIT_MESSAGE" value="Figures scales changed to 100 max instead of 1000 max" />
   </component>
 </project>

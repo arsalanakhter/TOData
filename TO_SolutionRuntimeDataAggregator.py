@@ -1,6 +1,7 @@
 import os
 import csv
 import numpy as np
+import pandas as pd
 
 from TO_SolutionReader import Solution_Reader
 
@@ -339,10 +340,77 @@ class SolutionRuntimeDataAggregator:
             results_file.write('%%%%%%%%%%%%%%%%%%%%%')
 
 
+    def write_latex_table_max_std(self):
+        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTableMaxStd.txt')
+
+        data_r2_df = pd.read_csv('aggregatedDataMinAvgMaxR2.csv')
+        data_r3_df = pd.read_csv('aggregatedDataMinAvgMaxR3.csv')
+        data_r4_df = pd.read_csv('aggregatedDataMinAvgMaxR4.csv')
+        with open(self.resultsFile, 'w+') as results_file:
+            string = """
+                %%%%%%%%%%%%%%%%%%%%%%%%%
+                %%%%%%%%%%%%%%%%%%%%%
+                \\begin{table}[h]
+                \\centering
+                \\begin{tabular}{cccccc}
+                \\toprule
+                 Params. & &
+                  $\\mathcal{F}1$ &
+                  $\\mathcal{F}2$ &
+                  $\\mathcal{F}3$ &
+                  $\\mathcal{F}4$ \\\\  
+                  \\cmidrule(l){3-6} 
+
+            """
+            results_file.write(string)
+            result_writer = csv.writer(results_file, delimiter='&',lineterminator='\n')
+            for r in [2, 3, 4]:
+                row_to_be_written = ["", r]
+                # Pick the right df, find the desired values
+                for f in self.formulations_list:
+                    selected_columns = []
+                    for d in self.no_of_depots_list:
+                        for t in self.no_of_tasks_list:
+                            selected_columns.append(
+                                f'F{f}D{d}T{t}'
+                            )
+                    if r == 2:
+                        df_max = data_r2_df.loc[
+                            data_r2_df.iloc[:,2] == 'Max']
+                        df_max = pd.DataFrame(df_max, columns=selected_columns)
+                        row_to_be_written.append('{:.2f}'.format(max(df_max.max())))
+                    if r == 3:
+                        df_max = data_r3_df.loc[
+                            data_r2_df.iloc[:,2] == 'Max']
+                        df_max = pd.DataFrame(df_max, columns=selected_columns)
+                        row_to_be_written.append('{:.2f}'.format(max(df_max.max())))
+                    if r == 4:
+                        df_max = data_r4_df.loc[
+                            data_r2_df.iloc[:,2] == 'Max']
+                        df_max = pd.DataFrame(df_max, columns=selected_columns)
+                        row_to_be_written.append('{:.2f}'.format(max(df_max.max())))
+                result_writer.writerow(row_to_be_written)
+                results_file.write("\\\\")
+            results_file.write("\\cmidrule(lr){2-6}")
+            string = """
+                        \\bottomrule
+                        \\end{tabular}
+                    """
+            results_file.write(string)
+            results_file.write('\\caption{Runtime for ' + str(
+                len(self.iterations_list)) + ' random instances - No. of '
+                                             'Robots = ' + str(
+                self.no_of_robots[0]) + '}')
+            results_file.write('\\label{tab:AllRuntimesR=' + str(
+                self.no_of_robots[0]) + '}')
+            results_file.write('\\end{table}')
+            results_file.write('%%%%%%%%%%%%%%%%%%%%%')
+
+
 
 def main():
     formulations_list = [1,2,3,4]
-    no_of_robots_list = [3] # We can only put one robot number here.
+    no_of_robots_list = [2] # We can only put one robot number here.
     no_of_depots_list =[1, 2, 3]
     no_of_tasks_list = [5 , 10]
     delta_param_list = [50, 75, 100, 125, 150]
@@ -358,14 +426,16 @@ def main():
                         Tmax_param_list,
                         iterations_list)
 
-    agg.write_to_csv()
-    print('All data written to csv')
-    agg.write_min_avg_max_to_csv()
-    print('Min-Avg_Max data written to csv')
-    agg.write_latex_table()
-    print('latex table written')
-    agg.write_latex_table_avg_only()
-    print('latex table written (with averages only)')
+    #agg.write_to_csv()
+    #print('All data written to csv')
+    #agg.write_min_avg_max_to_csv()
+    #print('Min-Avg_Max data written to csv')
+    #agg.write_latex_table()
+    #print('latex table written')
+    #agg.write_latex_table_avg_only()
+    #print('latex table written (with averages only)')
+    agg.write_latex_table_max_std()
+    print('latex table written (with avg and std for all robots 2,3,4)')
 
 if __name__ == "__main__":
     main()

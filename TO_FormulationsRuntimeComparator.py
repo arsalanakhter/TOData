@@ -182,7 +182,7 @@ class FormulationsRuntimeComparator:
             fig.update_yaxes(range=[0, 800])
             py.plot(fig, include_mathjax='cdn')
             fig = pio.full_figure_for_development(fig, warn=False)
-            pio.write_image(fig, 'figs/fig'+str(count)+'.pdf', format='pdf')
+            pio.write_image(fig, 'figs/fig'+str(count)+'.pdf', engine='orca')
             count += 1
 
 

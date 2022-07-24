@@ -95,9 +95,9 @@ class DataFiguresGenerator:
             #fig['layout']['yaxis2'].update(range=[0, y_max])
 
 
-        py.plot(fig, include_mathjax='cdn')
-        fig.write_image('figs/figRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
-        #fig.write_image('figs/TOMinMaxfigRuntimeR{}D{}tau{}.pdf'.format(r,d,tau))
+        # py.plot(fig, include_mathjax='cdn')
+        fig.write_image('figs/figRuntimeR{}D{}tau{}.pdf'.format(r,d,tau), engine='orca')
+        # fig.write_image('figs/TOMinMaxfigRuntimeR{}D{}tau{}.pdf'.format(r,d,tau), engine='orca')
 
 
     def compute_single_tau_plot(self, d, tmax):
@@ -162,9 +162,9 @@ class DataFiguresGenerator:
             #fig['layout']['yaxis2'].update(range=[0, y_max])
 
 
-        py.plot(fig, include_mathjax='cdn')
-        fig.write_image('figs/figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
-        #fig.write_image('figs/TOMinMaxfigRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax))
+        # py.plot(fig, include_mathjax='cdn')
+        fig.write_image('figs/figRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax), engine='orca')
+        # fig.write_image('figs/TOMinMaxfigRuntimeR{}D{}tmax{}.pdf'.format(r,d,tmax), engine='orca')
 
 
     def individual_trace(self):
@@ -284,7 +284,7 @@ class DataFiguresGenerator:
 
 def main():
     formulations_list = [1,2,3,4]
-    no_of_robots_list = [3] # We can only put one robot number here.
+    no_of_robots_list = [2] # We can only put one robot number here.
     no_of_depots_list =[1,2,3]
     no_of_tasks_list = [5, 10]
     delta_param_list = [50, 75, 100, 125, 150]

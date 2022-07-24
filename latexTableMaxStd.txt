@@ -1,0 +1,21 @@
+
+                %%%%%%%%%%%%%%%%%%%%%%%%%
+                %%%%%%%%%%%%%%%%%%%%%
+                \begin{table}[h]
+                \centering
+                \begin{tabular}{cccccc}
+                \toprule
+                 Params. & &
+                  $\mathcal{F}1$ &
+                  $\mathcal{F}2$ &
+                  $\mathcal{F}3$ &
+                  $\mathcal{F}4$ \\  
+                  \cmidrule(l){3-6} 
+
+            &2&8.59&86.08&8.27&8.84
+\\&3&71.57&97.98&9.85&88.86
+\\&4&85.25&96.73&99.63&94.36
+\\\cmidrule(lr){2-6}
+                        \bottomrule
+                        \end{tabular}
+                    \caption{Runtime for 10 random instances - No. of Robots = 2}\label{tab:AllRuntimesR=2}\end{table}%%%%%%%%%%%%%%%%%%%%%
