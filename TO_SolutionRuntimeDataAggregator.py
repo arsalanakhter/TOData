@@ -9,13 +9,13 @@ from TO_SolutionReader import Solution_Reader
 class SolutionRuntimeDataAggregator:
 
     def __init__(self, formulations_list,
-                        no_of_robots,
-                        no_of_depots_list,
-                        no_of_tasks_list,
-                        delta_param_list,
-                        Tmax_param_list,
-                        iterations_list,
-                        path_to_data_folder=os.getcwd()):
+                 no_of_robots,
+                 no_of_depots_list,
+                 no_of_tasks_list,
+                 delta_param_list,
+                 Tmax_param_list,
+                 iterations_list,
+                 path_to_data_folder=os.getcwd()):
 
         self.formulations_list = formulations_list
         self.no_of_robots = no_of_robots
@@ -24,45 +24,64 @@ class SolutionRuntimeDataAggregator:
         self.delta_param_list = delta_param_list
         self.Tmax_param_list = Tmax_param_list
         self.iterations_list = iterations_list
-                       
+
         self.solution_runtimes = {}
         for f in self.formulations_list:
-            self.solution_runtimes['F'+str(f)] = {}
+            self.solution_runtimes['F' + str(f)] = {}
             for r in self.no_of_robots:
-                self.solution_runtimes['F'+str(f)]['R'+str(r)] = {}
+                self.solution_runtimes['F' + str(f)]['R' + str(r)] = {}
                 for d in self.no_of_depots_list:
-                    self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)] = {}
+                    self.solution_runtimes['F' + str(f)]['R' + str(r)][
+                        'D' + str(d)] = {}
                     for t in self.no_of_tasks_list:
-                        self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)] = {}
+                        self.solution_runtimes['F' + str(f)]['R' + str(r)][
+                            'D' + str(d)]['T' + str(t)] = {}
                         for delta in self.delta_param_list:
-                            self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)]['delta'+str(delta)] = {}
+                            self.solution_runtimes['F' + str(f)]['R' + str(r)][
+                                'D' + str(d)]['T' + str(t)][
+                                'delta' + str(delta)] = {}
                             for tmax in self.Tmax_param_list:
-                                self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)]['delta'+str(delta)]['Tmax'+str(tmax)] = {}
+                                self.solution_runtimes['F' + str(f)][
+                                    'R' + str(r)]['D' + str(d)]['T' + str(t)][
+                                    'delta' + str(delta)][
+                                    'Tmax' + str(tmax)] = {}
                                 for i in self.iterations_list:
                                     this_instance_string = 'F' + str(f) + \
-                                        'R' + str(r) + 'D' + str(d) + \
-                                        'T' + str(t) + 'delta' + str(delta) + \
-                                        'Tmax' + str(tmax) + 'Iter' + str(i)
-                                    this_sol = Solution_Reader(this_instance_string)
-                                    self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)]['delta'+str(delta)]['Tmax'+str(tmax)]['Iter'+str(i)] = this_sol.runtime
-
+                                                           'R' + str(
+                                        r) + 'D' + str(d) + \
+                                                           'T' + str(
+                                        t) + 'delta' + str(delta) + \
+                                                           'Tmax' + str(
+                                        tmax) + 'Iter' + str(i)
+                                    this_sol = Solution_Reader(
+                                        this_instance_string)
+                                    self.solution_runtimes['F' + str(f)][
+                                        'R' + str(r)]['D' + str(d)][
+                                        'T' + str(t)]['delta' + str(delta)][
+                                        'Tmax' + str(tmax)][
+                                        'Iter' + str(i)] = this_sol.runtime
 
     def write_to_csv(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedDataR'+str(self.no_of_robots[0])+'.csv')
+        self.resultsFile = os.path.normpath(
+            os.getcwd() + '/aggregatedDataR' + str(
+                self.no_of_robots[0]) + '.csv')
         with open(self.resultsFile, 'w+') as results_file:
-            result_writer = csv.writer(results_file, delimiter=',', lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter=',',
+                                       lineterminator='\n')
             # Write row1
-            row1 = [' ',' ',' ']
-            row2 = [' ',' ',' ']
-            row3 = [' ',' ',' ']
+            row1 = [' ', ' ', ' ']
+            row2 = [' ', ' ', ' ']
+            row3 = [' ', ' ', ' ']
             for formulation in self.formulations_list:
-                row1 = row1 + ['F'+str(formulation) for i in range (len(self.no_of_depots_list)*len(self.no_of_tasks_list))]
+                row1 = row1 + ['F' + str(formulation) for i in range(
+                    len(self.no_of_depots_list) * len(self.no_of_tasks_list))]
                 # Write row2
                 for d in self.no_of_depots_list:
-                    row2 = row2 + ['D'+str(d) for i in range (len(self.no_of_tasks_list))]
+                    row2 = row2 + ['D' + str(d) for i in
+                                   range(len(self.no_of_tasks_list))]
                     # Write row3
                     for t in self.no_of_tasks_list:
-                        row3 = row3 + ['T'+str(t)]
+                        row3 = row3 + ['T' + str(t)]
             result_writer.writerow(row1)
             result_writer.writerow(row2)
             result_writer.writerow(row3)
@@ -71,37 +90,52 @@ class SolutionRuntimeDataAggregator:
                 for tmax in self.Tmax_param_list:
                     for delta in self.delta_param_list:
                         for i in self.iterations_list:
-                            row_tbw = ['Tmax'+str(tmax), 'tau'+str(delta), 'Iter'+str(i)]
+                            row_tbw = ['Tmax' + str(tmax), 'tau' + str(delta),
+                                       'Iter' + str(i)]
                             for f in self.formulations_list:
                                 for d in self.no_of_depots_list:
                                     for t in self.no_of_tasks_list:
-                                        row_tbw = row_tbw + [str(self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)]['delta'+str(delta)]['Tmax'+str(tmax)]['Iter'+str(i)])]
+                                        row_tbw = row_tbw + [str(
+                                            self.solution_runtimes[
+                                                'F' + str(f)]['R' + str(r)][
+                                                'D' + str(d)]['T' + str(t)][
+                                                'delta' + str(delta)][
+                                                'Tmax' + str(tmax)][
+                                                'Iter' + str(i)])]
                             result_writer.writerow(row_tbw)
 
-
     def write_min_avg_max_to_csv(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/aggregatedDataMinAvgMaxR'+str(self.no_of_robots[0])+'.csv')
+        self.resultsFile = os.path.normpath(
+            os.getcwd() + '/aggregatedDataMinAvgMaxR' + str(
+                self.no_of_robots[0]) + '.csv')
         with open(self.resultsFile, 'w+') as results_file:
-            result_writer = csv.writer(results_file, delimiter=',',lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter=',',
+                                       lineterminator='\n')
             # Write row1
-            row1 = [' ',' ',' ']
+            row1 = [' ', ' ', ' ']
             for formulation in self.formulations_list:
                 for d in self.no_of_depots_list:
                     for t in self.no_of_tasks_list:
-                        row1 = row1 + ['F'+str(formulation) + 'D'+str(d) + 'T'+str(t)]
+                        row1 = row1 + [
+                            'F' + str(formulation) + 'D' + str(d) + 'T' + str(
+                                t)]
             result_writer.writerow(row1)
 
             for r in self.no_of_robots:
                 for tmax in self.Tmax_param_list:
                     for delta in self.delta_param_list:
-                        row_tbw_min = ['Tmax'+str(tmax), '\\tau'+str(delta), 'Min']
-                        row_tbw_avg = ['Tmax'+str(tmax), '\\tau'+str(delta), 'Avg']
-                        row_tbw_std = ['Tmax'+str(tmax), '\\tau'+str(delta), 'StdDev']
-                        row_tbw_max = ['Tmax'+str(tmax), '\\tau'+str(delta), 'Max']
-                        #row_tbw_min = [' ']
-                        #row_tbw_avg = [' ']
-                        #row_tbw_std = [' ']
-                        #row_tbw_max = [' ']
+                        row_tbw_min = ['Tmax' + str(tmax), '\\tau' + str(delta),
+                                       'Min']
+                        row_tbw_avg = ['Tmax' + str(tmax), '\\tau' + str(delta),
+                                       'Avg']
+                        row_tbw_std = ['Tmax' + str(tmax), '\\tau' + str(delta),
+                                       'StdDev']
+                        row_tbw_max = ['Tmax' + str(tmax), '\\tau' + str(delta),
+                                       'Max']
+                        # row_tbw_min = [' ']
+                        # row_tbw_avg = [' ']
+                        # row_tbw_std = [' ']
+                        # row_tbw_max = [' ']
                         for f in self.formulations_list:
                             for d in self.no_of_depots_list:
                                 for t in self.no_of_tasks_list:
@@ -111,10 +145,18 @@ class SolutionRuntimeDataAggregator:
                                     iter_max = 0
                                     iter_data = []
                                     for i in self.iterations_list:
-                                        iter_data = iter_data + [self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)]['delta'+str(delta)]['Tmax'+str(tmax)]['Iter'+str(i)]]
+                                        iter_data = iter_data + [
+                                            self.solution_runtimes[
+                                                'F' + str(f)]['R' + str(r)][
+                                                'D' + str(d)]['T' + str(t)][
+                                                'delta' + str(delta)][
+                                                'Tmax' + str(tmax)][
+                                                'Iter' + str(i)]]
                                     iter_min = min(iter_data)
-                                    iter_avg = '{:.2f}'.format(np.mean([float(i) for i in iter_data]))
-                                    iter_std = '{:.2f}'.format(np.std([float(i) for i in iter_data]))
+                                    iter_avg = '{:.2f}'.format(
+                                        np.mean([float(i) for i in iter_data]))
+                                    iter_std = '{:.2f}'.format(
+                                        np.std([float(i) for i in iter_data]))
                                     iter_max = max(iter_data)
                                     row_tbw_min = row_tbw_min + [iter_min]
                                     row_tbw_avg = row_tbw_avg + [iter_avg]
@@ -124,11 +166,10 @@ class SolutionRuntimeDataAggregator:
                         result_writer.writerow(row_tbw_avg)
                         result_writer.writerow(row_tbw_std)
                         result_writer.writerow(row_tbw_max)
-
-
 
     def write_latex_table(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTableR'+str(self.no_of_robots[0])+'.txt')
+        self.resultsFile = os.path.normpath(
+            os.getcwd() + '/latexTableR' + str(self.no_of_robots[0]) + '.txt')
         with open(self.resultsFile, 'w+') as results_file:
             string = """
                         %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -182,18 +223,23 @@ class SolutionRuntimeDataAggregator:
                         \\midrule
             """
             results_file.write(string)
-            result_writer = csv.writer(results_file, delimiter='&',lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter='&',
+                                       lineterminator='\n')
             for r in self.no_of_robots:
                 for tmax in self.Tmax_param_list:
                     for fuel in self.delta_param_list:
-                        row_tbw_min = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Min']
-                        row_tbw_avg = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Avg']
-                        row_tbw_std = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Std']
-                        row_tbw_max = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Max']
-                        #row_tbw_min = [' ']
-                        #row_tbw_avg = [' ']
-                        #row_tbw_std = [' ']
-                        #row_tbw_max = [' ']
+                        row_tbw_min = ['Tmax' + str(tmax),
+                                       '$\\tau$' + str(fuel), 'Min']
+                        row_tbw_avg = ['Tmax' + str(tmax),
+                                       '$\\tau$' + str(fuel), 'Avg']
+                        row_tbw_std = ['Tmax' + str(tmax),
+                                       '$\\tau$' + str(fuel), 'Std']
+                        row_tbw_max = ['Tmax' + str(tmax),
+                                       '$\\tau$' + str(fuel), 'Max']
+                        # row_tbw_min = [' ']
+                        # row_tbw_avg = [' ']
+                        # row_tbw_std = [' ']
+                        # row_tbw_max = [' ']
                         for f in self.formulations_list:
                             for d in self.no_of_depots_list:
                                 for t in self.no_of_tasks_list:
@@ -203,10 +249,18 @@ class SolutionRuntimeDataAggregator:
                                     iter_max = 0
                                     iter_data = []
                                     for i in self.iterations_list:
-                                        iter_data = iter_data + [self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)]['delta'+str(fuel)]['Tmax'+str(tmax)]['Iter'+str(i)]]
+                                        iter_data = iter_data + [
+                                            self.solution_runtimes[
+                                                'F' + str(f)]['R' + str(r)][
+                                                'D' + str(d)]['T' + str(t)][
+                                                'delta' + str(fuel)][
+                                                'Tmax' + str(tmax)][
+                                                'Iter' + str(i)]]
                                     iter_min = min(iter_data)
-                                    iter_avg = '{:.2f}'.format(np.mean([float(i) for i in iter_data]))
-                                    iter_std = '{:.2f}'.format(np.std([float(i) for i in iter_data]))
+                                    iter_avg = '{:.2f}'.format(
+                                        np.mean([float(i) for i in iter_data]))
+                                    iter_std = '{:.2f}'.format(
+                                        np.std([float(i) for i in iter_data]))
                                     iter_max = max(iter_data)
                                     row_tbw_min = row_tbw_min + [iter_min]
                                     row_tbw_avg = row_tbw_avg + [iter_avg]
@@ -227,15 +281,18 @@ class SolutionRuntimeDataAggregator:
                         \\end{tabular}
                     }"""
             results_file.write(string)
-            results_file.write('\\caption{Runtime for'+str(len(self.iterations_list))+'random instances - No. of Robots = '+str(self.no_of_robots[0])+'}')
-            results_file.write('\\label{tab:AllRuntimesR='+str(self.no_of_robots[0])+'}')
+            results_file.write('\\caption{Runtime for' + str(
+                len(self.iterations_list)) + 'random instances - No. of Robots = ' + str(
+                self.no_of_robots[0]) + '}')
+            results_file.write(
+                '\\label{tab:AllRuntimesR=' + str(self.no_of_robots[0]) + '}')
             results_file.write('\\end{table*}')
             results_file.write('%%%%%%%%%%%%%%%%%%%%%')
 
-
-
     def write_latex_table_avg_only(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTableAvgOnlyR'+str(self.no_of_robots[0])+'.txt')
+        self.resultsFile = os.path.normpath(
+            os.getcwd() + '/latexTableAvgOnlyR' + str(
+                self.no_of_robots[0]) + '.txt')
         with open(self.resultsFile, 'w+') as results_file:
             string = """
                         %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -289,44 +346,57 @@ class SolutionRuntimeDataAggregator:
                         \\midrule
             """
             results_file.write(string)
-            result_writer = csv.writer(results_file, delimiter='&',lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter='&',
+                                       lineterminator='\n')
             for r in self.no_of_robots:
                 for tmax in self.Tmax_param_list:
                     for fuel in self.delta_param_list:
-                        #row_tbw_min = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Min']
-                        row_tbw_avg = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Avg']
-                        #row_tbw_std = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Std']
-                        #row_tbw_max = ['Tmax'+str(tmax), '$\\tau$'+str(fuel), 'Max']
-                        #row_tbw_min = [' ']
-                        #row_tbw_avg = [' ']
-                        #row_tbw_std = [' ']
-                        #row_tbw_max = [' ']
+                        # row_tbw_min = ['Tmax'+str(tmax), '$\\tau$'+str(
+                        # fuel), 'Min']
+                        row_tbw_avg = ['Tmax' + str(tmax),
+                                       '$\\tau$' + str(fuel), 'Avg']
+                        # row_tbw_std = ['Tmax'+str(tmax), '$\\tau$'+str(
+                        # fuel), 'Std']
+                        # row_tbw_max = ['Tmax'+str(tmax), '$\\tau$'+str(
+                        # fuel), 'Max']
+                        # row_tbw_min = [' ']
+                        # row_tbw_avg = [' ']
+                        # row_tbw_std = [' ']
+                        # row_tbw_max = [' ']
                         for f in self.formulations_list:
                             for d in self.no_of_depots_list:
                                 for t in self.no_of_tasks_list:
-                                    #iter_min = 0
+                                    # iter_min = 0
                                     iter_avg = 0
-                                    #iter_std = 0
-                                    #iter_max = 0
+                                    # iter_std = 0
+                                    # iter_max = 0
                                     iter_data = []
                                     for i in self.iterations_list:
-                                        iter_data = iter_data + [self.solution_runtimes['F'+str(f)]['R'+str(r)]['D'+str(d)]['T'+str(t)]['delta'+str(fuel)]['Tmax'+str(tmax)]['Iter'+str(i)]]
-                                    #iter_min = min(iter_data)
-                                    iter_avg = '{:.2f}'.format(np.mean([float(i) for i in iter_data]))
-                                    #iter_std = '{:.2f}'.format(np.std([float(i) for i in iter_data]))
-                                    #iter_max = max(iter_data)
-                                    #row_tbw_min = row_tbw_min + [iter_min]
+                                        iter_data = iter_data + [
+                                            self.solution_runtimes[
+                                                'F' + str(f)]['R' + str(r)][
+                                                'D' + str(d)]['T' + str(t)][
+                                                'delta' + str(fuel)][
+                                                'Tmax' + str(tmax)][
+                                                'Iter' + str(i)]]
+                                    # iter_min = min(iter_data)
+                                    iter_avg = '{:.2f}'.format(
+                                        np.mean([float(i) for i in iter_data]))
+                                    # iter_std = '{:.2f}'.format(np.std([
+                                    # float(i) for i in iter_data]))
+                                    # iter_max = max(iter_data)
+                                    # row_tbw_min = row_tbw_min + [iter_min]
                                     row_tbw_avg = row_tbw_avg + [iter_avg]
-                                    #row_tbw_std = row_tbw_std + [iter_std]
-                                    #row_tbw_max = row_tbw_max + [iter_max]
-                        #result_writer.writerow(row_tbw_min)
-                        #results_file.write("\\\\")
+                                    # row_tbw_std = row_tbw_std + [iter_std]
+                                    # row_tbw_max = row_tbw_max + [iter_max]
+                        # result_writer.writerow(row_tbw_min)
+                        # results_file.write("\\\\")
                         result_writer.writerow(row_tbw_avg)
                         results_file.write("\\\\")
-                        #result_writer.writerow(row_tbw_std)
-                        #results_file.write("\\\\")
-                        #result_writer.writerow(row_tbw_max)
-                        #results_file.write("\\\\")
+                        # result_writer.writerow(row_tbw_std)
+                        # results_file.write("\\\\")
+                        # result_writer.writerow(row_tbw_max)
+                        # results_file.write("\\\\")
                         results_file.write("\\cmidrule(lr){3-19}")
                     results_file.write("\\cmidrule(lr){2-19}")
             string = """
@@ -334,14 +404,17 @@ class SolutionRuntimeDataAggregator:
                         \\end{tabular}
                     }"""
             results_file.write(string)
-            results_file.write('\\caption{Runtime for '+str(len(self.iterations_list))+' random instances - No. of Robots = '+str(self.no_of_robots[0])+'}')
-            results_file.write('\\label{tab:AllRuntimesR='+str(self.no_of_robots[0])+'}')
+            results_file.write('\\caption{Runtime for ' + str(
+                len(self.iterations_list)) + ' random instances - No. of Robots = ' + str(
+                self.no_of_robots[0]) + '}')
+            results_file.write(
+                '\\label{tab:AllRuntimesR=' + str(self.no_of_robots[0]) + '}')
             results_file.write('\\end{table*}')
             results_file.write('%%%%%%%%%%%%%%%%%%%%%')
 
-
     def write_latex_table_max_std(self):
-        self.resultsFile = os.path.normpath(os.getcwd()+'/latexTableMaxStd.txt')
+        self.resultsFile = os.path.normpath(
+            os.getcwd() + '/latexTableMaxStd.txt')
 
         data_r2_df = pd.read_csv('aggregatedDataMinAvgMaxR2.csv')
         data_r3_df = pd.read_csv('aggregatedDataMinAvgMaxR3.csv')
@@ -363,7 +436,9 @@ class SolutionRuntimeDataAggregator:
 
             """
             results_file.write(string)
-            result_writer = csv.writer(results_file, delimiter='&',lineterminator='\n')
+            result_writer = csv.writer(results_file, delimiter='&',
+                                       lineterminator='\n')
+            # for the robots
             for r in [2, 3, 4]:
                 row_to_be_written = ["", r]
                 # Pick the right df, find the desired values
@@ -376,22 +451,82 @@ class SolutionRuntimeDataAggregator:
                             )
                     if r == 2:
                         df_max = data_r2_df.loc[
-                            data_r2_df.iloc[:,2] == 'Max']
+                            data_r2_df.iloc[:, 2] == 'Max']
                         df_max = pd.DataFrame(df_max, columns=selected_columns)
-                        row_to_be_written.append('{:.2f}'.format(max(df_max.max())))
+                        row_to_be_written.append(
+                            '{:.2f}'.format(max(df_max.max())))
                     if r == 3:
                         df_max = data_r3_df.loc[
-                            data_r2_df.iloc[:,2] == 'Max']
+                            data_r2_df.iloc[:, 2] == 'Max']
                         df_max = pd.DataFrame(df_max, columns=selected_columns)
-                        row_to_be_written.append('{:.2f}'.format(max(df_max.max())))
+                        row_to_be_written.append(
+                            '{:.2f}'.format(max(df_max.max())))
                     if r == 4:
                         df_max = data_r4_df.loc[
-                            data_r2_df.iloc[:,2] == 'Max']
+                            data_r2_df.iloc[:, 2] == 'Max']
                         df_max = pd.DataFrame(df_max, columns=selected_columns)
-                        row_to_be_written.append('{:.2f}'.format(max(df_max.max())))
+                        row_to_be_written.append(
+                            '{:.2f}'.format(max(df_max.max())))
                 result_writer.writerow(row_to_be_written)
                 results_file.write("\\\\")
             results_file.write("\\cmidrule(lr){2-6}")
+            # for the depots
+            for d in self.no_of_depots_list:
+                row_to_be_written = ["", d]
+                # Pick the right df, find the desired values
+                for f in self.formulations_list:
+                    selected_columns = []
+                    for t in self.no_of_tasks_list:
+                        selected_columns.append(
+                            f'F{f}D{d}T{t}'
+                        )
+                    df_r2_max = data_r2_df.loc[
+                        data_r2_df.iloc[:, 2] == 'Max']
+                    df_r2_max = max(pd.DataFrame(df_r2_max,
+                                             columns=selected_columns).max())
+                    df_r3_max = data_r3_df.loc[
+                        data_r3_df.iloc[:, 2] == 'Max']
+                    df_r3_max = max(pd.DataFrame(df_r3_max,
+                                             columns=selected_columns).max())
+                    df_r4_max = data_r4_df.loc[
+                        data_r4_df.iloc[:, 2] == 'Max']
+                    df_r4_max = max(pd.DataFrame(df_r4_max,
+                                             columns=selected_columns).max())
+
+                    row_to_be_written.append('{:.2f}'.format(max([
+                        df_r2_max, df_r3_max, df_r4_max])))
+                result_writer.writerow(row_to_be_written)
+                results_file.write("\\\\")
+            results_file.write("\\cmidrule(lr){2-6}")
+            # for tasks
+            for t in self.no_of_tasks_list:
+                row_to_be_written = ["", t]
+                # Pick the right df, find the desired values
+                for f in self.formulations_list:
+                    selected_columns = []
+                    for d in self.no_of_depots_list:
+                        selected_columns.append(
+                            f'F{f}D{d}T{t}'
+                        )
+                    df_r2_max = data_r2_df.loc[
+                        data_r2_df.iloc[:, 2] == 'Max']
+                    df_r2_max = max(pd.DataFrame(df_r2_max,
+                                             columns=selected_columns).max())
+                    df_r3_max = data_r3_df.loc[
+                        data_r3_df.iloc[:, 2] == 'Max']
+                    df_r3_max = max(pd.DataFrame(df_r3_max,
+                                             columns=selected_columns).max())
+                    df_r4_max = data_r4_df.loc[
+                        data_r4_df.iloc[:, 2] == 'Max']
+                    df_r4_max = max(pd.DataFrame(df_r4_max,
+                                             columns=selected_columns).max())
+
+                    row_to_be_written.append('{:.2f}'.format(max([
+                        df_r2_max, df_r3_max, df_r4_max])))
+                result_writer.writerow(row_to_be_written)
+                results_file.write("\\\\")
+            results_file.write("\\cmidrule(lr){2-6}")
+
             string = """
                         \\bottomrule
                         \\end{tabular}
@@ -407,35 +542,35 @@ class SolutionRuntimeDataAggregator:
             results_file.write('%%%%%%%%%%%%%%%%%%%%%')
 
 
-
 def main():
-    formulations_list = [1,2,3,4]
-    no_of_robots_list = [2] # We can only put one robot number here.
-    no_of_depots_list =[1, 2, 3]
-    no_of_tasks_list = [5 , 10]
+    formulations_list = [1, 2, 3, 4]
+    no_of_robots_list = [2]  # We can only put one robot number here.
+    no_of_depots_list = [1, 2, 3]
+    no_of_tasks_list = [5, 10]
     delta_param_list = [50, 75, 100, 125, 150]
     Tmax_param_list = [50, 75, 150, 300, 450, 600]
     iterations_list = [i for i in range(10)]
 
     agg = SolutionRuntimeDataAggregator(
-                        formulations_list,
-                        no_of_robots_list,
-                        no_of_depots_list,
-                        no_of_tasks_list,
-                        delta_param_list,
-                        Tmax_param_list,
-                        iterations_list)
+        formulations_list,
+        no_of_robots_list,
+        no_of_depots_list,
+        no_of_tasks_list,
+        delta_param_list,
+        Tmax_param_list,
+        iterations_list)
 
-    #agg.write_to_csv()
-    #print('All data written to csv')
-    #agg.write_min_avg_max_to_csv()
-    #print('Min-Avg_Max data written to csv')
-    #agg.write_latex_table()
-    #print('latex table written')
-    #agg.write_latex_table_avg_only()
-    #print('latex table written (with averages only)')
+    # agg.write_to_csv()
+    # print('All data written to csv')
+    # agg.write_min_avg_max_to_csv()
+    # print('Min-Avg_Max data written to csv')
+    # agg.write_latex_table()
+    # print('latex table written')
+    # agg.write_latex_table_avg_only()
+    # print('latex table written (with averages only)')
     agg.write_latex_table_max_std()
     print('latex table written (with avg and std for all robots 2,3,4)')
+
 
 if __name__ == "__main__":
     main()
